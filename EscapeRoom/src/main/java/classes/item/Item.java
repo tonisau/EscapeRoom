@@ -9,6 +9,14 @@ public abstract class Item {
         this.price = price;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public String getName() {
         return name;
     }
@@ -16,8 +24,4 @@ public abstract class Item {
     public double getPrice() {
         return price;
     }
-
-    public abstract void create();
-
-    public abstract void remove();
 }
