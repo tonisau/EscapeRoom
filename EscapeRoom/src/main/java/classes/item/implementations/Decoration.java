@@ -1,19 +1,30 @@
 package classes.item.implementations;
 
 import classes.item.Item;
+import classes.item.Material;
 
 public class Decoration extends Item {
+
+    Material material;
+    int quantity;
+
     public Decoration(String name, double price) {
         super(name, price);
     }
 
-    @Override
-    public void create() {
-
+    public Material getMaterial() {
+        return material;
     }
 
-    @Override
-    public void remove() {
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
