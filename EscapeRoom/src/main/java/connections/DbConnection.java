@@ -10,7 +10,7 @@ public class DbConnection {
     protected Connection connection;
     protected ResultSet resultSet;
     protected PreparedStatement statement;
-    private static final String URL = "jdbc:mysql://localhost/db-escaperoom";
+    private static final String URL = "jdbc:mysql://localhost:3306/db-escaperoom";
     private static final String USER = "root";
     private String password;
 
