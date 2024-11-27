@@ -2,6 +2,7 @@ package managers;
 
 import exceptions.IncorrectMenuOptionException;
 import utils.Entry;
+import utils.MenuOptions;
 
 public class EscapeRoomManager {
 
@@ -53,25 +54,15 @@ public class EscapeRoomManager {
     }
 
     public int menu() throws IncorrectMenuOptionException {
-        System.out.println(
-                "Menú:" +
-                        "\n1.- Create new Escape Room " +
-                        "\n2.- Add new Room to the Escape Room. " +
-                        "\n3.- Add new Enigma to a Room." +
-                        "\n4.- Add new Clue for an Enigma. " +
-                        "\n5.- Add new Decoration object to a/some Room(s). " +
-                        "\n6.- Show inventory (Rooms, Enigmas, Clues and Decorations). " +
-                        "\n7.- Show total inventory value." +
-                        "\n8 - Remove Room, Enigma, Clue or Decoration. " +
-                        "\n9 - Add new user. " +
-                        "\n10 - Create new game and generate ticket. " +
-                        "\n11 - Show tota sales. " +
-                        "\n11 - Generate certificate for user. " +
-                        "\n0.- Close."
-        );
 
-        int menuOption = Entry.readInt("Select a menu option between 0 and 11");
-        if (menuOption < 0 || menuOption > 11) throw new IncorrectMenuOptionException("Menu option should be between 0 and 11.");
+        System.out.println("\nMenu:");
+        for (int i = 1; i <= MenuOptions.options.length; i++) {
+            System.out.println( i + ". " + MenuOptions.options[i-1]);
+        }
+        System.out.println("0. " + MenuOptions.close);
+
+        int menuOption = Entry.readInt("Select a menu option between 0 and " + MenuOptions.options.length + ".");
+        if (menuOption < 0 || menuOption > MenuOptions.options.length) throw new IncorrectMenuOptionException("Menu option should be between 0 and " + MenuOptions.options.length + ".");
         else return menuOption;
     }
 }
