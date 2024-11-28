@@ -52,7 +52,7 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
         if (values.isEmpty()) return Optional.empty();
 
         EscapeRoom escape = new EscapeRoom();
-        parser.method(escape,values);
+        parser.parseObject(escape, values);
 
         return Optional.of(escape);
     }

@@ -5,7 +5,6 @@ import connections.callback.CallBack;
 import connections.query.resultAttribute.Attribute;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Parser<T> {
@@ -16,7 +15,7 @@ public class Parser<T> {
         this.callback = callback;
     }
 
-    public void method(T object, HashMap<String, Attribute> values) {
+    public void parseObject(T object, HashMap<String, Attribute> values) {
         for (Map.Entry<String, Attribute> set: values.entrySet()) {
             Attribute attribute = set.getValue();
             switch (attribute.getType()) {
