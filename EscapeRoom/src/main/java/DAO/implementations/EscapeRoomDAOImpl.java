@@ -33,12 +33,13 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO {
     @Override
     public Optional<EscapeRoom> getEscapeRoomIfPresent() {
 
+        List<QueryAttribute> queryAttributeList = new ArrayList<>();
         List<Attribute> attributesList = Arrays.asList(
                 new Attribute(IDESCAPEROOM, ResultType.INT),
                 new Attribute(NAME, ResultType.STRING),
                 new Attribute(CIF, ResultType.STRING));
 
-        List<HashMap<String, Object>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, new ArrayList<>(), attributesList);
+        List<HashMap<String, Object>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, attributesList);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
