@@ -8,8 +8,16 @@ public class Room {
     private double price;
     private Level level;
 
-    public Room(){
-
+    public Room(int idRoom, String name, double price, Level level){
+        this.idRoom=idRoom;
+        this.name=name;
+        this.price=price;
+        this.level=level;
+    }
+    public Room(String name, double price, Level level){
+        this.name=name;
+        this.price=price;
+        this.level=level;
     }
 
     public int getIdRoom() {

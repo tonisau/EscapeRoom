@@ -5,7 +5,7 @@ import static java.time.chrono.JapaneseEra.values;
 public enum Level {
 
     LOW(1, "Low"),
-    MEDIUM(2, "Mediu"),
+    MEDIUM(2, "Medium"),
     HIGH(3, "High");
 
     private final int VALUE;
