@@ -99,7 +99,7 @@ public class DbConnection {
         }
     }
 
-    public ResultSet executeQuery() throws ConnectionException {
+    private ResultSet executeQuery() throws ConnectionException {
         try {
             this.resultSet = this.statement.executeQuery();
             return this.resultSet;
