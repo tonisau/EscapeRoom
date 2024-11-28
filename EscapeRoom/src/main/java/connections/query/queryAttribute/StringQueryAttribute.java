@@ -16,10 +16,9 @@ public class StringQueryAttribute implements QueryAttribute {
     }
 
     @Override
-    public PreparedStatement addToStatement(PreparedStatement statement) throws ConnectionException {
+    public void addToStatement(PreparedStatement statement) throws ConnectionException {
         try {
             statement.setString(position, value);
-            return statement;
         } catch (SQLException e) {
             throw new ConnectionException("Could not set String to statement " + value);
         }

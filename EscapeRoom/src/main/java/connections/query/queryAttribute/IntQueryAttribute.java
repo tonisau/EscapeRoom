@@ -16,10 +16,9 @@ public class IntQueryAttribute implements QueryAttribute {
     }
 
     @Override
-    public PreparedStatement addToStatement(PreparedStatement statement) throws ConnectionException {
+    public void addToStatement(PreparedStatement statement) throws ConnectionException {
         try {
             statement.setInt(position, value);
-            return statement;
         } catch (SQLException e) {
             throw new ConnectionException("Could not set int to statement " + value);
         }
