@@ -128,7 +128,7 @@ public class DbConnection {
     private void addAttributesToStatement(List<QueryAttribute> attributes) throws ConnectionException {
         for (QueryAttribute attribute: attributes) {
             try {
-                this.statement = attribute.addToStatement(this.statement);
+                attribute.addToStatement(this.statement);
             } catch (ConnectionException e) {
                 throw new ConnectionException(e.getMessage());
             }

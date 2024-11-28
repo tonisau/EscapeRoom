@@ -1,7 +1,6 @@
 package DAO;
 
-import classes.EscapeRoom;
-import connections.callback.CallBack;
+import connections.callback.ParsingCallBack;
 import connections.query.resultAttribute.Attribute;
 
 import java.util.HashMap;
@@ -9,9 +8,9 @@ import java.util.Map;
 
 public class Parser<T> {
 
-    CallBack<T> callback;
+    ParsingCallBack<T> callback;
 
-    public Parser(CallBack<T> callback) {
+    public Parser(ParsingCallBack<T> callback) {
         this.callback = callback;
     }
 

@@ -4,7 +4,7 @@ import DAO.Parser;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
 import connections.DbConnection;
-import connections.callback.CallBack;
+import connections.callback.ParsingCallBack;
 import connections.query.Query;
 import connections.query.queryAttribute.QueryAttribute;
 import connections.query.queryAttribute.StringQueryAttribute;
@@ -14,7 +14,7 @@ import connections.query.resultAttribute.ResultType;
 
 import java.util.*;
 
-public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
+public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeRoom> {
 
     DbConnection dbConnection;
     Parser<EscapeRoom> parser = new Parser<>(this);
