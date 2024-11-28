@@ -4,6 +4,7 @@ public class Attribute {
 
     private String name;
     private ResultType type;
+    private AttributeValue value;
 
     public Attribute(String name, ResultType type) {
         this.name = name;
@@ -16,5 +17,22 @@ public class Attribute {
 
     public String getName() {
         return name;
+    }
+
+    public AttributeValue getValue() {
+        return value;
+    }
+
+    public void setValue(AttributeValue value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                ", value=" + value +
+                '}';
     }
 }

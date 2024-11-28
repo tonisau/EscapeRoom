@@ -7,6 +7,7 @@ import connections.query.Query;
 import connections.query.queryAttribute.QueryAttribute;
 import connections.query.queryAttribute.StringQueryAttribute;
 import connections.query.resultAttribute.Attribute;
+import connections.query.resultAttribute.AttributeValue;
 import connections.query.resultAttribute.ResultType;
 
 import java.util.*;
@@ -39,11 +40,11 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO {
                 new Attribute(NAME, ResultType.STRING),
                 new Attribute(CIF, ResultType.STRING));
 
-        List<HashMap<String, Object>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, attributesList);
+        List<HashMap<String, Attribute>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, attributesList);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
-        HashMap<String, Object> attributes = escapeRoomsList.getFirst();
+        HashMap<String, Attribute> attributes = escapeRoomsList.getFirst();
         if (attributes.isEmpty()) return Optional.empty();
 
         EscapeRoom escape = new EscapeRoom();
@@ -53,15 +54,15 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO {
             if (attributes.containsKey(key)) {
                 switch (attribute.getType()) {
                     case STRING -> {
-                        String att = String.valueOf(attributes.get(key));
+                        AttributeValue<String> attValue = attributes.get(key).getValue();
                         switch (attribute.getName()) {
-                            case NAME -> escape.setName(att);
-                            case CIF -> escape.setCif(att);
+                            case NAME -> escape.setName(attValue.getValue());
+                            case CIF -> escape.setCif(attValue.getValue());
                         }
                     }
                     case INT -> {
-                        int att = (int) attributes.get(key);
-                        escape.setIdEscaperoom(att);
+                        AttributeValue<Integer> attValue = attributes.get(key).getValue();
+                        escape.setIdEscaperoom(attValue.getValue());
                     }
                     default -> {
                     }

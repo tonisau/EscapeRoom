@@ -1,6 +1,7 @@
 package connections;
 
 import connections.query.resultAttribute.Attribute;
+import connections.query.resultAttribute.AttributeValue;
 import exceptions.ConnectionException;
 import connections.query.queryAttribute.QueryAttribute;
 
@@ -49,9 +50,9 @@ public class DbConnection {
         }
     }
 
-    public List<HashMap<String, Object>> callQuery(String query, List<QueryAttribute> queryAttributes, List<Attribute> attributes) {
+    public List<HashMap<String, Attribute>> callQuery(String query, List<QueryAttribute> queryAttributes, List<Attribute> attributes) {
 
-        List<HashMap<String, Object>> list = new ArrayList<>();
+        List<HashMap<String, Attribute>> list = new ArrayList<>();
 
         try {
             this.createConnection();
@@ -60,15 +61,24 @@ public class DbConnection {
             this.resultSet = this.executeQuery();
 
             while(this.resultSet.next()) {
-                HashMap<String, Object> hasMap = new HashMap<>();
+                HashMap<String, Attribute> hasMap = new HashMap<>();
                 for (Attribute attribute: attributes) {
-                    Object obj = null;
+
                     switch (attribute.getType()) {
-                        case STRING -> obj = this.resultSet.getString(attribute.getName());
-                        case INT -> obj = this.resultSet.getInt(attribute.getName());
-                        case DOUBLE -> obj = this.resultSet.getDouble(attribute.getName());
+                        case STRING -> {
+                            AttributeValue<String> value = new AttributeValue<>(this.resultSet.getString(attribute.getName()));
+                            attribute.setValue(value);
+                        }
+                        case INT -> {
+                            AttributeValue<Integer> value = new AttributeValue<>(this.resultSet.getInt(attribute.getName()));
+                            attribute.setValue(value);
+                        }
+                        case DOUBLE ->{
+                            AttributeValue<Double> value = new AttributeValue<>(this.resultSet.getDouble(attribute.getName()));
+                            attribute.setValue(value);
+                        }
                     }
-                    hasMap.put(attribute.getName(), obj);
+                    hasMap.put(attribute.getName(), attribute);
                 }
                 list.add(hasMap);
             }
