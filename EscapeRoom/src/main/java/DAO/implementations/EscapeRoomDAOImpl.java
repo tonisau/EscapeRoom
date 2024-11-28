@@ -1,8 +1,10 @@
 package DAO.implementations;
 
+import DAO.Parser;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
 import connections.DbConnection;
+import connections.callback.CallBack;
 import connections.query.Query;
 import connections.query.queryAttribute.QueryAttribute;
 import connections.query.queryAttribute.StringQueryAttribute;
@@ -12,9 +14,10 @@ import connections.query.resultAttribute.ResultType;
 
 import java.util.*;
 
-public class EscapeRoomDAOImpl implements EscapeRoomDAO {
+public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
 
     DbConnection dbConnection;
+    Parser<EscapeRoom> parser = new Parser<>(this);
     private static final String IDESCAPEROOM = "idEscapeRoom";
     private static final String NAME = "name";
     private static final String CIF = "cif";
@@ -44,32 +47,27 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO {
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
-        HashMap<String, Attribute> attributes = escapeRoomsList.getFirst();
-        if (attributes.isEmpty()) return Optional.empty();
+        HashMap<String, Attribute> values = escapeRoomsList.getFirst();
+        if (values.isEmpty()) return Optional.empty();
 
         EscapeRoom escape = new EscapeRoom();
-
-        for (Attribute attribute: attributesList) {
-            String key = attribute.getName();
-            if (attributes.containsKey(key)) {
-                switch (attribute.getType()) {
-                    case STRING -> {
-                        AttributeValue<String> attValue = attributes.get(key).getValue();
-                        switch (attribute.getName()) {
-                            case NAME -> escape.setName(attValue.getValue());
-                            case CIF -> escape.setCif(attValue.getValue());
-                        }
-                    }
-                    case INT -> {
-                        AttributeValue<Integer> attValue = attributes.get(key).getValue();
-                        escape.setIdEscaperoom(attValue.getValue());
-                    }
-                    default -> {
-                    }
-                }
-            }
-        }
+        parser.method(escape,values);
 
         return Optional.of(escape);
+    }
+
+    public void onCallbackString(EscapeRoom escapeRoom, Attribute attribute) {
+        AttributeValue<String> attValue = attribute.getValue();
+        switch (attribute.getName()) {
+            case NAME -> escapeRoom.setName(attValue.getValue());
+            case CIF -> escapeRoom.setCif(attValue.getValue());
+        }
+    }
+
+    public void onCallbackInt(EscapeRoom escapeRoom, Attribute attribute) {
+        AttributeValue<Integer> attValue = attribute.getValue();
+        if (attribute.getName().equals(IDESCAPEROOM)) {
+            escapeRoom.setIdEscaperoom(attValue.getValue());
+        }
     }
 }
