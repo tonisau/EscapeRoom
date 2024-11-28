@@ -32,6 +32,10 @@ public class DbConnection {
         }
     }
 
+    public Connection getConnection() {
+        return this.connection;
+    }
+
     public void callCreate(String query, List<QueryAttribute> queryAttributes) {
         try {
             this.createConnection();
