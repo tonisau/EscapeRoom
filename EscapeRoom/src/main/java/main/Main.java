@@ -1,7 +1,11 @@
 package main;
 
+import managers.EscapeRoomManager;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        EscapeRoomManager escapeRoomManager = new EscapeRoomManager();
+        escapeRoomManager.start();
     }
 }
