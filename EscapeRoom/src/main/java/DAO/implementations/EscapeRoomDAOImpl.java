@@ -18,6 +18,7 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
 
     DbConnection dbConnection;
     Parser<EscapeRoom> parser = new Parser<>(this);
+
     private static final String IDESCAPEROOM = "idEscapeRoom";
     private static final String NAME = "name";
     private static final String CIF = "cif";
@@ -38,12 +39,12 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
     public Optional<EscapeRoom> getEscapeRoomIfPresent() {
 
         List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        List<Attribute> attributesList = Arrays.asList(
+        List<Attribute> resultAttributesList = Arrays.asList(
                 new Attribute(IDESCAPEROOM, ResultType.INT),
                 new Attribute(NAME, ResultType.STRING),
                 new Attribute(CIF, ResultType.STRING));
 
-        List<HashMap<String, Attribute>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, attributesList);
+        List<HashMap<String, Attribute>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
@@ -56,6 +57,7 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
         return Optional.of(escape);
     }
 
+    @Override
     public void onCallbackString(EscapeRoom escapeRoom, Attribute attribute) {
         AttributeValue<String> attValue = attribute.getValue();
         switch (attribute.getName()) {
@@ -64,6 +66,7 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, CallBack<EscapeRoom> {
         }
     }
 
+    @Override
     public void onCallbackInt(EscapeRoom escapeRoom, Attribute attribute) {
         AttributeValue<Integer> attValue = attribute.getValue();
         if (attribute.getName().equals(IDESCAPEROOM)) {
