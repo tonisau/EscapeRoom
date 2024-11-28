@@ -1,5 +1,5 @@
 package classes.item;
 
 public enum Material {
-    WOOD, PLASTIC, GLASS, METAL
+    WOOD, PLASTIC, PAPER, GLASS, METAL
 }
