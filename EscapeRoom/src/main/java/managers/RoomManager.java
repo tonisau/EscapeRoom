@@ -1,9 +1,8 @@
 package managers;
 
-import DAO.interfaces.implementations.DAORoomImpl;
+import DAO.implementations.DAORoomImpl;
 import classes.Room;
 import classes.enums.*;
-import exceptions.NoRoomsException;
 import utils.Entry;
 
 public class RoomManager {

@@ -1,4 +1,4 @@
-package DAO;
+package DAO.interfaces;
 
 import classes.EscapeRoom;
 

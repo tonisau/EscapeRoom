@@ -1,6 +1,6 @@
-package DAO.implementation;
+package DAO.implementations;
 
-import DAO.EscapeRoomDAO;
+import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
 import connections.DbConnection;
 import connections.query.Query;
@@ -9,8 +9,6 @@ import connections.query.queryAttribute.StringQueryAttribute;
 import connections.query.resultAttribute.Attribute;
 import connections.query.resultAttribute.ResultType;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 public class EscapeRoomDAOImpl implements EscapeRoomDAO {

@@ -1,11 +1,10 @@
 package main;
 
-import DAO.EscapeRoomDAO;
-import DAO.implementation.EscapeRoomDAOImpl;
+import DAO.interfaces.EscapeRoomDAO;
+import DAO.implementations.EscapeRoomDAOImpl;
 import classes.EscapeRoom;
 import managers.MainManager;
 
-import java.util.List;
 import java.util.Optional;
 
 public class Main {

@@ -14,13 +14,12 @@ public class EscapeRoom {
         this.cif = cif;
     }
 
-    public EscapeRoom() {
-    }
-
     public EscapeRoom(String name, String cif) {
         this.name = name;
         this.cif = cif;
     }
+
+    public EscapeRoom() {}
 
     public String getName() {
         return name;

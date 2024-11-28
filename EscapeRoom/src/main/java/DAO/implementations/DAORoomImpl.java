@@ -1,4 +1,4 @@
-package DAO.interfaces.implementations;
+package DAO.implementations;
 
 import connections.DbConnection;
 import DAO.interfaces.RoomDAO;
