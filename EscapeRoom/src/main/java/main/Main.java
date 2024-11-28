@@ -1,31 +1,26 @@
 package main;
 
+import classes.EscapeRoom;
 import connections.DbConnection;
+import managers.ConnectionManager;
 import managers.EscapeRoomManager;
+import managers.MainManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        DbConnection dbconnection = new DbConnection();
-        Connection connection = dbconnection.getConnection();
-        if (connection !=null){
-            System.out.println("Connection successful");
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        connectionManager.createEscapeRoom(new EscapeRoom("Escape name 2", "34356543S"));
+        List<EscapeRoom> escapeRoomList = connectionManager.getAllEscapeRooms();
 
-            try {
-                PreparedStatement stmt = connection.prepareStatement("INSERT INTO escaperoom (name, cif) VALUES (?, ?)");
-                stmt.setString(1, "My escape");
-                stmt.setString(2, "34546340u34069d");
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+        escapeRoomList.forEach(System.out::println);
 
-            EscapeRoomManager escapeRoomManager = new EscapeRoomManager();
-            escapeRoomManager.start();
-            }
+        MainManager mainManager = new MainManager();
+        mainManager.start();
     }
 }
