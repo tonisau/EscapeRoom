@@ -14,6 +14,11 @@ public class Room {
         this.price=price;
         this.level=level;
     }
+    public Room(String name, double price, Level level){
+        this.name=name;
+        this.price=price;
+        this.level=level;
+    }
 
     public int getIdRoom() {
         return idRoom;
