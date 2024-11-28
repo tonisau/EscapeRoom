@@ -1,24 +1,23 @@
 package main;
 
+import DAO.EscapeRoomDAO;
+import DAO.implementation.EscapeRoomDAOImpl;
 import classes.EscapeRoom;
-import connections.DbConnection;
-import managers.ConnectionManager;
-import managers.EscapeRoomManager;
 import managers.MainManager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
-        ConnectionManager connectionManager = ConnectionManager.getInstance();
-        connectionManager.createEscapeRoom(new EscapeRoom("Escape name 2", "34356543S"));
-        List<EscapeRoom> escapeRoomList = connectionManager.getAllEscapeRooms();
-
-        escapeRoomList.forEach(System.out::println);
+        EscapeRoomDAO escapeRoomDAO = new EscapeRoomDAOImpl();
+        Optional<EscapeRoom> escapeRoom = escapeRoomDAO.getEscapeRoomIfPresent();
+        if (escapeRoom.isEmpty()) {
+            escapeRoomDAO.createEscapeRoom(new EscapeRoom("Escape name", "545465422e"));
+            System.out.println("Escape room created");
+        } else {
+            System.out.println("Escape Room already exists: " + escapeRoom.get());
+        }
 
         MainManager mainManager = new MainManager();
         mainManager.start();
