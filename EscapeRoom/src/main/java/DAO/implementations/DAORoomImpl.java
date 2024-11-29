@@ -1,16 +1,5 @@
 package DAO.implementations;
 
-import connections.DbConnection;
-import DAO.interfaces.RoomDAO;
-import classes.Room;
-import classes.enums.Level;
-
-import exceptions.NoRoomsException;
-import utils.Entry;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 /*public class DAORoomImpl extends DbConnection implements RoomDAO {
 
     @Override

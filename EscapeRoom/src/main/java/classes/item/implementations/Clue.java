@@ -1,7 +1,7 @@
 package classes.item.implementations;
 
 import classes.item.Item;
-import classes.item.Theme;
+import classes.enums.Theme;
 
 public class Clue extends Item {
 

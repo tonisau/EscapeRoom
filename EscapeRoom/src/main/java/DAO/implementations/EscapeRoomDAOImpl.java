@@ -3,7 +3,7 @@ package DAO.implementations;
 import DAO.Parser;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
-import connections.DbConnection;
+import connections.DbConnectionImpl;
 import connections.callback.ParsingCallBack;
 import connections.query.Query;
 import connections.query.queryAttribute.QueryAttribute;
@@ -16,7 +16,7 @@ import java.util.*;
 
 public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeRoom> {
 
-    DbConnection dbConnection = DbConnection.getInstance();
+    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
     Parser<EscapeRoom> parser = new Parser<>(this);
 
     private static final String IDESCAPEROOM = "idEscapeRoom";
@@ -30,19 +30,19 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeR
         List<QueryAttribute> queryAttributeList = new ArrayList<>();
         queryAttributeList.add(new StringQueryAttribute(1, escapeRoom.getName()));
         queryAttributeList.add(new StringQueryAttribute(2, escapeRoom.getCif()));
-        dbConnection.callCreate(Query.CREATEESCAPEROOM, queryAttributeList);
+        dbConnection.create(Query.CREATEESCAPEROOM, queryAttributeList);
     }
 
     @Override
     public Optional<EscapeRoom> getEscapeRoomIfPresent() {
 
         List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        List<Attribute> resultAttributesList = Arrays.asList(
+        List<Attribute> outputAttributes = Arrays.asList(
                 new Attribute(IDESCAPEROOM, ResultType.INT),
                 new Attribute(NAME, ResultType.STRING),
                 new Attribute(CIF, ResultType.STRING));
 
-        List<HashSet<Attribute>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
+        List<HashSet<Attribute>> escapeRoomsList = dbConnection.query(Query.GETESCAPEROOM, queryAttributeList, outputAttributes);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 

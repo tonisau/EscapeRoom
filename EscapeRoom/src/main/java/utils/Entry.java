@@ -1,5 +1,7 @@
 package utils;
 
+import classes.enums.Theme;
+import exceptions.IncorrectInputException;
 import exceptions.StringException;
 
 import java.util.InputMismatchException;
@@ -57,6 +59,31 @@ public class Entry {
         }
         scanner.nextLine();
         return validInput;
+    }
+
+    public static Theme readTheme(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System.in);
+        boolean isValidInput = false;
+        Theme validInput = null;
+        while (!isValidInput) {
+            try {
+                validInput = checkValidTheme(stringReadLineAndCheck(scanner));
+                isValidInput = true;
+            } catch (StringException | IncorrectInputException e) {
+                System.out.println("Format error. " + e.getMessage());
+            }
+        }
+        scanner.reset();
+        return validInput;
+    }
+
+    private static Theme checkValidTheme(String input) throws IncorrectInputException {
+        try {
+            return Theme.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IncorrectInputException("Introduced theme doesn't match with the options. ");
+        }
     }
 
     private static String stringReadLineAndCheck(Scanner scanner) throws StringException {
