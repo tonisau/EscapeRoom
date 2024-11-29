@@ -35,6 +35,31 @@ public class UserDAOImpl extends DbConnection implements UserDAO {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        User user = null;
+        if(email == null) System.out.println("Cannot retrieve user, email is not provided");
+        else{
+            final String SQL = "SELECT * FROM user WHERE email = ? LIMIT 1";
+            try (Connection connection = dbConnection.getConnection();
+                 PreparedStatement pStatement = connection.prepareStatement(SQL)) {
+                pStatement.setString(1, email);
+                ResultSet rs = pStatement.executeQuery();
+                while (rs.next()){
+                    int id = rs.getInt("iduser");
+                    String name = rs.getString("name");
+                    boolean isSubscriber = rs.getBoolean("isSubscriber");
+                    user = new User(id, name, isSubscriber);
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Ocurrió un error al obtener el usuario con el email: " +
+                        email + "." + e.getMessage());
+            }
+        }
+        return user;
+    }
+
+    @Override
     public void updateUser(User user) {
         if(getUser(user.getId()) == null){
             System.out.println("No se ha podido actualizar el usuario, no se encuentra en la base de datos.");
