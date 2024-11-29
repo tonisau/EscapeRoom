@@ -13,9 +13,10 @@ public class User implements Subscriber {
         this.email = email;
     }
 
-    public User(int id, String name, boolean isSuscriber) {
+    public User(int id, String name, String email, boolean isSuscriber) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.isSuscriber = isSuscriber;
     }
 
