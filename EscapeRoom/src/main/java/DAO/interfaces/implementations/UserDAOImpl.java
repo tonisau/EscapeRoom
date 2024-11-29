@@ -57,12 +57,44 @@ public class UserDAOImpl extends DbConnection implements UserDAO {
 
     @Override
     public List<String> getCertificates(User user) {
-        return List.of();
+        final String SQL = "SELECT e.name FROM user_has_enigma uhe " +
+                            "JOIN user u ON uhe.user_iduser = u.iduser " +
+                            "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma" +
+                            "WHERE u.iduser = ?";
+        List<String> enigmas = new ArrayList<>();
+        try (Connection connection = dbConnection.getConnection();
+             PreparedStatement pStatement = connection.prepareStatement(SQL)) {
+            pStatement.setInt(1, user.getId());
+            ResultSet rs = pStatement.executeQuery();
+            while (rs.next()){
+                enigmas.add(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió un error al obtener las enigmas resueltas por el usuario con id: " +
+                    user.getId() + "." + e.getMessage());
+        }
+        return enigmas;
     }
 
     @Override
     public List<String> getGifts(User user) {
-        return List.of();
+        final String SQL = "SELECT g.name FROM user_has_gift uhg " +
+                "JOIN user u ON uhg.user_iduser = u.iduser " +
+                "JOIN gift g ON uhg.gift_idgift = g.idgift " +
+                "WHERE u.iduser = ?";
+        List<String> gifts = new ArrayList<>();
+        try (Connection connection = dbConnection.getConnection();
+             PreparedStatement pStatement = connection.prepareStatement(SQL)) {
+            pStatement.setInt(1, user.getId());
+            ResultSet rs = pStatement.executeQuery();
+            while (rs.next()){
+                gifts.add(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Ocurrió un error al obtener los obsequios resueltas por el usuario con id: " +
+                    user.getId() + "." + e.getMessage());
+        }
+        return gifts;
     }
 
     @Override
