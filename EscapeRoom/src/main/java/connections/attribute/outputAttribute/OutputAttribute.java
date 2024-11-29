@@ -2,18 +2,19 @@ package connections.attribute.outputAttribute;
 
 import java.util.Objects;
 
+@SuppressWarnings("rawtypes")
 public class OutputAttribute {
 
-    private String name;
-    private ResultType type;
+    private final String name;
+    private final OutputType type;
     private AttributeValue value;
 
-    public OutputAttribute(String name, ResultType type) {
+    public OutputAttribute(String name, OutputType type) {
         this.name = name;
         this.type = type;
     }
 
-    public ResultType getType() {
+    public OutputType getType() {
         return type;
     }
 

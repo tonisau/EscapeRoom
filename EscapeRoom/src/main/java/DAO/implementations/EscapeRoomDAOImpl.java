@@ -12,7 +12,7 @@ import connections.attribute.queryAttribute.QueryAttribute;
 import connections.attribute.queryAttribute.StringQueryAttribute;
 import connections.attribute.outputAttribute.OutputAttribute;
 import connections.attribute.outputAttribute.AttributeValue;
-import connections.attribute.outputAttribute.ResultType;
+import connections.attribute.outputAttribute.OutputType;
 
 import java.util.*;
 
@@ -40,9 +40,9 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
 
         List<QueryAttribute> queryAttributeList = new ArrayList<>();
         List<OutputAttribute> resultAttributesList = Arrays.asList(
-                new OutputAttribute(IDESCAPEROOM, ResultType.INT),
-                new OutputAttribute(NAME, ResultType.STRING),
-                new OutputAttribute(CIF, ResultType.STRING));
+                new OutputAttribute(IDESCAPEROOM, OutputType.INT),
+                new OutputAttribute(NAME, OutputType.STRING),
+                new OutputAttribute(CIF, OutputType.STRING));
 
         List<HashSet<OutputAttribute>> escapeRoomsList = dbConnection.query(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
 

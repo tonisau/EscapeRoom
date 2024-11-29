@@ -1,6 +1,6 @@
 package connections.attribute.outputAttribute;
 
-public enum ResultType {
+public enum OutputType {
 
     INT, STRING, DOUBLE
 }
