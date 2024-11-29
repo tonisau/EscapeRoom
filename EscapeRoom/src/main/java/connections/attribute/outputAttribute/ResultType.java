@@ -1,4 +1,4 @@
-package connections.query.resultAttribute;
+package connections.attribute.outputAttribute;
 
 public enum ResultType {
 
