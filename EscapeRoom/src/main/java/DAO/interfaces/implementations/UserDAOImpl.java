@@ -25,8 +25,9 @@ public class UserDAOImpl extends DbConnection implements UserDAO {
             while (rs.next()){
                 int iduser = rs.getInt("iduser");
                 String name = rs.getString("name");
+                String email = rs.getString("email");
                 boolean isSubscriber = rs.getBoolean("isSubscriber");
-                user = new User(iduser, name, isSubscriber);
+                user = new User(iduser, name, email, isSubscriber);
             }
         } catch (SQLException e) {
             System.out.println("Ocurrió un error al obtener el usuario con id: " + id + "." + e.getMessage());
@@ -48,7 +49,7 @@ public class UserDAOImpl extends DbConnection implements UserDAO {
                     int id = rs.getInt("iduser");
                     String name = rs.getString("name");
                     boolean isSubscriber = rs.getBoolean("isSubscriber");
-                    user = new User(id, name, isSubscriber);
+                    user = new User(id, name, email, isSubscriber);
                 }
 
             } catch (SQLException e) {
@@ -148,8 +149,9 @@ public class UserDAOImpl extends DbConnection implements UserDAO {
             while (rs.next()){
                 int id = rs.getInt("iduser");
                 String name = rs.getString("name");
+                String email = rs.getString("email");
                 boolean isSubscriber = rs.getBoolean("isSubscriber");
-                user = new User(id, name, isSubscriber);
+                user = new User(id, name, email, isSubscriber);
                 users.add(user);
             }
 
