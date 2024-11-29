@@ -26,11 +26,14 @@ public class MainManager {
             switch (selectedMenuOption) {
                 case 1:
                     escapeRoomManager.createEscapeRoomIfNotPresent();
+                    break;
                 case 2:
                     break;
                 case 3:
+                    inventoryManager.addEnigmaToRoom();
                     break;
                 case 4:
+                    inventoryManager.getEnigmasForRoom();
                     break;
                 case 5:
                     break;

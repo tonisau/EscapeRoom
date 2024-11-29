@@ -19,6 +19,7 @@ public class Parser<T> {
             switch (attribute.getType()) {
                 case STRING -> callback.onCallbackString(object, attribute);
                 case INT -> callback.onCallbackInt(object, attribute);
+                case DOUBLE -> callback.onCallbackDouble(object, attribute);
                 default -> {
                 }
             }

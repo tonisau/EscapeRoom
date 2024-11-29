@@ -19,4 +19,9 @@ public class ItemFactoryImpl implements ItemFactory {
     public Enigma createEnigma(String name, double price) {
         return new Enigma(name, price);
     }
+
+    @Override
+    public Enigma createEnigma() {
+        return new Enigma();
+    }
 }
