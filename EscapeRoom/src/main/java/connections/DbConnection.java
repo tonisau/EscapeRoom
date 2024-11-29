@@ -70,26 +70,26 @@ public class DbConnection {
             this.resultSet = this.executeQuery();
 
             while(this.resultSet.next()) {
-                HashSet<Attribute> hasSet = new HashSet<>();
+                HashSet<Attribute> hashSet = new HashSet<>();
                 for (Attribute attribute: attributes) {
-
+                    Attribute att = new Attribute(attribute.getName(), attribute.getType());
                     switch (attribute.getType()) {
                         case STRING -> {
                             AttributeValue<String> value = new AttributeValue<>(this.resultSet.getString(attribute.getName()));
-                            attribute.setValue(value);
+                            att.setValue(value);
                         }
                         case INT -> {
                             AttributeValue<Integer> value = new AttributeValue<>(this.resultSet.getInt(attribute.getName()));
-                            attribute.setValue(value);
+                            att.setValue(value);
                         }
                         case DOUBLE ->{
                             AttributeValue<Double> value = new AttributeValue<>(this.resultSet.getDouble(attribute.getName()));
-                            attribute.setValue(value);
+                            att.setValue(value);
                         }
                     }
-                    hasSet.add(attribute);
+                    hashSet.add(att);
                 }
-                list.add(hasSet);
+                list.add(hashSet);
             }
         } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
