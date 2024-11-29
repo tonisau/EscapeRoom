@@ -64,4 +64,14 @@ public class Entry {
         if (line.isEmpty()) throw new StringException("Input string is empty.");
         else return line;
     }
+
+    public static boolean readBoolean(String message) {
+        Scanner scanner = new Scanner(System.in);
+        String result;
+        do{
+            System.out.println(message);
+            result = scanner.nextLine().toUpperCase();
+        }while (!result.matches("[YN]") );
+        return result.equals("S");
+    }
 }
