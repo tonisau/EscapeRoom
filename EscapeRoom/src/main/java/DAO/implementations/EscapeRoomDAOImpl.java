@@ -16,16 +16,14 @@ import java.util.*;
 
 public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeRoom> {
 
-    DbConnection dbConnection;
+    DbConnection dbConnection = DbConnection.getInstance();
     Parser<EscapeRoom> parser = new Parser<>(this);
 
     private static final String IDESCAPEROOM = "idEscapeRoom";
     private static final String NAME = "name";
     private static final String CIF = "cif";
 
-    public EscapeRoomDAOImpl() {
-        dbConnection = new DbConnection();
-    }
+    public EscapeRoomDAOImpl() {}
 
     @Override
     public void createEscapeRoom(EscapeRoom escapeRoom) {
@@ -44,17 +42,17 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeR
                 new Attribute(NAME, ResultType.STRING),
                 new Attribute(CIF, ResultType.STRING));
 
-        List<HashMap<String, Attribute>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
+        List<HashSet<Attribute>> escapeRoomsList = dbConnection.callQuery(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
-        HashMap<String, Attribute> values = escapeRoomsList.getFirst();
-        if (values.isEmpty()) return Optional.empty();
+        HashSet<Attribute> attributeValues = escapeRoomsList.getFirst();
+        if (attributeValues.isEmpty()) return Optional.empty();
 
-        EscapeRoom escape = new EscapeRoom();
-        parser.parseObject(escape, values);
+        EscapeRoom escapeRoom = new EscapeRoom();
+        parser.parseObject(escapeRoom, attributeValues);
 
-        return Optional.of(escape);
+        return Optional.of(escapeRoom);
     }
 
     @Override

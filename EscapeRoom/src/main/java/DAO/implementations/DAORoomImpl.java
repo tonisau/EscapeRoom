@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAORoomImpl extends DbConnection implements RoomDAO {
+/*public class DAORoomImpl extends DbConnection implements RoomDAO {
 
     @Override
     public void add(Room newRoom) {
@@ -101,4 +101,4 @@ public class DAORoomImpl extends DbConnection implements RoomDAO {
     }
 
 
-}
+}*/

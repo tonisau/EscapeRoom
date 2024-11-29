@@ -7,7 +7,7 @@ import utils.MenuOptions;
 public class MainManager {
 
     EscapeRoomManager escapeRoomManager = new EscapeRoomManager();
-    RoomManager roomManager = new RoomManager();
+    //RoomManager roomManager = new RoomManager();
     InventoryManager inventoryManager = new InventoryManager();
     TicketManager ticketManager = new TicketManager();
     UserManager userManager = new UserManager();
@@ -25,7 +25,7 @@ public class MainManager {
 
             switch (selectedMenuOption) {
                 case 1:
-                    break;
+                    escapeRoomManager.createEscapeRoomIfNotPresent();
                 case 2:
                     break;
                 case 3:

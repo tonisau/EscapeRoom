@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class DbConnection {
@@ -25,7 +26,15 @@ public class DbConnection {
     private static final String USER = "root";
     private String password;
 
-    public DbConnection() {
+    // TODO: Check try con resources
+
+    private static final DbConnection dbConnection = new DbConnection();
+
+    public static DbConnection getInstance() {
+        return dbConnection;
+    }
+
+    private DbConnection() {
         try {
             this.password = readPassword();
         } catch (IOException e) {
@@ -50,9 +59,9 @@ public class DbConnection {
         }
     }
 
-    public List<HashMap<String, Attribute>> callQuery(String query, List<QueryAttribute> queryAttributes, List<Attribute> attributes) {
+    public List<HashSet<Attribute>> callQuery(String query, List<QueryAttribute> queryAttributes, List<Attribute> attributes) {
 
-        List<HashMap<String, Attribute>> list = new ArrayList<>();
+        List<HashSet<Attribute>> list = new ArrayList<>();
 
         try {
             this.createConnection();
@@ -61,7 +70,7 @@ public class DbConnection {
             this.resultSet = this.executeQuery();
 
             while(this.resultSet.next()) {
-                HashMap<String, Attribute> hasMap = new HashMap<>();
+                HashSet<Attribute> hasSet = new HashSet<>();
                 for (Attribute attribute: attributes) {
 
                     switch (attribute.getType()) {
@@ -78,9 +87,9 @@ public class DbConnection {
                             attribute.setValue(value);
                         }
                     }
-                    hasMap.put(attribute.getName(), attribute);
+                    hasSet.add(attribute);
                 }
-                list.add(hasMap);
+                list.add(hasSet);
             }
         } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
