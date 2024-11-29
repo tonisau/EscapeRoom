@@ -10,23 +10,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
 public class DbConnection {
-
-    protected Connection connection;
-    protected ResultSet resultSet;
-    protected PreparedStatement statement;
-
     private static final String FILENAME = "src/Password.txt";
     private static final String DRIVERCLASS = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/db-escaperoom";
     private static final String USER = "root";
     private String password;
-
-    // TODO: Check try con resources
 
     private static final DbConnection dbConnection = new DbConnection();
 
@@ -42,20 +34,13 @@ public class DbConnection {
         }
     }
 
-    public Connection getConnection() {
-        return this.connection;
-    }
-
     public void callCreate(String query, List<QueryAttribute> queryAttributes) {
-        try {
-            this.createConnection();
-            this.createStatementWithQuery(query);
-            this.addAttributesToStatement(queryAttributes);
-            this.executeCreate();
-        } catch (ConnectionException e) {
+        try(Connection connection = this.createConnection();
+            PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
+            this.addAttributesToStatement(statement, queryAttributes);
+            this.executeCreate(statement);
+        } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            closeConnection();
         }
     }
 
@@ -63,114 +48,81 @@ public class DbConnection {
 
         List<HashSet<Attribute>> list = new ArrayList<>();
 
-        try {
-            this.createConnection();
-            this.createStatementWithQuery(query);
-            this.addAttributesToStatement(queryAttributes);
-            this.resultSet = this.executeQuery();
+        try(Connection connection = this.createConnection();
+            PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
 
-            while(this.resultSet.next()) {
-                HashSet<Attribute> hashSet = new HashSet<>();
-                for (Attribute attribute: attributes) {
-                    Attribute att = new Attribute(attribute.getName(), attribute.getType());
-                    switch (attribute.getType()) {
-                        case STRING -> {
-                            AttributeValue<String> value = new AttributeValue<>(this.resultSet.getString(attribute.getName()));
-                            att.setValue(value);
+            this.addAttributesToStatement(statement, queryAttributes);
+
+            try(ResultSet resultSet = this.executeQuery(statement)) {
+                while(resultSet.next()) {
+                    HashSet<Attribute> hashSet = new HashSet<>();
+                    for (Attribute attribute: attributes) {
+                        Attribute att = new Attribute(attribute.getName(), attribute.getType());
+                        switch (attribute.getType()) {
+                            case STRING -> {
+                                AttributeValue<String> value = new AttributeValue<>(resultSet.getString(attribute.getName()));
+                                att.setValue(value);
+                            }
+                            case INT -> {
+                                AttributeValue<Integer> value = new AttributeValue<>(resultSet.getInt(attribute.getName()));
+                                att.setValue(value);
+                            }
+                            case DOUBLE ->{
+                                AttributeValue<Double> value = new AttributeValue<>(resultSet.getDouble(attribute.getName()));
+                                att.setValue(value);
+                            }
                         }
-                        case INT -> {
-                            AttributeValue<Integer> value = new AttributeValue<>(this.resultSet.getInt(attribute.getName()));
-                            att.setValue(value);
-                        }
-                        case DOUBLE ->{
-                            AttributeValue<Double> value = new AttributeValue<>(this.resultSet.getDouble(attribute.getName()));
-                            att.setValue(value);
-                        }
+                        hashSet.add(att);
                     }
-                    hashSet.add(att);
+                    list.add(hashSet);
                 }
-                list.add(hashSet);
             }
         } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            closeConnection();
         }
-
         return list;
     }
 
-    private void executeCreate() throws ConnectionException {
+    private void executeCreate(PreparedStatement statement) throws ConnectionException {
         try {
-            this.statement.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new ConnectionException("Error executing statement to create an object.");
         }
     }
 
-    private ResultSet executeQuery() throws ConnectionException {
+    private ResultSet executeQuery(PreparedStatement statement) throws ConnectionException {
         try {
-            this.resultSet = this.statement.executeQuery();
-            return this.resultSet;
+            return statement.executeQuery();
         } catch (SQLException e) {
             throw new ConnectionException("Error executing statement to query into de ddbb.");
         }
     }
 
-    private void createConnection() throws ConnectionException {
+    private Connection createConnection() throws ConnectionException {
         try {
             Class.forName(DRIVERCLASS);
-            this.connection = DriverManager.getConnection(URL, USER, this.password);
+            return DriverManager.getConnection(URL, USER, this.password);
         } catch (ClassNotFoundException | SQLException e) {
             throw new ConnectionException("Error while attempting connection to the database.");
         }
     }
 
-    private void createStatementWithQuery(String query) throws ConnectionException {
+    private PreparedStatement createStatementWithQuery(Connection connection, String query) throws ConnectionException {
         try {
-            this.statement = connection.prepareStatement(query);
+            return connection.prepareStatement(query);
         } catch (SQLException e) {
             throw new ConnectionException("Error while creating statement from query " + query);
         }
     }
 
-    private void addAttributesToStatement(List<QueryAttribute> attributes) throws ConnectionException {
+    private void addAttributesToStatement(PreparedStatement statement, List<QueryAttribute> attributes) throws ConnectionException {
         for (QueryAttribute attribute: attributes) {
             try {
-                attribute.addToStatement(this.statement);
+                attribute.addToStatement(statement);
             } catch (ConnectionException e) {
                 throw new ConnectionException(e.getMessage());
             }
-        }
-    }
-
-    private void closeResultSet() {
-        try {
-            resultSet.close();
-        } catch (SQLException ex) {
-            System.err.println("Error. Couldn't close resultSet.");
-        }
-    }
-
-    private void closeStatement() {
-        try {
-            statement.close();
-        } catch (SQLException ex) {
-            System.err.println("Error. Couldn't close statement.");
-        }
-    }
-
-    private void closeConnection() {
-        try {
-            if (resultSet != null) {
-                closeResultSet();
-            }
-            if (statement != null) {
-                closeStatement();
-            }
-            connection.close();
-        } catch (SQLException e) {
-            System.err.println("Error. Couldn't close the connection properly.");
         }
     }
 
