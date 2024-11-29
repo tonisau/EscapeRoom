@@ -87,7 +87,7 @@ public class DbConnection {
         try {
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new ConnectionException("Error executing statement to create an object.");
+            throw new ConnectionException("Error creating the object.");
         }
     }
 
@@ -95,7 +95,7 @@ public class DbConnection {
         try {
             return statement.executeQuery();
         } catch (SQLException e) {
-            throw new ConnectionException("Error executing statement to query into de ddbb.");
+            throw new ConnectionException("Error executing the query into de ddbb.");
         }
     }
 
