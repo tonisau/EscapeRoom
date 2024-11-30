@@ -40,6 +40,7 @@ public class EscapeRoomManager {
                 case 8:
                     break;
                 case 9:
+                    userManager.start();
                     break;
                 case 10:
                     break;

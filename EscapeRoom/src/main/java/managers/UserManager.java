@@ -4,13 +4,14 @@ import DAO.interfaces.implementations.UserDAOImpl;
 import classes.User;
 import exceptions.IncorrectMenuOptionException;
 import utils.Entry;
-import utils.MenuOptions;
 import utils.MenuUserOptions;
+
+import java.util.List;
 
 public class UserManager {
 
     private static UserManager instance;
-    private UserDAOImpl daoUser;
+    private final UserDAOImpl daoUser;
 
     public UserManager(){
         this.daoUser = new UserDAOImpl();
@@ -40,22 +41,10 @@ public class UserManager {
                     subscribeUser();
                     break;
                 case 3:
+                    printCertificates();
                     break;
                 case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    break;
-                case 11:
+                    showGifts();
                     break;
                 case 0:
                     close = true;
@@ -68,7 +57,7 @@ public class UserManager {
     private int menu() throws IncorrectMenuOptionException {
         System.out.println("\nMenu User:");
         for (int i = 1; i <= MenuUserOptions.options.length; i++) {
-            System.out.println( i + ". " + MenuOptions.options[i-1]);
+            System.out.println( i + ". " + MenuUserOptions.options[i-1]);
         }
         System.out.println("0. " + MenuUserOptions.close);
 
@@ -76,19 +65,19 @@ public class UserManager {
                 MenuUserOptions.options.length + ".");
         if (menuOption < 0 || menuOption > MenuUserOptions.options.length)
             throw new IncorrectMenuOptionException("Menu option should be between 0 and " +
-                    MenuOptions.options.length + ".");
+                    MenuUserOptions.options.length + ".");
         else return menuOption;
     }
 
     public void createUser(){
-        String name = Entry.readString("Entre el nombre del usuario: ");
-        String email = Entry.readString("Entre el email del usuario: ");
+        String name = Entry.readString("Please type user's name: ");
+        String email = Entry.readString("Please type user's email: ");
         User user = new User(name, email);
         getInstance().daoUser.add(user);
     }
 
     public void subscribeUser(){
-        String email = Entry.readString("Entre el email del usuario: ");
+        String email = Entry.readString("Please type user's email: ");
         User user = getInstance().daoUser.getUserByEmail(email);
         if (user == null){
             System.out.println("User not found with such email");
@@ -99,12 +88,38 @@ public class UserManager {
         }
     }
 
-    public void showCertifications(){
-
+    public void printCertificates(){
+        String email = Entry.readString("Please type user's email: ");
+        User user = getInstance().daoUser.getUserByEmail(email);
+        List<String> enigmas;
+        if (user == null){
+            System.out.println("User not found with such email");
+        }else{
+            enigmas = getInstance().daoUser.getCertificates(user);
+            if (enigmas.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
+                                    " has not solved any enigma yet.");
+            else{
+                enigmas.forEach(e -> System.out.println("This escape room certifies that player " + user.getName() +
+                        " solved successfully the enigma '" + e + "'."));
+            }
+        }
     }
 
     public void showGifts(){
-
+        String email = Entry.readString("Please type user's email: ");
+        User user = getInstance().daoUser.getUserByEmail(email);
+        List<String> gifts;
+        if (user == null){
+            System.out.println("User not found with such email");
+        }else{
+            gifts = getInstance().daoUser.getGifts(user);
+            if (gifts.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
+                    "has not won any reward yet");
+            else{
+                System.out.println("The player " + user.getName() + " has won the following rewards:");
+                gifts.forEach(System.out::println);
+            }
+        }
     }
 
 
