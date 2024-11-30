@@ -72,6 +72,6 @@ public class Entry {
             System.out.println(message);
             result = scanner.nextLine().toUpperCase();
         }while (!result.matches("[YN]") );
-        return result.equals("S");
+        return result.equals("Y");
     }
 }
