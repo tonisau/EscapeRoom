@@ -85,7 +85,7 @@ public class UserDAOImpl extends DbConnection implements UserDAO {
     public List<String> getCertificates(User user) {
         final String SQL = "SELECT e.name FROM user_has_enigma uhe " +
                             "JOIN user u ON uhe.user_iduser = u.iduser " +
-                            "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma" +
+                            "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma " +
                             "WHERE u.iduser = ?";
         List<String> enigmas = new ArrayList<>();
         try (Connection connection = dbConnection.getConnection();
