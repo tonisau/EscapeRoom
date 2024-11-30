@@ -7,7 +7,7 @@ public class Clue extends Item {
 
     Theme theme;
 
-    public Clue(String name, double price, Theme theme) {
+    Clue(String name, double price, Theme theme) {
         super(name, price);
         this.theme = theme;
     }

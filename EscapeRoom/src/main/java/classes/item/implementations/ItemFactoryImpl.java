@@ -1,10 +1,8 @@
-package classes.item;
+package classes.item.implementations;
 
 import classes.enums.Material;
 import classes.enums.Theme;
-import classes.item.implementations.Clue;
-import classes.item.implementations.Decoration;
-import classes.item.implementations.Enigma;
+import classes.item.ItemFactory;
 
 public class ItemFactoryImpl implements ItemFactory {
     @Override

@@ -4,7 +4,7 @@ import DAO.Parser;
 import DAO.interfaces.ItemDAO;
 import classes.item.Item;
 import classes.item.ItemFactory;
-import classes.item.ItemFactoryImpl;
+import classes.item.implementations.ItemFactoryImpl;
 import classes.enums.Material;
 import classes.item.implementations.Clue;
 import classes.item.implementations.Decoration;

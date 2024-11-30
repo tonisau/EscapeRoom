@@ -1,7 +1,5 @@
 package classes;
 
-import connections.query.resultAttribute.Attribute;
-
 public class EscapeRoom {
 
     private int idEscaperoom;
