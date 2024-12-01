@@ -20,6 +20,11 @@ public class Room {
         this.level=level;
     }
 
+    public Room() {
+
+    }
+
+
     public int getIdRoom() {
         return idRoom;
     }
