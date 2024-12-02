@@ -1,9 +1,8 @@
 package managers;
 
-import DAO.interfaces.implementations.DAORoomImpl;
+/*import DAO.implementations.DAORoomImpl;
 import classes.Room;
 import classes.enums.*;
-import exceptions.NoRoomsException;
 import utils.Entry;
 
 public class RoomManager {
@@ -44,4 +43,4 @@ public class RoomManager {
         newRoom=new Room(name,price, choosenLevel);
         this.daoRoom.add(newRoom);
     }
-}
+}*/
