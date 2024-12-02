@@ -24,8 +24,10 @@ public class GameManager {
     }
 
     public void playGame(){
+        System.out.println("Trying to get out of the room!...");
         this.certificates = resolveEnigmas();
         this.gifts = grantGifts();
+        System.out.println("Game has ended!...");
     }
     public HashMap<User, Enigma> resolveEnigmas(){
         // Replace following code with Get Enigma list of the room
