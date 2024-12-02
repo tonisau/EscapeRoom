@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Ticket {
     private int roomId;
-    private static double price = 20;
+    private double price ;
     private Date saleDate;
     private List<User> users;
 
-    public Ticket(int roomId, Date saleDate, List<User> users){
+    public Ticket(int roomId, Date saleDate, double price, List<User> users){
         this.roomId = roomId;
         this.saleDate = saleDate;
         this.users = users;
