@@ -1,5 +1,7 @@
 package utils;
 
+import classes.enums.Level;
+import classes.enums.Material;
 import classes.enums.Theme;
 import exceptions.IncorrectInputException;
 import exceptions.StringException;
@@ -59,6 +61,56 @@ public class Entry {
         }
         scanner.nextLine();
         return validInput;
+    }
+
+    public static Level readLevel(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System.in);
+        boolean isValidInput = false;
+        Level validInput = null;
+        while (!isValidInput) {
+            try {
+                validInput = checkValidLevel(stringReadLineAndCheck(scanner));
+                isValidInput = true;
+            } catch (StringException | IncorrectInputException e) {
+                System.out.println("Format error. " + e.getMessage());
+            }
+        }
+        scanner.reset();
+        return validInput;
+    }
+
+    private static Level checkValidLevel(String input) throws IncorrectInputException {
+        try {
+            return Level.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IncorrectInputException("Introduced level doesn't match with the options. ");
+        }
+    }
+
+    public static Material readMaterial(String message) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System.in);
+        boolean isValidInput = false;
+        Material validInput = null;
+        while (!isValidInput) {
+            try {
+                validInput = checkValidMaterial(stringReadLineAndCheck(scanner));
+                isValidInput = true;
+            } catch (StringException | IncorrectInputException e) {
+                System.out.println("Format error. " + e.getMessage());
+            }
+        }
+        scanner.reset();
+        return validInput;
+    }
+
+    private static Material checkValidMaterial(String input) throws IncorrectInputException {
+        try {
+            return Material.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IncorrectInputException("Introduced material doesn't match with the options. ");
+        }
     }
 
     public static Theme readTheme(String message) {

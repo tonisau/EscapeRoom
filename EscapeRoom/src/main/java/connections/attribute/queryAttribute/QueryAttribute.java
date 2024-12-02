@@ -1,4 +1,4 @@
-package connections.query.queryAttribute;
+package connections.attribute.queryAttribute;
 
 import exceptions.ConnectionException;
 

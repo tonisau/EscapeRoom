@@ -1,16 +1,16 @@
-package connections.query.queryAttribute;
+package connections.attribute.queryAttribute;
 
 import exceptions.ConnectionException;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class IntQueryAttribute implements QueryAttribute {
+public class StringQueryAttribute implements QueryAttribute {
 
     int position;
-    int value;
+    String value;
 
-    public IntQueryAttribute(int position, int value) {
+    public StringQueryAttribute(int position, String value) {
         this.position = position;
         this.value = value;
     }
@@ -18,9 +18,9 @@ public class IntQueryAttribute implements QueryAttribute {
     @Override
     public void addToStatement(PreparedStatement statement) throws ConnectionException {
         try {
-            statement.setInt(position, value);
+            statement.setString(position, value);
         } catch (SQLException e) {
-            throw new ConnectionException("Could not set int to statement " + value);
+            throw new ConnectionException("Could not set String to statement " + value);
         }
     }
 }

@@ -1,19 +1,20 @@
-package connections.query.resultAttribute;
+package connections.attribute.outputAttribute;
 
 import java.util.Objects;
 
-public class Attribute {
+@SuppressWarnings("rawtypes")
+public class OutputAttribute {
 
-    private String name;
-    private ResultType type;
+    private final String name;
+    private final OutputType type;
     private AttributeValue value;
 
-    public Attribute(String name, ResultType type) {
+    public OutputAttribute(String name, OutputType type) {
         this.name = name;
         this.type = type;
     }
 
-    public ResultType getType() {
+    public OutputType getType() {
         return type;
     }
 
@@ -33,7 +34,7 @@ public class Attribute {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        Attribute attribute = (Attribute) object;
+        OutputAttribute attribute = (OutputAttribute) object;
         return Objects.equals(getName(), attribute.getName()) && getType() == attribute.getType() && Objects.equals(getValue(), attribute.getValue());
     }
 

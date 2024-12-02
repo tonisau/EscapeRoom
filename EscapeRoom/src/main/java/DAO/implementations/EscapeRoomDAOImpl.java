@@ -3,20 +3,22 @@ package DAO.implementations;
 import DAO.Parser;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
-import connections.callback.ParsingCallBack;
-import connections.query.Query;
-import connections.query.queryAttribute.QueryAttribute;
-import connections.query.queryAttribute.StringQueryAttribute;
-import connections.query.resultAttribute.Attribute;
-import connections.query.resultAttribute.AttributeValue;
-import connections.query.resultAttribute.ResultType;
+import connections.attribute.queryAttribute.IntQueryAttribute;
+import connections.callback.ParsingCallback;
+import connections.attribute.Query;
+import connections.attribute.queryAttribute.QueryAttribute;
+import connections.attribute.queryAttribute.StringQueryAttribute;
+import connections.attribute.outputAttribute.OutputAttribute;
+import connections.attribute.outputAttribute.AttributeValue;
+import connections.attribute.outputAttribute.OutputType;
 
 import java.util.*;
 
-public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeRoom> {
+public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeRoom> {
 
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection = DbConnectionImpl.getInstance();
     Parser<EscapeRoom> parser = new Parser<>(this);
 
     private static final String IDESCAPEROOM = "idEscapeRoom";
@@ -37,16 +39,16 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeR
     public Optional<EscapeRoom> getEscapeRoomIfPresent() {
 
         List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        List<Attribute> outputAttributes = Arrays.asList(
-                new Attribute(IDESCAPEROOM, ResultType.INT),
-                new Attribute(NAME, ResultType.STRING),
-                new Attribute(CIF, ResultType.STRING));
+        List<OutputAttribute> resultAttributesList = Arrays.asList(
+                new OutputAttribute(IDESCAPEROOM, OutputType.INT),
+                new OutputAttribute(NAME, OutputType.STRING),
+                new OutputAttribute(CIF, OutputType.STRING));
 
-        List<HashSet<Attribute>> escapeRoomsList = dbConnection.query(Query.GETESCAPEROOM, queryAttributeList, outputAttributes);
+        List<HashSet<OutputAttribute>> escapeRoomsList = dbConnection.query(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
-        HashSet<Attribute> attributeValues = escapeRoomsList.getFirst();
+        HashSet<OutputAttribute> attributeValues = escapeRoomsList.getFirst();
         if (attributeValues.isEmpty()) return Optional.empty();
 
         EscapeRoom escapeRoom = new EscapeRoom();
@@ -55,8 +57,14 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeR
         return Optional.of(escapeRoom);
     }
 
+    public void deleteEscapeRoom(int escapeRoomId) {
+        List<QueryAttribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new IntQueryAttribute(1, escapeRoomId));
+        dbConnection.delete(Query.DELETEESCAPEROOM, queryAttributeList);
+    }
+
     @Override
-    public void onCallbackString(EscapeRoom escapeRoom, Attribute attribute) {
+    public void onCallbackString(EscapeRoom escapeRoom, OutputAttribute attribute) {
         AttributeValue<String> attValue = attribute.getValue();
         switch (attribute.getName()) {
             case NAME -> escapeRoom.setName(attValue.getValue());
@@ -65,7 +73,7 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeR
     }
 
     @Override
-    public void onCallbackInt(EscapeRoom escapeRoom, Attribute attribute) {
+    public void onCallbackInt(EscapeRoom escapeRoom, OutputAttribute attribute) {
         AttributeValue<Integer> attValue = attribute.getValue();
         if (attribute.getName().equals(IDESCAPEROOM)) {
             escapeRoom.setIdEscaperoom(attValue.getValue());
@@ -73,5 +81,8 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallBack<EscapeR
     }
 
     @Override
-    public void onCallbackDouble(EscapeRoom object, Attribute attribute) {}
+    public void onCallbackDouble(EscapeRoom object, OutputAttribute attribute) {}
+
+    @Override
+    public void onCallbackMaterial(EscapeRoom object, OutputAttribute attribute) {}
 }

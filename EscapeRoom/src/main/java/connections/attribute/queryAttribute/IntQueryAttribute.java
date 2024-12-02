@@ -1,16 +1,16 @@
-package connections.query.queryAttribute;
+package connections.attribute.queryAttribute;
 
 import exceptions.ConnectionException;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DoubleQueryAttribute implements QueryAttribute {
+public class IntQueryAttribute implements QueryAttribute {
 
     int position;
-    double value;
+    int value;
 
-    public DoubleQueryAttribute(int position, double value) {
+    public IntQueryAttribute(int position, int value) {
         this.position = position;
         this.value = value;
     }
@@ -18,9 +18,9 @@ public class DoubleQueryAttribute implements QueryAttribute {
     @Override
     public void addToStatement(PreparedStatement statement) throws ConnectionException {
         try {
-            statement.setDouble(position, value);
+            statement.setInt(position, value);
         } catch (SQLException e) {
-            throw new ConnectionException("Could not set double to statement " + value);
+            throw new ConnectionException("Could not set int to statement " + value);
         }
     }
 }

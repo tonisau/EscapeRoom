@@ -1,9 +1,9 @@
 package connections;
 
-import connections.query.resultAttribute.Attribute;
-import connections.query.resultAttribute.AttributeValue;
+import connections.attribute.outputAttribute.OutputAttribute;
+import connections.attribute.outputAttribute.AttributeValue;
 import exceptions.ConnectionException;
-import connections.query.queryAttribute.QueryAttribute;
+import connections.attribute.queryAttribute.QueryAttribute;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,33 +35,31 @@ public class DbConnectionImpl implements DbConnection {
     }
 
     @Override
-    public void create(String query, List<QueryAttribute> queryAttributes) {
-        callCreateOrDelete(query, queryAttributes);
-    }
+    public void create(String query, List<QueryAttribute> queryAttributes) { callUpdate(query, queryAttributes); }
 
     @Override
     public void delete(String query, List<QueryAttribute> queryAttributes) {
-        callCreateOrDelete(query, queryAttributes);
+        callUpdate(query, queryAttributes);
     }
 
     @Override
-    public List<HashSet<Attribute>> query(String query, List<QueryAttribute> queryAttributes, List<Attribute> attributes) {
-        return callQuery(query, queryAttributes, attributes);
+    public List<HashSet<OutputAttribute>> query(String query, List<QueryAttribute> queryAttributes, List<OutputAttribute> outputAttributes) {
+        return callQuery(query, queryAttributes, outputAttributes);
     }
 
-    private void callCreateOrDelete(String query, List<QueryAttribute> queryAttributes) {
+    private void callUpdate(String query, List<QueryAttribute> queryAttributes) {
         try(Connection connection = this.createConnection();
             PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
             this.addAttributesToStatement(statement, queryAttributes);
-            this.executeCreate(statement);
+            this.executeUpdate(statement);
         } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private List<HashSet<Attribute>> callQuery(String query, List<QueryAttribute> queryAttributes, List<Attribute> attributes) {
+    private List<HashSet<OutputAttribute>> callQuery(String query, List<QueryAttribute> queryAttributes, List<OutputAttribute> attributes) {
 
-        List<HashSet<Attribute>> list = new ArrayList<>();
+        List<HashSet<OutputAttribute>> list = new ArrayList<>();
 
         try(Connection connection = this.createConnection();
             PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
@@ -70,9 +68,9 @@ public class DbConnectionImpl implements DbConnection {
 
             try(ResultSet resultSet = this.executeQuery(statement)) {
                 while(resultSet.next()) {
-                    HashSet<Attribute> hashSet = new HashSet<>();
-                    for (Attribute attribute: attributes) {
-                        Attribute att = new Attribute(attribute.getName(), attribute.getType());
+                    HashSet<OutputAttribute> hashSet = new HashSet<>();
+                    for (OutputAttribute attribute: attributes) {
+                        OutputAttribute att = new OutputAttribute(attribute.getName(), attribute.getType());
                         switch (attribute.getType()) {
                             case STRING -> {
                                 AttributeValue<String> value = new AttributeValue<>(resultSet.getString(attribute.getName()));
@@ -98,7 +96,7 @@ public class DbConnectionImpl implements DbConnection {
         return list;
     }
 
-    private void executeCreate(PreparedStatement statement) throws ConnectionException {
+    private void executeUpdate(PreparedStatement statement) throws ConnectionException {
         try {
             statement.executeUpdate();
         } catch (SQLException e) {

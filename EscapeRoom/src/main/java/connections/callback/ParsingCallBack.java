@@ -1,9 +1,10 @@
 package connections.callback;
 
-import connections.query.resultAttribute.Attribute;
+import connections.attribute.outputAttribute.OutputAttribute;
 
-public interface ParsingCallBack<T> {
-    public void onCallbackString(T object, Attribute attribute);
-    public void onCallbackInt(T object, Attribute attribute);
-    public void onCallbackDouble(T object, Attribute attribute);
+public interface ParsingCallback<T> {
+    public void onCallbackString(T object, OutputAttribute attribute);
+    public void onCallbackInt(T object, OutputAttribute attribute);
+	public void onCallbackDouble(T object, OutputAttribute attribute);
+    public void onCallbackMaterial(T object, OutputAttribute attribute);
 }
