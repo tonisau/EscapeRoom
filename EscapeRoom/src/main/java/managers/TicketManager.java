@@ -6,11 +6,9 @@ import classes.Ticket;
 import classes.User;
 import utils.Entry;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TicketManager {
@@ -58,7 +56,7 @@ public class TicketManager {
         int selId;
         List<Room> rooms = this.daoRoom.showData();
         if (rooms.isEmpty()){
-            System.out.println("None available room found in this escape room.")
+            System.out.println("None available room found in this escape room.");
         }
         else{
             do{
