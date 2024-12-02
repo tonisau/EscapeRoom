@@ -109,4 +109,12 @@ public class TicketManager {
         return players.size();
     }
 
+    public void calcTotalIncome(){
+        System.out.println("The total sale amount of the escape room is : " +
+                            getTotalSales(this.daoTicket.showData()));
+    }
+    public double getTotalSales(List<Ticket> tickets){
+        return tickets.stream().mapToDouble(Ticket::getPrice).sum();
+    }
+
 }
