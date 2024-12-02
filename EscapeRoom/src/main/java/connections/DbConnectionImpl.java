@@ -202,11 +202,11 @@ public class DbConnectionImpl implements DbConnection {
         for (int i = 0; i < queryAttributes.size(); i++) {
             Attribute attribute = queryAttributes.get(i);
             try {
-                if (attribute.getValue() instanceof String) {
+                if (attribute.getType() == String.class) {
                     statement.setString(i + 1, (String) attribute.getValue());
-                } else if (attribute.getValue() instanceof Integer) {
+                } else if (attribute.getType() == Integer.class) {
                     statement.setInt(i + 1, (Integer) attribute.getValue());
-                } else if (attribute.getValue() instanceof Double) {
+                } else if (attribute.getType() == Double.class) {
                     statement.setDouble(i + 1, (Double) attribute.getValue());
                 }
             } catch (SQLException e) {
