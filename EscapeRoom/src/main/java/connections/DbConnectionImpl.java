@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class DbConnectionImpl implements DBConnection {
+public class DbConnectionImpl implements DbConnection {
     private static final String FILENAME = "src/Password.txt";
     private static final String DRIVERCLASS = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/db-escaperoom";
