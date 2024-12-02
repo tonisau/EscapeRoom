@@ -63,24 +63,6 @@ public class Entry {
         return validInput;
     }
 
-    public static boolean readBoolean(String message) {
-        System.out.println(message);
-        Scanner scanner = new Scanner(System.in);
-        boolean isValidInput = false;
-        boolean validInput = false;
-        while (!isValidInput) {
-            try {
-                validInput = scanner.nextBoolean();
-                isValidInput = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Format error. " + message);
-                scanner.nextLine();
-            }
-        }
-        scanner.nextLine();
-        return validInput;
-    }
-
     public static Level readLevel(String message) {
         System.out.println(message);
         Scanner scanner = new Scanner(System.in);
