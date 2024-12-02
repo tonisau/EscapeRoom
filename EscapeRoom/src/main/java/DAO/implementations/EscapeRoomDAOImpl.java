@@ -79,4 +79,10 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
             escapeRoom.setIdEscaperoom(attValue.getValue());
         }
     }
+
+    @Override
+    public void onCallbackDouble(EscapeRoom object, OutputAttribute attribute) {}
+
+    @Override
+    public void onCallbackMaterial(EscapeRoom object, OutputAttribute attribute) {}
 }

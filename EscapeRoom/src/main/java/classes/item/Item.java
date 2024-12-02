@@ -16,6 +16,8 @@ public abstract class Item {
         this.price = price;
     }
 
+    public Item() { }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -30,6 +32,10 @@ public abstract class Item {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public int getItemId() {

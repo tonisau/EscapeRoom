@@ -35,9 +35,7 @@ public class DbConnectionImpl implements DbConnection {
     }
 
     @Override
-    public void create(String query, List<QueryAttribute> queryAttributes) {
-        callUpdate(query, queryAttributes);
-    }
+    public void create(String query, List<QueryAttribute> queryAttributes) { callUpdate(query, queryAttributes); }
 
     @Override
     public void delete(String query, List<QueryAttribute> queryAttributes) {
@@ -102,7 +100,7 @@ public class DbConnectionImpl implements DbConnection {
         try {
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new ConnectionException("Error executing statement to create an object.");
+            throw new ConnectionException("Error creating the object.");
         }
     }
 
@@ -110,7 +108,7 @@ public class DbConnectionImpl implements DbConnection {
         try {
             return statement.executeQuery();
         } catch (SQLException e) {
-            throw new ConnectionException("Error executing statement to query into de ddbb.");
+            throw new ConnectionException("Error executing the query into de ddbb.");
         }
     }
 

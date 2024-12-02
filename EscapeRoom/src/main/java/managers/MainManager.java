@@ -26,11 +26,15 @@ public class MainManager {
             switch (selectedMenuOption) {
                 case 1:
                     escapeRoomManager.createEscapeRoomIfNotPresent();
+                    break;
                 case 2:
                     break;
                 case 3:
+                    inventoryManager.addEnigmaToRoom();
                     break;
                 case 4:
+                    inventoryManager.getEnigmasForRoom();
+                    inventoryManager.addClueForEnigma();
                     break;
                 case 5:
                     break;
@@ -39,6 +43,8 @@ public class MainManager {
                 case 7:
                     break;
                 case 8:
+                    // TODO: Submenu for Room / Enigma / Clue / Decoration
+                    inventoryManager.deleteEnigma();
                     break;
                 case 9:
                     break;
