@@ -11,9 +11,7 @@ import classes.item.implementations.Decoration;
 import classes.item.implementations.Enigma;
 import connections.DbConnectionImpl;
 import connections.attribute.Query;
-import connections.attribute.outputAttribute.AttributeValue;
-import connections.attribute.outputAttribute.OutputAttribute;
-import connections.attribute.outputAttribute.OutputType;
+import connections.attribute.Attribute;
 import connections.attribute.queryAttribute.IntQueryAttribute;
 import connections.attribute.queryAttribute.QueryAttribute;
 import connections.attribute.queryAttribute.StringQueryAttribute;
@@ -54,17 +52,17 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
     public List<Enigma> getAllEnigmasByRoom(int roomId) {
         List<Enigma> enigmas = new ArrayList<>();
 
-        List<QueryAttribute> queryAttributeList = List.of(new IntQueryAttribute(1, roomId));
-        List<OutputAttribute> outputAttributes = Arrays.asList(
-                new OutputAttribute(ITEMID, OutputType.INT),
-                new OutputAttribute(NAME, OutputType.STRING),
-                new OutputAttribute(PRICE, OutputType.DOUBLE));
+        List<Attribute> queryAttributeList = List.of(new Attribute<Integer>(roomId, Integer.class));
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<Integer>(ITEMID, null, Integer.class),
+                new Attribute<String>(NAME, null, String.class),
+                new Attribute<Double>(PRICE, null, Double.class));
 
-        List<HashSet<OutputAttribute>> enigmaList = dbConnection.query(Query.GETENIGMABYROOM, queryAttributeList, outputAttributes);
+        List<HashSet<Attribute>> enigmaList = dbConnection.query(Query.GETENIGMABYROOM, queryAttributeList, outputAttributes);
 
         if (enigmaList.isEmpty()) return List.of();
 
-        for (HashSet<OutputAttribute> attributeValues: enigmaList) {
+        for (HashSet<Attribute> attributeValues: enigmaList) {
             Enigma enigma = itemFactory.createEnigma();
             parser.parseObject(enigma, attributeValues);
             enigmas.add(enigma);
@@ -126,37 +124,33 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
     }
 
     @Override
-    public void onCallbackString(Item object, OutputAttribute attribute) {
-        AttributeValue<String> attValue = attribute.getValue();
+    public void onCallbackString(Item object, Attribute<String> attribute) {
         if (attribute.getName().equals(NAME)) {
-            object.setName(attValue.getValue());
+            object.setName(attribute.getValue());
         }
     }
 
     @Override
-    public void onCallbackInt(Item object, OutputAttribute attribute) {
-        AttributeValue<Integer> attValue = attribute.getValue();
+    public void onCallbackInt(Item object, Attribute<Integer> attribute) {
         switch (attribute.getName()) {
-            case ITEMID -> object.setItemId(attValue.getValue());
+            case ITEMID -> object.setItemId(attribute.getValue());
             case QUANTITY -> {
-                ((Decoration)object).setQuantity(attValue.getValue());
+                ((Decoration)object).setQuantity(attribute.getValue());
             }
         }
     }
 
     @Override
-    public void onCallbackDouble(Item object, OutputAttribute attribute) {
-        AttributeValue<Double> attValue = attribute.getValue();
+    public void onCallbackDouble(Item object, Attribute<Double> attribute) {
         if (attribute.getName().equals(PRICE)) {
-            object.setPrice(attValue.getValue());
+            object.setPrice(attribute.getValue());
         }
     }
 
     @Override
-    public void onCallbackMaterial(Item object, OutputAttribute attribute) {
-        AttributeValue<Material> attValue = attribute.getValue();
+    public void onCallbackMaterial(Item object, Attribute<Material> attribute) {
         if (attribute.getName().equals(NAME)) {
-            ((Decoration)object).setMaterial(attValue.getValue());
+            ((Decoration)object).setMaterial(attribute.getValue());
         }
     }
 }
