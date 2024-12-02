@@ -36,11 +36,17 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
 
     @Override
     public void addEnigma(Enigma enigma, int roomId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
+       /* List<QueryAttribute> queryAttributeList = new ArrayList<>();
         queryAttributeList.add(new StringQueryAttribute(1, enigma.getName()));
         queryAttributeList.add(new DoubleQueryAttribute(2, enigma.getPrice()));
         queryAttributeList.add(new IntQueryAttribute(3, roomId));
-        dbConnection.create(Query.CREATEENIGMA, queryAttributeList);
+        dbConnection.create(Query.CREATEENIGMA, queryAttributeList);*/
+
+        List<Attribute> attributeList = new ArrayList<>();
+        attributeList.add(new Attribute<String>(enigma.getName(), String.class));
+        attributeList.add(new Attribute<Double>(enigma.getPrice(), Double.class));
+        attributeList.add(new Attribute<Integer>(roomId, Integer.class));
+        dbConnection.createWithGenerics(Query.CREATEENIGMA, attributeList);
     }
 
     @Override
