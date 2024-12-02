@@ -6,10 +6,16 @@ import classes.Ticket;
 import classes.User;
 import utils.Entry;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TicketManager {
+    private final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    private final static double PLAYER_PRICE = 20;
     private static TicketManager instance;
     private final TicketDAOImpl daoTicket;
     private final DAORoomImpl daoRoom;
@@ -25,10 +31,26 @@ public class TicketManager {
         return instance;
     }
 
+    public void generateTicket(){
+        Ticket ticket = createTicket();
+        // save ticket in BDD
+
+        System.out.println("Printing ticket...");
+        System.out.println(ticket.toString());
+    }
+
     public Ticket createTicket(){
+        Ticket ticket = null;
         int roomId = selectRoom();
-        List<Integer> players = getplayers();
-        return null;
+        if (roomId != -1){
+            List<User> players = getplayers();
+            if (!players.isEmpty()){
+                double price = PLAYER_PRICE * countPlayers(players);
+                LocalDateTime saleDate = LocalDateTime.now();
+                ticket = new Ticket(roomId, saleDate, price, players);
+            }
+        }
+        return ticket;
     }
 
     public int selectRoom(){
@@ -36,7 +58,7 @@ public class TicketManager {
         int selId;
         List<Room> rooms = this.daoRoom.showData();
         if (rooms.isEmpty()){
-            System.out.println("None available room found in this escape room. A ticket cannot be issued.")
+            System.out.println("None available room found in this escape room.")
         }
         else{
             do{
@@ -52,8 +74,8 @@ public class TicketManager {
         return rooms.stream().filter(room -> room.getIdRoom() == id).toList().isEmpty();
     }
 
-    public List<Integer> getplayers(){
-        List<Integer> players = new ArrayList<>();
+    public List<User> getplayers(){
+        List<User> players = new ArrayList<>();
         List<User> users = this.daoUser.showData();
         int id = -1;
         if (users.isEmpty()){
@@ -63,10 +85,11 @@ public class TicketManager {
                 System.out.println("--- PLAYER LIST ---");
                 users.forEach(System.out::println);
                 id = Entry.readInt("Select player id from list or type 0 to finish >> ");
-                if(checkUserNotInList(id, users)){
+                User player = checkUser(id, users);
+                if(player == null){
                     System.out.println("Incorrect selection");
                 }else if (checkUserNotSelected(id, players)){
-                    players.add(id);
+                    players.add(player);
                 }
                 else{
                     System.out.println("User already selected as player");
@@ -76,12 +99,16 @@ public class TicketManager {
         return players;
     }
 
-    public boolean checkUserNotInList(int id, List<User> users){
-        return users.stream().filter(user -> user.getId() == id).toList().isEmpty();
+    public User checkUser(int id, List<User> users){
+        return users.stream().filter(user -> user.getId() == id).findFirst().orElse(null);
     }
 
-    public boolean checkUserNotSelected(int id, List<Integer> players){
-        return players.stream().filter(player -> player == id).toList().isEmpty();
+    public boolean checkUserNotSelected(int id, List<User> players){
+        return players.stream().filter(player -> player.getId() == id).toList().isEmpty();
+    }
+
+    public int countPlayers(List<User> players){
+        return players.size();
     }
 
 }
