@@ -15,11 +15,11 @@ public class Ticket {
         this.users = users;
     }
 
-    public static void setPrice(double price) {
-        Ticket.price = price;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public static double getPrice() {
+    public double getPrice() {
         return price;
     }
 
