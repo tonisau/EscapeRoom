@@ -8,6 +8,8 @@ public class User implements Subscriber {
     private String email;
     private boolean isSuscriber;
 
+    public User(){};
+
     public User(String name, String email) {
         this.name = name;
         this.email = email;
