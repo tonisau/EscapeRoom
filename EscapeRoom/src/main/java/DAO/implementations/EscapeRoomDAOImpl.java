@@ -84,4 +84,9 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
 
     @Override
     public void onCallbackMaterial(EscapeRoom object, Attribute<Material> attribute) {}
+
+    @Override
+    public void onCallbackBoolean(EscapeRoom object, Attribute<Boolean> attribute) {
+
+    }
 }

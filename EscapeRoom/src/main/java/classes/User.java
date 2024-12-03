@@ -3,17 +3,19 @@ package classes;
 import subscription.Subscriber;
 
 public class User implements Subscriber {
-    private int id;
+    private Integer id;
     private String name;
     private String email;
-    private boolean isSuscriber;
+    private Boolean isSuscriber;
+
+    public User(){};
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public User(int id, String name, String email, boolean isSuscriber) {
+    public User(Integer id, String name, String email, Boolean isSuscriber) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -24,8 +26,12 @@ public class User implements Subscriber {
         return name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -36,7 +42,11 @@ public class User implements Subscriber {
         return email;
     }
 
-    public void setIsSuscriber(boolean isSuscriber) {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setIsSuscriber(Boolean isSuscriber) {
         this.isSuscriber = isSuscriber;
     }
 
@@ -49,7 +59,7 @@ public class User implements Subscriber {
                 + event );
     }
 
-    public boolean isSuscriber() {
+    public Boolean isSuscriber() {
         return isSuscriber;
     }
 

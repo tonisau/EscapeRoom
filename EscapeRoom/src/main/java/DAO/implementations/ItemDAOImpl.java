@@ -153,4 +153,9 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
             ((Decoration)object).setMaterial(attribute.getValue());
         }
     }
+
+    @Override
+    public void onCallbackBoolean(Item object, Attribute<Boolean> attribute) {
+
+    }
 }
