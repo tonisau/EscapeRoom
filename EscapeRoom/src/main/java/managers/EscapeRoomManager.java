@@ -15,12 +15,14 @@ public class EscapeRoomManager {
         Optional<EscapeRoom> escapeRoom = escapeRoomDAO.getEscapeRoomIfPresent();
 
         if (escapeRoom.isEmpty()) {
+            System.out.println("To start, let's create a Escape Room. ");
             String name = Entry.readString("Give a name to the escape room");
             String CIF = Entry.readString("Give a CIF to the escape room");
             escapeRoomDAO.createEscapeRoom(new EscapeRoom(name, CIF));
             System.out.println("Escape room created");
         } else {
-            System.out.println("Escape Room already exists: " + escapeRoom.get());
+            System.out.println("\nWelcome to the Escape Room '" + escapeRoom.get().getName() + "'!!!!");
+            System.out.println(escapeRoom.get());
         }
 
     }

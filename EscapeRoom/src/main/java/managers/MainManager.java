@@ -16,6 +16,8 @@ public class MainManager {
         boolean close = false;
         int selectedMenuOption = -1;
 
+        escapeRoomManager.createEscapeRoomIfNotPresent();
+
         do {
             try {
                 selectedMenuOption = menu();
@@ -25,32 +27,30 @@ public class MainManager {
 
             switch (selectedMenuOption) {
                 case 1:
-                    escapeRoomManager.createEscapeRoomIfNotPresent();
                     break;
                 case 2:
-                    break;
-                case 3:
                     inventoryManager.addEnigmaToRoom();
                     break;
-                case 4:
+                case 3:
                     inventoryManager.getEnigmasForRoom();
                     inventoryManager.addClueForEnigma();
+                    break;
+                case 4:
                     break;
                 case 5:
                     break;
                 case 6:
                     break;
                 case 7:
-                    break;
-                case 8:
                     // TODO: Submenu for Room / Enigma / Clue / Decoration
                     inventoryManager.deleteEnigma();
+                    break;
+                case 8:
+                    userManager.start();
                     break;
                 case 9:
                     break;
                 case 10:
-                    break;
-                case 11:
                     break;
                 case 0:
                     close = true;
