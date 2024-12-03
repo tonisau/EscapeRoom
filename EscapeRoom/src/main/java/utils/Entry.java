@@ -1,8 +1,8 @@
 package utils;
 
 import classes.enums.Level;
-import classes.item.Material;
-import classes.item.Theme;
+import classes.enums.Material;
+import classes.enums.Theme;
 import exceptions.IncorrectInputException;
 import exceptions.StringException;
 
@@ -142,5 +142,15 @@ public class Entry {
         String line = scanner.nextLine();
         if (line.isEmpty()) throw new StringException("Input string is empty.");
         else return line;
+    }
+
+    public static boolean readBoolean(String message) {
+        Scanner scanner = new Scanner(System.in);
+        String result;
+        do{
+            System.out.println(message);
+            result = scanner.nextLine().toUpperCase();
+        }while (!result.matches("[YN]") );
+        return result.equals("Y");
     }
 }
