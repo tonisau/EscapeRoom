@@ -7,9 +7,7 @@ public class Enigma extends Item {
         super(name, price);
     }
 
-    Enigma() {
-        super();
-    }
+    Enigma() { super(); }
 
     @Override
     public String toString() {

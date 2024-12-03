@@ -39,6 +39,10 @@ public class EscapeRoom {
         this.cif = cif;
     }
 
+    public Integer getIdEscaperoom() {
+        return idEscaperoom;
+    }
+
     @Override
     public String toString() {
         return "EscapeRoom{" +
