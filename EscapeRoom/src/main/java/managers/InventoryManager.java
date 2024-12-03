@@ -32,29 +32,6 @@ public class InventoryManager {
         enigmaDAO.addEnigma(itemFactory.createEnigma(name, price), roomId);
     }
 
-    public void addClueForEnigma() {
-        Integer enigmaId = Entry.readInt("Enter an enigma id");
-        String name = Entry.readString("Give a name for the clue");
-        Double price = Entry.readDouble("Enter a price for the clue");
-        Theme theme = Entry.readTheme("Give a Theme for the clue"); // TODO: Give the possible values
-        clueDAO.addClue(itemFactory.createClue(name, price, theme), enigmaId);
-    }
-
-    public void addDecorationToRoom() {
-        Integer roomId = Entry.readInt("Enter an room id");
-        String name = Entry.readString("Give a name for the decoration");
-        Double price = Entry.readDouble("Enter a price for the decoration");
-        Material material = Entry.readMaterial("Enter a material for the decoration"); // TODO: Give the possible values
-        Integer quantity = Entry.readInt("How may decoration objects do you have?");
-        decorationDAO.addDecoration(itemFactory.createDecoration(name, price, material, quantity), roomId);
-    }
-
-    public void createGift() {
-        String name = Entry.readString("Give a name for the gift");
-        Double price = Entry.readDouble("Enter a price for the gift");
-        giftDAO.addGift(itemFactory.createGift(name, price));
-    }
-
     public List<Enigma> getEnigmasForRoom() {
         Integer roomId = Entry.readInt("Enter a room id");
         return enigmaDAO.getAllEnigmasByRoom(roomId);
@@ -67,6 +44,15 @@ public class InventoryManager {
     public void deleteEnigma() {
         Integer enigmaId = Entry.readInt("Enter an enigma id");
         enigmaDAO.delete(enigmaId);
+    }
+
+    public void addDecorationToRoom() {
+        Integer roomId = Entry.readInt("Enter an room id");
+        String name = Entry.readString("Give a name for the decoration");
+        Double price = Entry.readDouble("Enter a price for the decoration");
+        Material material = Entry.readMaterial("Enter a material for the decoration"); // TODO: Give the possible values
+        Integer quantity = Entry.readInt("How may decoration objects do you have?");
+        decorationDAO.addDecoration(itemFactory.createDecoration(name, price, material, quantity), roomId);
     }
 
     public List<Decoration> getDecorationForRoom() {
@@ -83,6 +69,12 @@ public class InventoryManager {
         decorationDAO.delete(decorationId);
     }
 
+    public void createGift() {
+        String name = Entry.readString("Give a name for the gift");
+        Double price = Entry.readDouble("Enter a price for the gift");
+        giftDAO.addGift(itemFactory.createGift(name, price));
+    }
+
     public List<Gift> getGiftsForUser() {
         Integer userId = Entry.readInt("Enter a user id");
         return giftDAO.getAllGiftsByUser(userId);
@@ -95,6 +87,14 @@ public class InventoryManager {
     public void deleteGift() {
         Integer giftId = Entry.readInt("Enter a gift id");
         giftDAO.delete(giftId);
+    }
+
+    public void addClueForEnigma() {
+        Integer enigmaId = Entry.readInt("Enter an enigma id");
+        String name = Entry.readString("Give a name for the clue");
+        Double price = Entry.readDouble("Enter a price for the clue");
+        Theme theme = Entry.readTheme("Give a Theme for the clue"); // TODO: Give the possible values
+        clueDAO.addClue(itemFactory.createClue(name, price, theme), enigmaId);
     }
 
     public List<Clue> getCluesForEnigma() {
