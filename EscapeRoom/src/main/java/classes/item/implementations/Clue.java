@@ -1,14 +1,15 @@
 package classes.item.implementations;
 
 import classes.item.Item;
-import classes.item.Theme;
+import classes.enums.Theme;
 
 public class Clue extends Item {
 
     Theme theme;
 
-    public Clue(String name, double price) {
+    Clue(String name, double price, Theme theme) {
         super(name, price);
+        this.theme = theme;
     }
 
     public Theme getTheme() {

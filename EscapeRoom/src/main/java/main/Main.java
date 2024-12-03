@@ -1,11 +1,11 @@
 package main;
 
-import managers.EscapeRoomManager;
+import managers.MainManager;
+
 
 public class Main {
     public static void main(String[] args) {
-
-        EscapeRoomManager escapeRoomManager = new EscapeRoomManager();
-        escapeRoomManager.start();
+        MainManager mainManager = new MainManager();
+        mainManager.start();
     }
 }
