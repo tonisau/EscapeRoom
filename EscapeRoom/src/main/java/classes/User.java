@@ -38,6 +38,10 @@ public class User implements Subscriber {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setIsSuscriber(boolean isSuscriber) {
         this.isSuscriber = isSuscriber;
     }
