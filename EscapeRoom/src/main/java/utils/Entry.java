@@ -10,7 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Entry {
-    public static int readInt(String message) {
+    public static Integer readInt(String message) {
         System.out.println(message);
         Scanner scanner = new Scanner(System.in);
         boolean isValidInput = false;
@@ -45,7 +45,7 @@ public class Entry {
         return validInput;
     }
 
-    public static double readDouble(String message) {
+    public static Double readDouble(String message) {
         System.out.println(message);
         Scanner scanner = new Scanner(System.in);
         boolean isValidInput = false;
@@ -144,7 +144,7 @@ public class Entry {
         else return line;
     }
 
-    public static boolean readBoolean(String message) {
+    public static Boolean readBoolean(String message) {
         Scanner scanner = new Scanner(System.in);
         String result;
         do{
