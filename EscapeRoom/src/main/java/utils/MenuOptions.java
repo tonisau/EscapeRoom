@@ -5,10 +5,10 @@ public class MenuOptions {
     static final String m2 = "Add new Room to the Escape Room. ";
     static final String m3 = "Add new Enigma to a Room.";
     static final String m4 = "Add new Clue for an Enigma.";
-    static final String m5 = "Add new Decoration object to a/some Room(s).";
+    static final String m5 = "Add new Decoration object to a Room. ";
     static final String m6 = "Show inventory (Rooms, Enigmas, Clues and Decorations). ";
     static final String m7 = "Show total inventory value.";
-    static final String m8 = "Remove Room, Enigma, Clue or Decoration. ";
+    static final String m8 = "Delete Room, Enigma, Clue or Decoration. ";
     static final String m9 = "Add new user. ";
     static final String m10 = "Create new game and generate ticket. ";
     static final String m11 = "Show total sales. ";
