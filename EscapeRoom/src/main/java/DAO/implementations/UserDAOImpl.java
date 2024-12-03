@@ -28,7 +28,24 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
 
     @Override
     public User getUser(int id) {
-        return null;
+        List<Attribute> queryAttributeList = Arrays.asList(
+                new Attribute<>(IDUSER, null, Integer.class)
+        );
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<>(IDUSER, null, Integer.class),
+                new Attribute<>(NAME, null, String.class),
+                new Attribute<>(EMAIL, null, String.class),
+                new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
+
+        HashSet<Attribute> attributeValues = dbConnection
+                                    .query(Query.GETUSER, queryAttributeList, outputAttributes)
+                                    .getFirst();
+
+        if (attributeValues.isEmpty()) return null;
+
+        User user = new User();
+        parser.parseObject(user, attributeValues);
+        return user;
     }
 
     @Override
