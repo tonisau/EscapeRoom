@@ -7,10 +7,12 @@ public class Clue extends Item {
 
     Theme theme;
 
-    Clue(String name, double price, Theme theme) {
+    Clue(String name, Double price, Theme theme) {
         super(name, price);
         this.theme = theme;
     }
+
+    Clue() { super(); }
 
     public Theme getTheme() {
         return theme;
