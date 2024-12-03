@@ -1,9 +1,8 @@
-package classes.item;
+package classes.item.implementations;
 
-import classes.item.implementations.Clue;
-import classes.item.implementations.Decoration;
-import classes.item.implementations.Enigma;
-import classes.item.implementations.Gift;
+import classes.enums.Material;
+import classes.enums.Theme;
+import classes.item.ItemFactory;
 
 public class ItemFactoryImpl implements ItemFactory {
     @Override
@@ -25,4 +24,11 @@ public class ItemFactoryImpl implements ItemFactory {
     public Gift createGift(String name, double price) {
         return new Gift(name, price);
     }
+
+    @Override
+    public Enigma createEnigma() {
+        return new Enigma();
+    }
 }
+
+
