@@ -46,6 +46,7 @@ public class MainManager {
                     inventoryManager.deleteEnigma();
                     break;
                 case 8:
+                    userManager.start();
                     break;
                 case 9:
                     break;

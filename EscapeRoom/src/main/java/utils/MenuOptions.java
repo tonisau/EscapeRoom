@@ -8,7 +8,7 @@ public class MenuOptions {
     static final String m5 = "Show inventory (Rooms, Enigmas, Clues and Decorations). ";
     static final String m6 = "Show total inventory value.";
     static final String m7 = "Delete Room, Enigma, Clue or Decoration. ";
-    static final String m8 = "Add new user. ";
+    static final String m8 = "Access to user menu. ";
     static final String m9 = "Create new game and generate ticket. ";
     static final String m10 = "Show total sales. ";
     static public final String close = "Close.";
