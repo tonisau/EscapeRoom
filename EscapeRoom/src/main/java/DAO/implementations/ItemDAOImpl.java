@@ -11,9 +11,7 @@ import classes.item.implementations.Decoration;
 import classes.item.implementations.Enigma;
 import connections.DbConnectionImpl;
 import connections.attribute.Query;
-import connections.attribute.outputAttribute.AttributeValue;
-import connections.attribute.outputAttribute.OutputAttribute;
-import connections.attribute.outputAttribute.OutputType;
+import connections.attribute.Attribute;
 import connections.attribute.queryAttribute.IntQueryAttribute;
 import connections.attribute.queryAttribute.QueryAttribute;
 import connections.attribute.queryAttribute.StringQueryAttribute;
@@ -38,11 +36,11 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
 
     @Override
     public void addEnigma(Enigma enigma, int roomId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new StringQueryAttribute(1, enigma.getName()));
-        queryAttributeList.add(new DoubleQueryAttribute(2, enigma.getPrice()));
-        queryAttributeList.add(new IntQueryAttribute(3, roomId));
-        dbConnection.create(Query.CREATEENIGMA, queryAttributeList);
+        List<Attribute> attributeList = new ArrayList<>();
+        attributeList.add(new Attribute<>(enigma.getName(), String.class));
+        attributeList.add(new Attribute<>(enigma.getPrice(), Double.class));
+        attributeList.add(new Attribute<>(roomId, Integer.class));
+        dbConnection.create(Query.CREATEENIGMA, attributeList);
     }
 
     @Override
@@ -54,17 +52,17 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
     public List<Enigma> getAllEnigmasByRoom(int roomId) {
         List<Enigma> enigmas = new ArrayList<>();
 
-        List<QueryAttribute> queryAttributeList = List.of(new IntQueryAttribute(1, roomId));
-        List<OutputAttribute> outputAttributes = Arrays.asList(
-                new OutputAttribute(ITEMID, OutputType.INT),
-                new OutputAttribute(NAME, OutputType.STRING),
-                new OutputAttribute(PRICE, OutputType.DOUBLE));
+        List<Attribute> queryAttributeList = List.of(new Attribute<>(roomId, Integer.class));
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<>(ITEMID, null, Integer.class),
+                new Attribute<>(NAME, null, String.class),
+                new Attribute<>(PRICE, null, Double.class));
 
-        List<HashSet<OutputAttribute>> enigmaList = dbConnection.query(Query.GETENIGMABYROOM, queryAttributeList, outputAttributes);
+        List<HashSet<Attribute>> enigmaList = dbConnection.query(Query.GETENIGMABYROOM, queryAttributeList, outputAttributes);
 
         if (enigmaList.isEmpty()) return List.of();
 
-        for (HashSet<OutputAttribute> attributeValues: enigmaList) {
+        for (HashSet<Attribute> attributeValues: enigmaList) {
             Enigma enigma = itemFactory.createEnigma();
             parser.parseObject(enigma, attributeValues);
             enigmas.add(enigma);
@@ -75,18 +73,18 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
 
     @Override
     public void deleteEnigma(int itemId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new IntQueryAttribute(1, itemId));
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute(itemId, Integer.class));
         dbConnection.delete(Query.DELETEENIGMA, queryAttributeList);
     }
 
     @Override
     public void addClue(Clue clue, int enigmaId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new StringQueryAttribute(1, clue.getName()));
-        queryAttributeList.add(new DoubleQueryAttribute(2, clue.getPrice()));
-        queryAttributeList.add(new StringQueryAttribute(3, clue.getTheme().name()));
-        queryAttributeList.add(new IntQueryAttribute(4, enigmaId));
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute(clue.getName(), String.class));
+        queryAttributeList.add(new Attribute(clue.getPrice(), Double.class));
+        queryAttributeList.add(new Attribute(clue.getTheme().name(), String.class));
+        queryAttributeList.add(new Attribute(enigmaId, Integer.class));
         dbConnection.create(Query.CREATECLUE, queryAttributeList);
     }
 
@@ -126,37 +124,33 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
     }
 
     @Override
-    public void onCallbackString(Item object, OutputAttribute attribute) {
-        AttributeValue<String> attValue = attribute.getValue();
+    public void onCallbackString(Item object, Attribute<String> attribute) {
         if (attribute.getName().equals(NAME)) {
-            object.setName(attValue.getValue());
+            object.setName(attribute.getValue());
         }
     }
 
     @Override
-    public void onCallbackInt(Item object, OutputAttribute attribute) {
-        AttributeValue<Integer> attValue = attribute.getValue();
+    public void onCallbackInt(Item object, Attribute<Integer> attribute) {
         switch (attribute.getName()) {
-            case ITEMID -> object.setItemId(attValue.getValue());
+            case ITEMID -> object.setItemId(attribute.getValue());
             case QUANTITY -> {
-                ((Decoration)object).setQuantity(attValue.getValue());
+                ((Decoration)object).setQuantity(attribute.getValue());
             }
         }
     }
 
     @Override
-    public void onCallbackDouble(Item object, OutputAttribute attribute) {
-        AttributeValue<Double> attValue = attribute.getValue();
+    public void onCallbackDouble(Item object, Attribute<Double> attribute) {
         if (attribute.getName().equals(PRICE)) {
-            object.setPrice(attValue.getValue());
+            object.setPrice(attribute.getValue());
         }
     }
 
     @Override
-    public void onCallbackMaterial(Item object, OutputAttribute attribute) {
-        AttributeValue<Material> attValue = attribute.getValue();
+    public void onCallbackMaterial(Item object, Attribute<Material> attribute) {
         if (attribute.getName().equals(NAME)) {
-            ((Decoration)object).setMaterial(attValue.getValue());
+            ((Decoration)object).setMaterial(attribute.getValue());
         }
     }
 }
