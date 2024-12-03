@@ -13,9 +13,10 @@ public class User implements Subscriber {
         this.email = email;
     }
 
-    public User(int id, String name, boolean isSuscriber) {
+    public User(int id, String name, String email, boolean isSuscriber) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.isSuscriber = isSuscriber;
     }
 
@@ -23,12 +24,20 @@ public class User implements Subscriber {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setIsSuscriber(boolean status) {
-        this.isSuscriber = status;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setIsSuscriber(boolean isSuscriber) {
+        this.isSuscriber = isSuscriber;
     }
 
     @Override
@@ -39,5 +48,10 @@ public class User implements Subscriber {
         System.out.println("Hola " + this.name + ", tenemos noticias para ti:\n"
                 + event );
     }
+
+    public boolean isSuscriber() {
+        return isSuscriber;
+    }
+
 }
 

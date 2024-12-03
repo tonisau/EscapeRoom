@@ -1,15 +1,17 @@
 package classes.item.implementations;
 
 import classes.item.Item;
-import classes.item.Material;
+import classes.enums.Material;
 
 public class Decoration extends Item {
 
     Material material;
     int quantity;
 
-    public Decoration(String name, double price) {
+    Decoration(String name, double price, Material material, int quantity) {
         super(name, price);
+        this.setMaterial(material);
+        this.setQuantity(quantity);
     }
 
     public Material getMaterial() {
