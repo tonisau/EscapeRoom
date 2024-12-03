@@ -1,7 +1,9 @@
 package managers;
 
+import DAO.implementations.GiftDAOImpl;
 import DAO.interfaces.implementations.UserDAOImpl;
 import classes.User;
+import classes.item.implementations.Gift;
 import exceptions.IncorrectMenuOptionException;
 import utils.Entry;
 import utils.MenuUserOptions;
@@ -12,9 +14,11 @@ public class UserManager {
 
     private static UserManager instance;
     private final UserDAOImpl daoUser;
+    private final GiftDAOImpl daoGift;
 
     public UserManager(){
         this.daoUser = new UserDAOImpl();
+        this.daoGift = new GiftDAOImpl();
     }
 
     public static UserManager getInstance(){
@@ -108,11 +112,11 @@ public class UserManager {
     public void showGifts(){
         String email = Entry.readString("Please type user's email: ");
         User user = getInstance().daoUser.getUserByEmail(email);
-        List<String> gifts;
+        List<Gift> gifts;
         if (user == null){
             System.out.println("User not found with such email");
         }else{
-            gifts = getInstance().daoUser.getGifts(user);
+            gifts = getInstance().daoGift.getGifts(user);
             if (gifts.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
                     "has not won any reward yet");
             else{
