@@ -82,7 +82,7 @@ public class UserManager {
         if (user == null){
             System.out.println("User not found with such email");
         }else{
-            boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
+            Boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
             user.setIsSuscriber(isSubscriber);
             getInstance().daoUser.updateUser(user);
         }
