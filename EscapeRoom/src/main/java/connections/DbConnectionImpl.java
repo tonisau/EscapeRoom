@@ -35,32 +35,13 @@ public class DbConnectionImpl implements DbConnection {
     }
 
     @Override
-    public void create(String query, List<QueryAttribute> queryAttributes) { callUpdate(query, queryAttributes); }
-
-    @Override
-    public <T> void createWithReflection(String query, T object) {
-        try(Connection connection = this.createConnection();
-            PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
-            this.addAttributesToStatementReflection(statement, object);
-            this.executeUpdate(statement);
-        } catch (ConnectionException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void createWithGenerics(String query, List<Attribute> queryAttributes) {
-        try(Connection connection = this.createConnection();
-            PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
-            this.addAttributesToStatementGenerics(statement, queryAttributes);
-            this.executeUpdate(statement);
-        } catch (ConnectionException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
+    public void create(String query, List<Attribute> queryAttributes) {
+        this.callUpdate(query, queryAttributes);
     }
 
     @Override
-    public void delete(String query, List<QueryAttribute> queryAttributes) {
-        callUpdate(query, queryAttributes);
+    public void delete(String query, List<Attribute> queryAttributes) {
+        this.callUpdate(query, queryAttributes);
     }
 
     @Override
@@ -70,7 +51,7 @@ public class DbConnectionImpl implements DbConnection {
         try(Connection connection = this.createConnection();
             PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
 
-            this.addAttributesToStatementGenerics(statement, queryAttributes);
+            this.addAttributesToStatement(statement, queryAttributes);
 
             try(ResultSet resultSet = this.executeQuery(statement)) {
                 while(resultSet.next()) {
@@ -100,12 +81,9 @@ public class DbConnectionImpl implements DbConnection {
             System.out.println(e.getMessage());
         }
         return list;
-
-
-        //return callQuery(query, queryAttributes, outputAttributes);
     }
 
-    private void callUpdate(String query, List<QueryAttribute> queryAttributes) {
+    private void callUpdate(String query, List<Attribute> queryAttributes) {
         try(Connection connection = this.createConnection();
             PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
             this.addAttributesToStatement(statement, queryAttributes);
@@ -113,45 +91,6 @@ public class DbConnectionImpl implements DbConnection {
         } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private List<HashSet<OutputAttribute>> callQuery(String query, List<QueryAttribute> queryAttributes, List<OutputAttribute> attributes) {
-
-        List<HashSet<OutputAttribute>> list = new ArrayList<>();
-
-        try(Connection connection = this.createConnection();
-            PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
-
-            this.addAttributesToStatement(statement, queryAttributes);
-
-            try(ResultSet resultSet = this.executeQuery(statement)) {
-                while(resultSet.next()) {
-                    HashSet<OutputAttribute> hashSet = new HashSet<>();
-                    for (OutputAttribute attribute: attributes) {
-                        OutputAttribute att = new OutputAttribute(attribute.getName(), attribute.getType());
-                        switch (attribute.getType()) {
-                            case STRING -> {
-                                AttributeValue<String> value = new AttributeValue<>(resultSet.getString(attribute.getName()));
-                                att.setValue(value);
-                            }
-                            case INT -> {
-                                AttributeValue<Integer> value = new AttributeValue<>(resultSet.getInt(attribute.getName()));
-                                att.setValue(value);
-                            }
-                            case DOUBLE ->{
-                                AttributeValue<Double> value = new AttributeValue<>(resultSet.getDouble(attribute.getName()));
-                                att.setValue(value);
-                            }
-                        }
-                        hashSet.add(att);
-                    }
-                    list.add(hashSet);
-                }
-            }
-        } catch (ConnectionException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return list;
     }
 
     private void executeUpdate(PreparedStatement statement) throws ConnectionException {
@@ -187,17 +126,7 @@ public class DbConnectionImpl implements DbConnection {
         }
     }
 
-    private void addAttributesToStatement(PreparedStatement statement, List<QueryAttribute> attributes) throws ConnectionException {
-        for (QueryAttribute attribute: attributes) {
-            try {
-                attribute.addToStatement(statement);
-            } catch (ConnectionException e) {
-                throw new ConnectionException(e.getMessage());
-            }
-        }
-    }
-
-    private void addAttributesToStatementGenerics(PreparedStatement statement, List<Attribute> queryAttributes) {
+    private void addAttributesToStatement(PreparedStatement statement, List<Attribute> queryAttributes) {
 
         for (int i = 0; i < queryAttributes.size(); i++) {
             Attribute attribute = queryAttributes.get(i);
@@ -212,33 +141,6 @@ public class DbConnectionImpl implements DbConnection {
             } catch (SQLException e) {
                 System.out.println("Could not set value to statement.Position: " + (i + 1) + " Attribute: " + attribute.getValue() + " Value: " + attribute.getName());
             }
-        }
-    }
-
-    private <T> void addAttributesToStatementReflection(PreparedStatement statement, T object) {
-        try {
-            Class<?> c = object.getClass();
-            Field[] fields = c.getDeclaredFields();
-            int i = 1;
-            for(Field field: fields) {
-                field.setAccessible(true);
-                String fieldName = field.getName();
-                Class<?> fieldType = field.getType();
-
-                Object instance = field.get(object);
-                if (instance == null) { continue; }
-                else { i += 1; }
-
-                System.out.println("Field: " + fieldName + ", Type: " + fieldType.getName());
-
-                if (fieldType == Integer.class) statement.setInt(i, (Integer) instance);
-                else if (fieldType == String.class) statement.setString(i, (String) instance);
-                else if (fieldType == Double.class) statement.setDouble(i, (Double) instance);
-                else System.out.println("Unsupported class.");
-            }
-
-        } catch (NullPointerException | SQLException | IllegalAccessException e) {
-            System.out.println(e.getMessage());
         }
     }
 

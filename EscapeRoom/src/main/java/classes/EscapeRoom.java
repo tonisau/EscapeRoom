@@ -23,7 +23,7 @@ public class EscapeRoom {
         return name;
     }
 
-    public void setIdEscaperoom(int idEscaperoom) {
+    public void setIdEscaperoom(Integer idEscaperoom) {
         this.idEscaperoom = idEscaperoom;
     }
 

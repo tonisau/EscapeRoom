@@ -7,14 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public interface DbConnection {
-    public void create(String query, List<QueryAttribute> queryAttributes);
-
-    public void delete(String query, List<QueryAttribute> queryAttributes);
-
+    public void create(String query, List<Attribute> queryAttributes);
+    public void delete(String query, List<Attribute> queryAttributes);
     public List<HashSet<Attribute>> query(String query, List<Attribute> queryAttributes, List<Attribute> outputAttributes);
-
-    public <T> void createWithReflection(String query, T object);
-
-    public void createWithGenerics(String query, List<Attribute> queryAttributes);
 }
 

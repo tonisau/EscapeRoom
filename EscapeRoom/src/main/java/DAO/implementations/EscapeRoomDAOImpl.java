@@ -28,17 +28,10 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
 
     @Override
     public void createEscapeRoom(EscapeRoom escapeRoom) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new StringQueryAttribute(1, escapeRoom.getName()));
-        queryAttributeList.add(new StringQueryAttribute(2, escapeRoom.getCif()));
-        //dbConnection.create(Query.CREATEESCAPEROOM, queryAttributeList);
-
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<String>(escapeRoom.getName(), String.class));
         attributeList.add(new Attribute<String>(escapeRoom.getCif(), String.class));
-        dbConnection.createWithGenerics(Query.CREATEESCAPEROOM, attributeList);
-
-        //dbConnection.createWithReflection(Query.CREATEESCAPEROOM, escapeRoom);
+        dbConnection.create(Query.CREATEESCAPEROOM, attributeList);
     }
 
     @Override
@@ -66,8 +59,8 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
     }
 
     public void deleteEscapeRoom(int escapeRoomId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new IntQueryAttribute(1, escapeRoomId));
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute(escapeRoomId, Integer.class));
         dbConnection.delete(Query.DELETEESCAPEROOM, queryAttributeList);
     }
 

@@ -3,7 +3,7 @@ package classes.item.implementations;
 import classes.item.Item;
 
 public class Enigma extends Item {
-    Enigma(String name, double price) {
+    Enigma(String name, Double price) {
         super(name, price);
     }
 

@@ -36,17 +36,11 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
 
     @Override
     public void addEnigma(Enigma enigma, int roomId) {
-       /* List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new StringQueryAttribute(1, enigma.getName()));
-        queryAttributeList.add(new DoubleQueryAttribute(2, enigma.getPrice()));
-        queryAttributeList.add(new IntQueryAttribute(3, roomId));
-        dbConnection.create(Query.CREATEENIGMA, queryAttributeList);*/
-
         List<Attribute> attributeList = new ArrayList<>();
-        attributeList.add(new Attribute<String>(enigma.getName(), String.class));
-        attributeList.add(new Attribute<Double>(enigma.getPrice(), Double.class));
-        attributeList.add(new Attribute<Integer>(roomId, Integer.class));
-        dbConnection.createWithGenerics(Query.CREATEENIGMA, attributeList);
+        attributeList.add(new Attribute<>(enigma.getName(), String.class));
+        attributeList.add(new Attribute<>(enigma.getPrice(), Double.class));
+        attributeList.add(new Attribute<>(roomId, Integer.class));
+        dbConnection.create(Query.CREATEENIGMA, attributeList);
     }
 
     @Override
@@ -58,11 +52,11 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
     public List<Enigma> getAllEnigmasByRoom(int roomId) {
         List<Enigma> enigmas = new ArrayList<>();
 
-        List<Attribute> queryAttributeList = List.of(new Attribute<Integer>(roomId, Integer.class));
+        List<Attribute> queryAttributeList = List.of(new Attribute<>(roomId, Integer.class));
         List<Attribute> outputAttributes = Arrays.asList(
-                new Attribute<Integer>(ITEMID, null, Integer.class),
-                new Attribute<String>(NAME, null, String.class),
-                new Attribute<Double>(PRICE, null, Double.class));
+                new Attribute<>(ITEMID, null, Integer.class),
+                new Attribute<>(NAME, null, String.class),
+                new Attribute<>(PRICE, null, Double.class));
 
         List<HashSet<Attribute>> enigmaList = dbConnection.query(Query.GETENIGMABYROOM, queryAttributeList, outputAttributes);
 
@@ -79,18 +73,18 @@ public class ItemDAOImpl implements ItemDAO, ParsingCallback<Item> {
 
     @Override
     public void deleteEnigma(int itemId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new IntQueryAttribute(1, itemId));
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute(itemId, Integer.class));
         dbConnection.delete(Query.DELETEENIGMA, queryAttributeList);
     }
 
     @Override
     public void addClue(Clue clue, int enigmaId) {
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new StringQueryAttribute(1, clue.getName()));
-        queryAttributeList.add(new DoubleQueryAttribute(2, clue.getPrice()));
-        queryAttributeList.add(new StringQueryAttribute(3, clue.getTheme().name()));
-        queryAttributeList.add(new IntQueryAttribute(4, enigmaId));
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute(clue.getName(), String.class));
+        queryAttributeList.add(new Attribute(clue.getPrice(), Double.class));
+        queryAttributeList.add(new Attribute(clue.getTheme().name(), String.class));
+        queryAttributeList.add(new Attribute(enigmaId, Integer.class));
         dbConnection.create(Query.CREATECLUE, queryAttributeList);
     }
 
