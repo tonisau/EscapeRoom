@@ -21,7 +21,14 @@ public class ItemFactoryImpl implements ItemFactory {
     }
 
     @Override
+    public Gift createGift(String name, double price) {
+        return new Gift(name, price);
+    }
+
+    @Override
     public Enigma createEnigma() {
         return new Enigma();
     }
 }
+
+
