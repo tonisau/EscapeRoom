@@ -4,8 +4,6 @@ import DAO.Parser;
 import DAO.interfaces.UserDAO;
 import classes.User;
 import classes.enums.Material;
-import classes.item.Item;
-import classes.item.implementations.Enigma;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import connections.attribute.Query;
@@ -35,7 +33,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
                 new Attribute<>(IDUSER, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(EMAIL, null, String.class),
-                new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
+                new Attribute<>(IS_SUBSCRIBER, null, Boolean.class));
 
         HashSet<Attribute> attributeValues = dbConnection
                                     .query(Query.GETUSER, queryAttributeList, outputAttributes)
@@ -58,14 +56,28 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
         attributeList.add(new Attribute<>(user.getEmail(), String.class));
-        attributeList.add(new Attribute<>(user.isSuscriber(), boolean.class));
+        attributeList.add(new Attribute<>(user.isSuscriber(), Boolean.class));
         attributeList.add(new Attribute<>(user.getId(), Integer.class));
         dbConnection.create(Query.UPDATEUSER, attributeList);
     }
 
     @Override
     public List<String> getCertificates(User user) {
-        return List.of();
+        DbConnectionImpl dbConnection1 = DbConnectionImpl.getInstance();
+
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute<>(user.getId(), Integer.class));
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<>(NAME, null, String.class));
+
+        List<HashSet<Attribute>> certificates = dbConnection.query(Query.GETCERTIFICATES, queryAttributeList, outputAttributes);
+
+        if (certificates.isEmpty()) return List.of();
+
+        for (HashSet<Attribute> attributeValues: certificates) {
+
+        }
+        return null;
     }
 
     @Override
