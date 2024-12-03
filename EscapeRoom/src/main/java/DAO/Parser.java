@@ -1,7 +1,7 @@
 package DAO;
 
+import connections.attribute.Attribute;
 import connections.callback.ParsingCallback;
-import connections.attribute.outputAttribute.OutputAttribute;
 
 import java.util.HashSet;
 
@@ -13,14 +13,11 @@ public class Parser<T> {
         this.callback = callback;
     }
 
-    public void parseObject(T object, HashSet<OutputAttribute> values) {
-        for (OutputAttribute attribute: values) {
-            switch (attribute.getType()) {
-                case STRING -> callback.onCallbackString(object, attribute);
-                case INT -> callback.onCallbackInt(object, attribute);
-                default -> {
-                }
-            }
+    public void parseObject(T object, HashSet<Attribute> values) {
+        for (Attribute attribute: values) {
+            if (attribute.getValue() instanceof String) callback.onCallbackString(object, attribute);
+            else if (attribute.getValue() instanceof Integer) callback.onCallbackInt(object, attribute);
+            else if (attribute.getValue() instanceof Double) callback.onCallbackDouble(object, attribute);
         }
     }
 }

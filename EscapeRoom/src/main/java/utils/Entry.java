@@ -1,8 +1,8 @@
 package utils;
 
 import classes.enums.Level;
-import classes.item.Material;
-import classes.item.Theme;
+import classes.enums.Material;
+import classes.enums.Theme;
 import exceptions.IncorrectInputException;
 import exceptions.StringException;
 

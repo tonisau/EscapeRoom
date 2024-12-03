@@ -3,16 +3,15 @@ package DAO.implementations;
 import DAO.Parser;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
+import classes.enums.Material;
 import connections.DbConnection;
 import connections.DbConnectionImpl;
+import connections.attribute.Attribute;
 import connections.attribute.queryAttribute.IntQueryAttribute;
 import connections.callback.ParsingCallback;
 import connections.attribute.Query;
 import connections.attribute.queryAttribute.QueryAttribute;
 import connections.attribute.queryAttribute.StringQueryAttribute;
-import connections.attribute.outputAttribute.OutputAttribute;
-import connections.attribute.outputAttribute.AttributeValue;
-import connections.attribute.outputAttribute.OutputType;
 
 import java.util.*;
 
@@ -32,23 +31,32 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
         List<QueryAttribute> queryAttributeList = new ArrayList<>();
         queryAttributeList.add(new StringQueryAttribute(1, escapeRoom.getName()));
         queryAttributeList.add(new StringQueryAttribute(2, escapeRoom.getCif()));
-        dbConnection.create(Query.CREATEESCAPEROOM, queryAttributeList);
+        //dbConnection.create(Query.CREATEESCAPEROOM, queryAttributeList);
+
+        List<Attribute> attributeList = new ArrayList<>();
+        attributeList.add(new Attribute<String>(escapeRoom.getName(), String.class));
+        attributeList.add(new Attribute<String>(escapeRoom.getCif(), String.class));
+        dbConnection.createWithGenerics(Query.CREATEESCAPEROOM, attributeList);
+
+        //dbConnection.createWithReflection(Query.CREATEESCAPEROOM, escapeRoom);
     }
 
     @Override
     public Optional<EscapeRoom> getEscapeRoomIfPresent() {
 
-        List<QueryAttribute> queryAttributeList = new ArrayList<>();
-        List<OutputAttribute> resultAttributesList = Arrays.asList(
-                new OutputAttribute(IDESCAPEROOM, OutputType.INT),
-                new OutputAttribute(NAME, OutputType.STRING),
-                new OutputAttribute(CIF, OutputType.STRING));
+        List<Attribute> queryAttributeList = new ArrayList<>();
 
-        List<HashSet<OutputAttribute>> escapeRoomsList = dbConnection.query(Query.GETESCAPEROOM, queryAttributeList, resultAttributesList);
+        List<Attribute> outputAttributesList = Arrays.asList(
+                new Attribute<Integer>(IDESCAPEROOM, null, Integer.class),
+                new Attribute<String>(NAME, null, String.class),
+                new Attribute<String>(CIF, null, String.class));
+
+
+        List<HashSet<Attribute>> escapeRoomsList = dbConnection.query(Query.GETESCAPEROOM, queryAttributeList, outputAttributesList);
 
         if (escapeRoomsList.isEmpty()) return Optional.empty();
 
-        HashSet<OutputAttribute> attributeValues = escapeRoomsList.getFirst();
+        HashSet<Attribute> attributeValues = escapeRoomsList.getFirst();
         if (attributeValues.isEmpty()) return Optional.empty();
 
         EscapeRoom escapeRoom = new EscapeRoom();
@@ -64,19 +72,23 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
     }
 
     @Override
-    public void onCallbackString(EscapeRoom escapeRoom, OutputAttribute attribute) {
-        AttributeValue<String> attValue = attribute.getValue();
+    public void onCallbackString(EscapeRoom escapeRoom, Attribute<String> attribute) {
         switch (attribute.getName()) {
-            case NAME -> escapeRoom.setName(attValue.getValue());
-            case CIF -> escapeRoom.setCif(attValue.getValue());
+            case NAME -> escapeRoom.setName(attribute.getValue());
+            case CIF -> escapeRoom.setCif(attribute.getValue());
         }
     }
 
     @Override
-    public void onCallbackInt(EscapeRoom escapeRoom, OutputAttribute attribute) {
-        AttributeValue<Integer> attValue = attribute.getValue();
+    public void onCallbackInt(EscapeRoom escapeRoom, Attribute<Integer> attribute) {
         if (attribute.getName().equals(IDESCAPEROOM)) {
-            escapeRoom.setIdEscaperoom(attValue.getValue());
+            escapeRoom.setIdEscaperoom(attribute.getValue());
         }
     }
+
+    @Override
+    public void onCallbackDouble(EscapeRoom object, Attribute<Double> attribute) {}
+
+    @Override
+    public void onCallbackMaterial(EscapeRoom object, Attribute<Material> attribute) {}
 }

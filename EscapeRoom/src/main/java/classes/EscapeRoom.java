@@ -2,11 +2,11 @@ package classes;
 
 public class EscapeRoom {
 
-    private int idEscaperoom;
+    private Integer idEscaperoom;
     private String name;
     private String cif;
 
-    public EscapeRoom(int idEscaperoom, String name, String cif) {
+    public EscapeRoom(Integer idEscaperoom, String name, String cif) {
         this.idEscaperoom = idEscaperoom;
         this.name = name;
         this.cif = cif;
