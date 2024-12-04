@@ -17,7 +17,7 @@ public class Query {
     public static final String DELETECLUE = "DELETE FROM clue WHERE idclue = ?";
     public static final String GETCLUEBYID = "SELECT idclue, name, price, theme FROM clue WHERE idclue = ?";
 
-    public static  final String CREATEDECORATION = "INSERT INTO decoration (name, material, price, quantity, room_idroom) VALUES (?, ?, ?, ?, ?)";
+    public static final String CREATEDECORATION = "INSERT INTO decoration (name, material, price, quantity, room_idroom) VALUES (?, ?, ?, ?, ?)";
     public static final String GETDECORATIONEBYROOM = "SELECT iddecoration, name, material, price, quantity FROM decoration WHERE room_idroom = ?";
     public static final String GETALLDECORATIONS = "SELECT iddecoration, name, material, price, quantity FROM decoration";
     public static final String DELETEDECORATION = "DELETE FROM decoration WHERE iddecoration = ?";
