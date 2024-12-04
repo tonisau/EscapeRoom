@@ -62,25 +62,6 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
         dbConnection.create(Query.UPDATEUSER, attributeList);
     }
 
-    @Override
-    public List<String> getCertificates(User user) { // TODO: Use giftDAO to get Enigmas and remove this method
-        DbConnectionImpl dbConnection1 = DbConnectionImpl.getInstance();
-
-        List<Attribute> queryAttributeList = new ArrayList<>();
-        queryAttributeList.add(new Attribute<>(user.getId(), Integer.class));
-        List<Attribute> outputAttributes = Arrays.asList(
-                new Attribute<>(NAME, null, String.class));
-
-        List<HashSet<Attribute>> certificates = dbConnection.query("", queryAttributeList, outputAttributes);
-
-        if (certificates.isEmpty()) return List.of();
-
-        for (HashSet<Attribute> attributeValues: certificates) {
-
-        }
-        return null;
-    }
-
     public void add(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
