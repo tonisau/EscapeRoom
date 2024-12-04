@@ -4,6 +4,7 @@ import DAO.Parser;
 import classes.User;
 import classes.enums.Material;
 import classes.item.implementations.Gift;
+import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import connections.attribute.Query;
@@ -15,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class GiftDAOImpl implements ParsingCallback<Gift> {
-
+    ItemFactoryImpl itemFactory;
     DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
     Parser<Gift> parser = new Parser<>(this);
 
@@ -36,7 +37,7 @@ public class GiftDAOImpl implements ParsingCallback<Gift> {
         if(giftList.isEmpty()) return List.of();
 
         for (HashSet<Attribute> attributeValues: giftList) {
-            Gift gift = new Gift();
+            Gift gift = itemFactory.createGift();
             parser.parseObject(gift, attributeValues);
             gifts.add(gift);
         }
