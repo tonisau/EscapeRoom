@@ -1,13 +1,9 @@
 package connections;
 
-import connections.attribute.outputAttribute.OutputAttribute;
-import connections.attribute.outputAttribute.AttributeValue;
 import connections.attribute.Attribute;
 import exceptions.ConnectionException;
-import connections.attribute.queryAttribute.QueryAttribute;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;

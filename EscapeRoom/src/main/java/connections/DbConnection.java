@@ -1,7 +1,6 @@
 package connections;
 
 import connections.attribute.Attribute;
-import connections.attribute.queryAttribute.QueryAttribute;
 
 import java.util.HashSet;
 import java.util.List;

@@ -1,5 +1,7 @@
 package DAO;
 
+import classes.enums.Material;
+import classes.enums.Theme;
 import connections.attribute.Attribute;
 import connections.callback.ParsingCallback;
 
@@ -16,8 +18,10 @@ public class Parser<T> {
     public void parseObject(T object, HashSet<Attribute> values) {
         for (Attribute attribute: values) {
             if (attribute.getValue() instanceof String) callback.onCallbackString(object, attribute);
-            else if (attribute.getValue() instanceof Integer) callback.onCallbackInt(object, attribute);
+            else if (attribute.getValue() instanceof Integer) callback.onCallbackInteger(object, attribute);
             else if (attribute.getValue() instanceof Double) callback.onCallbackDouble(object, attribute);
+            else if (attribute.getValue() instanceof Theme) callback.onCallbackTheme(object, attribute);
+            else if (attribute.getValue() instanceof Material) callback.onCallbackMaterial(object, attribute);
             else if (attribute.getValue() instanceof Boolean) callback.onCallbackBoolean(object, attribute);
         }
     }
