@@ -9,7 +9,7 @@ import classes.item.implementations.Clue;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
-import connections.attribute.Query;
+import DAO.Query;
 import connections.callback.ParsingCallback;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
     }
 
     @Override
-    public List<Clue> showData() {
+    public List<Clue> getData() {
         List<Clue> clues = new ArrayList<>();
 
         List<Attribute> queryAttributeList = List.of();

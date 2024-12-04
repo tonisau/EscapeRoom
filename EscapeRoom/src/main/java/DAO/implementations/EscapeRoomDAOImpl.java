@@ -1,7 +1,6 @@
 package DAO.implementations;
 
 import DAO.Parser;
-import DAO.interfaces.DAO;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
 import classes.enums.Material;
@@ -10,7 +9,7 @@ import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import connections.callback.ParsingCallback;
-import connections.attribute.Query;
+import DAO.Query;
 
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
     }
 
     @Override
-    public List<EscapeRoom> showData() {
+    public List<EscapeRoom> getData() {
         List<Attribute> queryAttributeList = new ArrayList<>();
 
         List<Attribute> outputAttributesList = Arrays.asList(

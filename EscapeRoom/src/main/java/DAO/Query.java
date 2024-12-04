@@ -1,4 +1,4 @@
-package connections.attribute;
+package DAO;
 
 public class Query {
     public static final String CREATEESCAPEROOM = "INSERT INTO escaperoom (name, cif) VALUES (?, ?)";

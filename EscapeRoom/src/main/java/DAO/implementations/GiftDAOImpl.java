@@ -1,18 +1,15 @@
 package DAO.implementations;
 
 import DAO.Parser;
-import classes.User;
 import classes.enums.Material;
 import DAO.interfaces.GiftDAO;
-import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
-import classes.item.implementations.Enigma;
 import classes.item.implementations.Gift;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
-import connections.attribute.Query;
+import DAO.Query;
 import connections.callback.ParsingCallback;
 
 import java.util.ArrayList;
@@ -69,7 +66,7 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
     }
 
     @Override
-    public List<Gift> showData() {
+    public List<Gift> getData() {
         List<Attribute> queryAttributeList = List.of();
         List<Attribute> outputAttributes = Arrays.asList(
                 new Attribute<>(IDGIFT, null, Integer.class),

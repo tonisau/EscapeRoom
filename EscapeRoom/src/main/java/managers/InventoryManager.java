@@ -38,7 +38,7 @@ public class InventoryManager {
     }
 
     public List<Enigma> getAllEnigmas() {
-        return enigmaDAO.showData();
+        return enigmaDAO.getData();
     }
 
     public void deleteEnigma() {
@@ -61,7 +61,7 @@ public class InventoryManager {
     }
 
     public List<Decoration> getAllDecoration() {
-        return decorationDAO.showData(); // TODO: Rename show to get
+        return decorationDAO.getData(); // TODO: Rename show to get
     }
 
     public void deleteDecoration() {
@@ -81,7 +81,7 @@ public class InventoryManager {
     }
 
     public List<Gift> getAllGifts() {
-        return giftDAO.showData();
+        return giftDAO.getData();
     }
 
     public void deleteGift() {
@@ -103,7 +103,7 @@ public class InventoryManager {
     }
 
     public List<Clue> getAllClues() {
-        return clueDAO.showData();
+        return clueDAO.getData();
     }
 
     public void deleteClue() {

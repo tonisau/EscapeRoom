@@ -7,7 +7,7 @@ import classes.enums.Material;
 import classes.enums.Theme;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
-import connections.attribute.Query;
+import DAO.Query;
 import connections.callback.ParsingCallback;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public List<User> showData() {
+    public List<User> getData() {
         List<User> users = new ArrayList<>();
 
         List<Attribute> queryAttributeList = List.of();

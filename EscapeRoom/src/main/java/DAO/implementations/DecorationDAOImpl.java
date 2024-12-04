@@ -5,12 +5,11 @@ import DAO.interfaces.DecorationDAO;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
-import classes.item.implementations.Clue;
 import classes.item.implementations.Decoration;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
-import connections.attribute.Query;
+import DAO.Query;
 import connections.callback.ParsingCallback;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
     }
 
     @Override
-    public List<Decoration> showData() {
+    public List<Decoration> getData() {
         List<Attribute> queryAttributeList = List.of();
         List<Attribute> outputAttributes = Arrays.asList(
                 new Attribute<>(IDDECORATION, null, Integer.class),

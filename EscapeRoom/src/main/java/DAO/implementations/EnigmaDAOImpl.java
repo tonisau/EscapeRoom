@@ -5,12 +5,11 @@ import DAO.interfaces.EnigmaDAO;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
-import classes.item.implementations.Clue;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
-import connections.attribute.Query;
+import DAO.Query;
 import connections.callback.ParsingCallback;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
     }
 
     @Override
-    public List<Enigma> showData() {
+    public List<Enigma> getData() {
         List<Attribute> queryAttributeList = List.of();
         List<Attribute> outputAttributes = Arrays.asList(
                 new Attribute<>(IDENIGMA, null, Integer.class),

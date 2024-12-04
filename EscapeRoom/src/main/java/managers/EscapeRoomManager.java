@@ -15,7 +15,7 @@ public class EscapeRoomManager {
     EscapeRoom escapeRoom;
 
     public void createEscapeRoomIfNotPresent() {
-        List<EscapeRoom> escapeRoomList = escapeRoomDAO.showData();
+        List<EscapeRoom> escapeRoomList = escapeRoomDAO.getData();
 
         if (escapeRoomList.isEmpty()) {
             System.out.println("To start, let's create a Escape Room. ");
@@ -32,7 +32,7 @@ public class EscapeRoomManager {
 
     public EscapeRoom getEscapeRoom() {
         if (this.escapeRoom != null) return escapeRoom;
-        List<EscapeRoom> escapeRoomList = escapeRoomDAO.showData();
+        List<EscapeRoom> escapeRoomList = escapeRoomDAO.getData();
         escapeRoom = escapeRoomList.getFirst();
         return escapeRoom;
     }
