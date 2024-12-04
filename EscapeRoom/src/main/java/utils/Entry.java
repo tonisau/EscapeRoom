@@ -8,6 +8,7 @@ import exceptions.StringException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -158,9 +159,20 @@ public class Entry {
 
     public static LocalDateTime readLocalDateTime(String message) {
         Scanner scanner = new Scanner(System.in);
-        String dateStr = scanner.next();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime dateTime = LocalDateTime.parse(dateStr, formatter);
+        LocalDateTime dateTime = null;
+
+        while (true) {
+            System.out.print(message);
+            String dateStr = scanner.nextLine();
+
+            try {
+                dateTime = LocalDateTime.parse(dateStr + "T00:00:00");
+                break;
+            } catch (DateTimeParseException e) {
+
+                System.out.println("Invalid format. Please type date with format 'yyyy-MM-dd'.");
+            }
+        }
         return dateTime;
     }
 
