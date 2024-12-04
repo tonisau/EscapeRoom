@@ -1,5 +1,8 @@
 package connections;
 
+import classes.enums.Level;
+import classes.enums.Material;
+import classes.enums.Theme;
 import connections.attribute.Attribute;
 import exceptions.ConnectionException;
 
@@ -68,6 +71,21 @@ public class DbConnectionImpl implements DbConnection {
                             att.setName(attribute.getName());
                             att.setValue(resultSet.getDouble(attribute.getName()));
                             hashSet.add(att);
+                        } else if (attribute.getType() == Theme.class) {
+                            Attribute<Theme> att = new Attribute<>();
+                            att.setName(attribute.getName());
+                            att.setValue(Theme.valueOf(resultSet.getString(attribute.getName())));
+                            hashSet.add(att);
+                        } else if (attribute.getType() == Material.class) {
+                            Attribute<Material> att = new Attribute<>();
+                            att.setName(attribute.getName());
+                            att.setValue(Material.valueOf(resultSet.getString(attribute.getName())));
+                            hashSet.add(att);
+                        } else if (attribute.getType() == Level.class) {
+                            Attribute<Level> att = new Attribute<>();
+                            att.setName(attribute.getName());
+                            att.setValue(Level.valueOf(resultSet.getString(attribute.getName())));
+                            hashSet.add(att);
                         }
                     }
                     list.add(hashSet);
@@ -93,7 +111,7 @@ public class DbConnectionImpl implements DbConnection {
         try {
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new ConnectionException("Error creating the object.");
+            throw new ConnectionException("Error creating or deleting the object.");
         }
     }
 
@@ -135,7 +153,8 @@ public class DbConnectionImpl implements DbConnection {
                     statement.setDouble(i + 1, (Double) attribute.getValue());
                 }
             } catch (SQLException e) {
-                System.out.println("Could not set value to statement.Position: " + (i + 1) + " Attribute: " + attribute.getValue() + " Value: " + attribute.getName());
+                System.out.println(e.getMessage());
+                System.out.println("Could not set value to statement. Position: " + (i + 1) + " Attribute: " + attribute.getName() + " Value: " + attribute.getValue());
             }
         }
     }

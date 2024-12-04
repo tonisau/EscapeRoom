@@ -28,9 +28,10 @@ public class MainManager {
 
             switch (selectedMenuOption) {
                 case 1:
+                    Integer escapeRoomId = escapeRoomManager.getEscapeRoom().getIdEscaperoom();
+                    inventoryManager.addRoomToEscapeRoom(escapeRoomId);
                     break;
                 case 2:
-                    // TODO: Room manager show all rooms
                     inventoryManager.addEnigmaToRoom();
                     break;
                 case 3:
@@ -45,30 +46,7 @@ public class MainManager {
                 case 6:
                     break;
                 case 7:
-                    int selectedDelete = 0; // TODO: Open discussion - Debería de estar room dentro de inventory manager? También facilitará el desarrollo del inventory (menu 5 y 6)
-                    try {
-                        selectedDelete = menuDelete();
-                    } catch (IncorrectMenuOptionException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    switch (selectedDelete) {
-                        case 1:
-                            // TODO: RoomManager.delete
-                            break;
-                        case 2:
-                            inventoryManager.deleteEnigma();
-                            break;
-                        case 3:
-                            inventoryManager.deleteClue();
-                            break;
-                        case 4:
-                            inventoryManager.deleteDecoration();
-                            break;
-                        case 5:
-                            inventoryManager.deleteGift();
-                            break;
-                        default: break;
-                    }
+                    inventoryManager.deleteMenuStart();
                     break;
                 case 8:
                     //userManager.start();
@@ -95,20 +73,6 @@ public class MainManager {
 
         int menuOption = Entry.readInt("Select a menu option between 0 and " + MenuOptions.options.length + ".");
         if (menuOption < 0 || menuOption > MenuOptions.options.length) throw new IncorrectMenuOptionException("Menu option should be between 0 and " + MenuOptions.options.length + ".");
-        else return menuOption;
-    }
-
-    public int menuDelete() throws IncorrectMenuOptionException {
-        // TODO: Create a propper menu opion
-        /*for (int i = 1; i <= MenuOptions.options.length; i++) {
-            System.out.println( i + ". " + MenuOptions.options[i-1]);
-        }
-        System.out.println("0. " + MenuOptions.close);
-        */
-
-
-        int menuOption = Entry.readInt("Select a menu option between 1 and 5.");
-        if (menuOption < 0 || menuOption > 5) throw new IncorrectMenuOptionException("Menu option should be between 0 and 5.");
         else return menuOption;
     }
 }

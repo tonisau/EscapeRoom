@@ -1,29 +1,47 @@
 package managers;
 
-import DAO.implementations.ClueDAOImpl;
-import DAO.implementations.DecorationDAOImpl;
-import DAO.implementations.EnigmaDAOImpl;
-import DAO.implementations.GiftDAOImpl;
-import DAO.interfaces.ClueDAO;
-import DAO.interfaces.DecorationDAO;
-import DAO.interfaces.EnigmaDAO;
-import DAO.interfaces.GiftDAO;
+import DAO.implementations.*;
+import DAO.interfaces.*;
+import classes.Room;
+import classes.User;
+import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.*;
+import exceptions.IncorrectMenuOptionException;
 import utils.Entry;
+import utils.MenuDeleteInventoryOptions;
+import utils.MenuOptions;
 
 import java.util.List;
 
 public class InventoryManager {
 
+    RoomDAO roomDAO = new RoomDAOImpl();
     EnigmaDAO enigmaDAO = new EnigmaDAOImpl();
     ClueDAO clueDAO = new ClueDAOImpl();
     DecorationDAO decorationDAO = new DecorationDAOImpl();
     GiftDAO giftDAO = new GiftDAOImpl();
+    UserDAO userDAO = new UserDAOImpl();
 
     ItemFactory itemFactory = new ItemFactoryImpl();
+
+    public void addRoomToEscapeRoom(Integer escapeRoomId) {
+        String name = Entry.readString("Give a name for the room");
+        Double price = Entry.readDouble("Enter a price for the room");
+        Level level = Entry.readLevel("Enter a level for the room (Low/Medium/High)");
+        roomDAO.addRoom(new Room(name, price, level), escapeRoomId);
+    }
+
+    public void deleteRoom() {
+        Integer roomId = Entry.readInt("Enter a room id");
+        roomDAO.delete(roomId);
+    }
+
+    public List<Room> getAllRooms() {
+        return roomDAO.getData();
+    }
 
     public void addEnigmaToRoom() {
         Integer roomId = Entry.readInt("Enter a room id");
@@ -43,7 +61,19 @@ public class InventoryManager {
 
     public void deleteEnigma() {
         Integer enigmaId = Entry.readInt("Enter an enigma id");
-        enigmaDAO.delete(enigmaId);
+        List<Clue> clues = clueDAO.getAllCluesByEnigma(enigmaId);
+        Boolean confirm = true;
+        if (!clues.isEmpty()) {
+            System.out.println("Deleting enigma " + enigmaId + " will also delete clues:");
+            clues.forEach(System.out::println);
+            confirm = Entry.readBoolean("Do you confirm you want to delete the enigma " + enigmaId + " (Y/N)?");
+        }
+
+        if (confirm) {
+            clues.forEach(clue -> clueDAO.delete(clue.getItemId()));
+            userDAO.deleteUsersWithEnigma(enigmaId);
+            enigmaDAO.delete(enigmaId);
+        }
     }
 
     public void addDecorationToRoom() {
@@ -93,7 +123,7 @@ public class InventoryManager {
         Integer enigmaId = Entry.readInt("Enter an enigma id");
         String name = Entry.readString("Give a name for the clue");
         Double price = Entry.readDouble("Enter a price for the clue");
-        Theme theme = Entry.readTheme("Give a Theme for the clue"); // TODO: Give the possible values
+        Theme theme = Entry.readTheme("Give a Theme for the clue (detective/futurist/cowboys)");
         clueDAO.addClue(itemFactory.createClue(name, price, theme), enigmaId);
     }
 
@@ -111,5 +141,54 @@ public class InventoryManager {
         clueDAO.delete(clueId);
     }
 
+    public void deleteMenuStart() {
+        boolean close = false;
+        int selectedMenuOption = -1;
 
+        do {
+            try {
+                selectedMenuOption = menu();
+            } catch (IncorrectMenuOptionException e) {
+                System.out.println(e.getMessage());
+            }
+            switch (selectedMenuOption) {
+                case 1:
+                    getAllRooms().forEach(System.out::println);
+                    deleteRoom();
+                    break;
+                case 2:
+                    getAllEnigmas().forEach(System.out::println);
+                    deleteEnigma();
+                    break;
+                case 3:
+                    getAllClues().forEach(System.out::println);
+                    deleteClue();
+                    break;
+                case 4:
+                    getAllDecoration().forEach(System.out::println);
+                    deleteDecoration();
+                    break;
+                case 5:
+                    getAllGifts().forEach(System.out::println);
+                    deleteGift();
+                    break;
+                case 0:
+                    close = true;
+                    break;
+                default: break;
+            }
+        } while (!close);
+    }
+
+    public int menu() throws IncorrectMenuOptionException {
+        System.out.println("\nWhat do you want to delete?");
+        for (int i = 1; i <= MenuDeleteInventoryOptions.options.length; i++) {
+            System.out.println( i + ". " + MenuDeleteInventoryOptions.options[i-1]);
+        }
+        System.out.println("0. " + MenuDeleteInventoryOptions.close);
+
+        int menuOption = Entry.readInt("Select a menu option between 0 and " + MenuDeleteInventoryOptions.options.length + ".");
+        if (menuOption < 0 || menuOption > MenuDeleteInventoryOptions.options.length) throw new IncorrectMenuOptionException("Menu option should be between 0 and " + MenuDeleteInventoryOptions.options.length + ".");
+        else return menuOption;
+    }
 }

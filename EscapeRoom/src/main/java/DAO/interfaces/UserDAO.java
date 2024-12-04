@@ -10,4 +10,6 @@ public interface UserDAO extends DAO<User>{
     User getUserByEmail(String email);
     void updateUser(User user);
     List<String> getCertificates(User user);
+    List<User> getUsersWithEnigma(Integer enigmaId);
+    void deleteUsersWithEnigma(Integer enigmaId);
 }

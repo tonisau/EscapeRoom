@@ -2,6 +2,7 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.DecorationDAO;
+import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
@@ -133,6 +134,9 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
 
     @Override
     public void onCallbackTheme(Decoration object, Attribute<Theme> attribute) {}
+
+    @Override
+    public void onCallbackLevel(Decoration object, Attribute<Level> attribute) {}
 
     @Override
     public void onCallbackBoolean(Decoration object, Attribute<Boolean> attribute) {}
