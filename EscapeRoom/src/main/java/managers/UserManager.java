@@ -97,18 +97,10 @@ public class UserManager {
     }
 
     public void printCertificates(){
-        List<User> users = getInstance().daoUser.getData();
-        System.out.println("--- USER LIST ---");
-        Integer id;
-        User currentUser;
-        users.forEach(user -> System.out.println(user.getId() + ". " + user.getName()));
-        do{
-            id = Entry.readInt("Select user id >> ");
-            currentUser = checkUserInList(id, users);
-        }while (currentUser == null);
+        User currentUser = selectUser();
+        final String userName = currentUser.getName();
 
         List<Enigma> enigmas;
-        final String userName = currentUser.getName();
 
         enigmas = getInstance().daoEnigma.getAllEnigmasByUser(currentUser);
         if (enigmas.isEmpty()) System.out.println("Sorry, the player " + userName +
@@ -120,12 +112,9 @@ public class UserManager {
     }
 
     public void showGifts(){
-        String email = Entry.readString("Please type user's email: ");
-        User user = getInstance().daoUser.getUserByEmail(email);
+        User user = selectUser();
+        final String userName = user.getName();
         List<Gift> gifts;
-        if (user == null){
-            System.out.println("User not found with such email");
-        }else{
             gifts = getInstance().daoGift.getAllGiftsByUser(user.getId());
             if (gifts.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
                     "has not won any reward yet");
@@ -133,7 +122,6 @@ public class UserManager {
                 System.out.println("The player " + user.getName() + " has won the following rewards:");
                 gifts.forEach(System.out::println);
             }
-        }
     }
 
     public User checkUserInList(Integer id, List<User> users){
@@ -141,6 +129,20 @@ public class UserManager {
                             .findFirst().orElse(null);
     }
 
+    public User selectUser(){
+        List<User> users = getInstance().daoUser.getData();
+        if (users.isEmpty()) return null;
+
+        System.out.println("--- USER LIST ---");
+        Integer id;
+        User currentUser = null;
+        users.forEach(user -> System.out.println(user.getId() + ". " + user.getName()));
+        do{
+            id = Entry.readInt("Select user id >> ");
+            currentUser = checkUserInList(id, users);
+        }while (currentUser == null);
+        return currentUser;
+    }
 }
 
 
