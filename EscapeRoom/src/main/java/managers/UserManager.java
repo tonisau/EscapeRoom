@@ -1,7 +1,7 @@
 package managers;
 
 import DAO.implementations.GiftDAOImpl;
-import DAO.interfaces.implementations.UserDAOImpl;
+import DAO.implementations.UserDAOImpl;
 import classes.User;
 import classes.item.implementations.Gift;
 import exceptions.IncorrectMenuOptionException;
