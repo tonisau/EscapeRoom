@@ -130,6 +130,9 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
     }
 
     @Override
+    public void onCallbackBoolean(Clue object, Attribute<Boolean> attribute) {}
+
+    @Override
     public void onCallbackTheme(Clue object, Attribute<Theme> attribute) {
         if (attribute.getName().equals(THEME)) {
             object.setTheme(attribute.getValue());

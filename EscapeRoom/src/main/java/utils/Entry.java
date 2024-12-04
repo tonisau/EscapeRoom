@@ -144,7 +144,7 @@ public class Entry {
         else return line;
     }
 
-    public static boolean readBoolean(String message) {
+    public static Boolean readBoolean(String message) {
         Scanner scanner = new Scanner(System.in);
         String result;
         do{

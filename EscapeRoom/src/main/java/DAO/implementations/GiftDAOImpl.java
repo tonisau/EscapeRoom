@@ -1,6 +1,8 @@
 package DAO.implementations;
 
 import DAO.Parser;
+import classes.User;
+import classes.enums.Material;
 import DAO.interfaces.GiftDAO;
 import classes.enums.Material;
 import classes.enums.Theme;
@@ -127,4 +129,7 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
 
     @Override
     public void onCallbackTheme(Gift object, Attribute<Theme> attribute) {}
+
+    @Override
+    public void onCallbackBoolean(Gift object, Attribute<Boolean> attribute) {}
 }

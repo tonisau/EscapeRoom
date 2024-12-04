@@ -29,4 +29,11 @@ public class Query {
     public static final String GETALLGIFTS = "SELECT idgift, name FROM gift";
     public static final String DELETEGIFT = "DELETE FROM gift WHERE idgift = ?";
     public static final String GETGIFTBYID = "SELECT idgift, name, price FROM gift WHERE idgift = ?";
+
+    public static final String CREATEUSER = "INSERT INTO user (name, email) VALUES (?, ?)";;
+    public static final String UPDATEUSER = "UPDATE user" +
+            " SET name = ?, email = ?, isSubscriber = ? WHERE iduser = ?";
+    public static final String GETUSER = "SELECT * FROM user WHERE iduser = ? LIMIT 1";
+    public static final String GETUSERBYEMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
+    public static final String SHOWUSERS = "SELECT * FROM user";
 }

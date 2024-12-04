@@ -133,7 +133,8 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
     }
 
     @Override
-    public void onCallbackTheme(Decoration object, Attribute<Theme> attribute) {
+    public void onCallbackTheme(Decoration object, Attribute<Theme> attribute) {}
 
-    }
+    @Override
+    public void onCallbackBoolean(Decoration object, Attribute<Boolean> attribute) {}
 }
