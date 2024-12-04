@@ -62,7 +62,7 @@ public class Ticket {
                 "Sala " + roomId +
                 ", fecha: " + saleDate +
                 ", precio: " + price +
-                "€, judadores: " + users +
+                "€, judadores: \n" + users +
                 '}';
     }
 }
