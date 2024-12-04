@@ -85,10 +85,10 @@ public class UserManager {
     }
 
     public void subscribeUser(){
-        String email = Entry.readString("Please type user's email: ");
-        User user = getInstance().daoUser.getUserByEmail(email);
+        User user = selectUser();
         if (user == null){
-            System.out.println("User not found with such email");
+            System.out.println("No user found");
+            return;
         }else{
             Boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
             user.setIsSuscriber(isSubscriber);
@@ -98,6 +98,10 @@ public class UserManager {
 
     public void printCertificates(){
         User currentUser = selectUser();
+        if (currentUser == null){
+            System.out.println("No user found");
+            return;
+        }
         final String userName = currentUser.getName();
 
         List<Enigma> enigmas;
@@ -113,6 +117,10 @@ public class UserManager {
 
     public void showGifts(){
         User user = selectUser();
+        if (user == null){
+            System.out.println("No user found");
+            return;
+        }
         final String userName = user.getName();
         List<Gift> gifts;
             gifts = getInstance().daoGift.getAllGiftsByUser(user.getId());
