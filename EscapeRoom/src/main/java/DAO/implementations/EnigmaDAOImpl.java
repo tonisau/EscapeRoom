@@ -2,6 +2,7 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.EnigmaDAO;
+import classes.User;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
@@ -60,6 +61,26 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
                 new Attribute<>(PRICE, null, Double.class));
 
         return this.getEngimas(Query.GETENIGMABYID, queryAttributeList, outputAttributes).getFirst();
+    }
+
+    @Override
+    public List<Enigma> getAllEnigmasByUser(User user) {
+        List<Enigma> enigmas = new ArrayList<>();
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute<>(user.getId(), Integer.class));
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<>(NAME, null, String.class));
+
+        List<HashSet<Attribute>> certificates = dbConnection.query(Query.GETENIGMASBYUSER, queryAttributeList, outputAttributes);
+
+        if (certificates.isEmpty()) return List.of();
+
+        for (HashSet<Attribute> attributeValues: certificates) {
+            Enigma enigma = itemFactory.createEnigma();
+            parser.parseObject(enigma, attributeValues);
+            enigmas.add(enigma);
+        }
+        return enigmas;
     }
 
     @Override

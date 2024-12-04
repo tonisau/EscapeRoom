@@ -36,4 +36,8 @@ public class Query {
     public static final String GETUSER = "SELECT * FROM user WHERE iduser = ? LIMIT 1";
     public static final String GETUSERBYEMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
     public static final String SHOWUSERS = "SELECT * FROM user";
+
+    public static final String GETENIGMASBYUSER = "SELECT e.name FROM user_has_enigma uhe " +
+                                "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma " +
+                                "WHERE user_iduser = ?";
 }
