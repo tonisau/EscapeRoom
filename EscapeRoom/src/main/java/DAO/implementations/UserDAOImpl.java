@@ -81,11 +81,6 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public List<String> getGifts(User user) {
-        return List.of();
-    }
-
-    @Override
     public void add(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));

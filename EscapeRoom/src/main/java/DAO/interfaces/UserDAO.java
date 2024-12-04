@@ -9,5 +9,4 @@ public interface UserDAO extends DAO<User>{
     User getUserByEmail(String email);
     void updateUser(User user);
     List<String> getCertificates(User user);
-    List<String> getGifts(User user);
 }
