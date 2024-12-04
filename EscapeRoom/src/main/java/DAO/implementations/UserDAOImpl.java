@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     private static final String IDUSER = "iduser";
 
     @Override
-    public User getUser(int id) {
+    public User getUser(Integer id) {
         List<Attribute> queryAttributeList = Arrays.asList(
                 new Attribute<>(IDUSER, null, Integer.class)
         );
