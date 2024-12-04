@@ -63,5 +63,14 @@ public class User implements Subscriber {
         return isSuscriber;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id: " + id +
+                ", name: " + name +
+                ", email: " + email +
+                ", Suscriber? >" + isSuscriber +
+                '}';
+    }
 }
 
