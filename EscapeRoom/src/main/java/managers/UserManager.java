@@ -116,7 +116,7 @@ public class UserManager {
         if (user == null){
             System.out.println("User not found with such email");
         }else{
-            gifts = getInstance().daoGift.getGifts(user);
+            gifts = getInstance().daoGift.getAllGiftsByUser(user.getId());
             if (gifts.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
                     "has not won any reward yet");
             else{

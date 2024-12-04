@@ -4,6 +4,7 @@ import DAO.Parser;
 import DAO.interfaces.UserDAO;
 import classes.User;
 import classes.enums.Material;
+import classes.enums.Theme;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import connections.attribute.Query;
@@ -49,7 +50,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     @Override
     public User getUserByEmail(String email) {
         return null;
-    }
+    } // TODO: remove
 
     @Override
     public void updateUser(User user) {
@@ -62,7 +63,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public List<String> getCertificates(User user) {
+    public List<String> getCertificates(User user) { // TODO: Use giftDAO to get Enigmas and remove this method
         DbConnectionImpl dbConnection1 = DbConnectionImpl.getInstance();
 
         List<Attribute> queryAttributeList = new ArrayList<>();
@@ -70,7 +71,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
         List<Attribute> outputAttributes = Arrays.asList(
                 new Attribute<>(NAME, null, String.class));
 
-        List<HashSet<Attribute>> certificates = dbConnection.query(Query.GETCERTIFICATES, queryAttributeList, outputAttributes);
+        List<HashSet<Attribute>> certificates = dbConnection.query("", queryAttributeList, outputAttributes);
 
         if (certificates.isEmpty()) return List.of();
 
@@ -80,7 +81,6 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
         return null;
     }
 
-    @Override
     public void add(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
@@ -112,6 +112,11 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
+    public void delete(Integer id) {
+
+    }
+
+    @Override
     public void onCallbackString(User object, Attribute<String> attribute) {
         switch (attribute.getName()){
             case NAME -> object.setName(attribute.getValue());
@@ -120,7 +125,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public void onCallbackInt(User object, Attribute<Integer> attribute) {
+    public void onCallbackInteger(User object, Attribute<Integer> attribute) {
         if (attribute.getName().equals(IDUSER)) object.setId(attribute.getValue());
     }
 
@@ -138,4 +143,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     public void onCallbackBoolean(User object, Attribute<Boolean> attribute){
         if (attribute.getName().equals(IS_SUBSCRIBER)) object.setIsSuscriber(attribute.getValue());
     }
+
+    @Override
+    public void onCallbackTheme(User object, Attribute<Theme> attribute) {}
 }
