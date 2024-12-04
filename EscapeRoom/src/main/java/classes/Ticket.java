@@ -16,6 +16,7 @@ public class Ticket {
     public Ticket(int roomId, LocalDateTime saleDate, double price, List<User> users){
         this.roomId = roomId;
         this.saleDate = saleDate;
+        this.price = price;
         this.users = users;
     }
 
