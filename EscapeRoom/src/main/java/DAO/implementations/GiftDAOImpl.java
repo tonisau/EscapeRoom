@@ -124,15 +124,5 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
     }
 
     @Override
-    public void onCallbackMaterial(Gift object, Attribute<Material> attribute) {}
-
-    @Override
-    public void onCallbackTheme(Gift object, Attribute<Theme> attribute) {}
-
-    @Override
     public void onCallbackBoolean(Gift object, Attribute<Boolean> attribute) {}
-
-    @Override
-    public void onCallbackLevel(Gift object, Attribute<Level> attribute) {}
-
 }

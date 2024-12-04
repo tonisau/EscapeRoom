@@ -161,24 +161,10 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public void onCallbackDouble(User object, Attribute<Double> attribute) {
-
-    }
-
-    @Override
-    public void onCallbackMaterial(User object, Attribute<Material> attribute) {
-
-    }
+    public void onCallbackDouble(User object, Attribute<Double> attribute) {}
 
     @Override
     public void onCallbackBoolean(User object, Attribute<Boolean> attribute){
         if (attribute.getName().equals(IS_SUBSCRIBER)) object.setIsSuscriber(attribute.getValue());
     }
-
-    @Override
-    public void onCallbackTheme(User object, Attribute<Theme> attribute) {}
-
-    @Override
-    public void onCallbackLevel(User object, Attribute<Level> attribute) {}
-
 }
