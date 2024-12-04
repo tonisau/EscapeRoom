@@ -71,11 +71,13 @@ public class MainManager {
                     }
                     break;
                 case 8:
-                    //userManager.start();
+                    userManager.start();
                     break;
                 case 9:
+                    ticketManager.generateTicket();
                     break;
                 case 10:
+                    ticketManager.calcTotalIncome();
                     break;
                 case 0:
                     close = true;
