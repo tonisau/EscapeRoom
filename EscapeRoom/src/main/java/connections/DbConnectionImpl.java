@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class DbConnectionImpl implements DbConnection {
@@ -133,7 +134,10 @@ public class DbConnectionImpl implements DbConnection {
                     statement.setInt(i + 1, (Integer) attribute.getValue());
                 } else if (attribute.getType() == Double.class) {
                     statement.setDouble(i + 1, (Double) attribute.getValue());
+                } else if (attribute.getType() == LocalDateTime.class){
+                    statement.setObject(i +1, attribute.getValue());
                 }
+
             } catch (SQLException e) {
                 System.out.println("Could not set value to statement.Position: " + (i + 1) + " Attribute: " + attribute.getValue() + " Value: " + attribute.getName());
             }
