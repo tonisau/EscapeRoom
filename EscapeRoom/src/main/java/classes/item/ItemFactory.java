@@ -8,9 +8,13 @@ import classes.item.implementations.Enigma;
 import classes.item.implementations.Gift;
 
 public interface ItemFactory {
-    Decoration createDecoration(String name, double price, Material material, int quantity);
-    Clue createClue(String name, double price, Theme theme);
-    Enigma createEnigma(String name, double price);
-    Gift createGift(String name, double price);
+    Decoration createDecoration(String name, Double price, Material material, Integer quantity);
+    Clue createClue(String name, Double price, Theme theme);
+    Enigma createEnigma(String name, Double price);
+    Gift createGift(String name, Double price);
+
+    Decoration createDecoration();
+    Clue createClue();
     Enigma createEnigma();
+    Gift createGift();
 }

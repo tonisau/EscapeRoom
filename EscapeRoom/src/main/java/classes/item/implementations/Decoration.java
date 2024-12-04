@@ -6,13 +6,15 @@ import classes.enums.Material;
 public class Decoration extends Item {
 
     Material material;
-    int quantity;
+    Integer quantity;
 
-    Decoration(String name, double price, Material material, int quantity) {
+    Decoration(String name, Double price, Material material, Integer quantity) {
         super(name, price);
         this.setMaterial(material);
         this.setQuantity(quantity);
     }
+
+    Decoration() { super(); }
 
     public Material getMaterial() {
         return material;
@@ -22,7 +24,7 @@ public class Decoration extends Item {
         this.material = material;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
