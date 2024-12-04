@@ -11,6 +11,8 @@ public class Ticket {
     private LocalDateTime saleDate;
     private List<User> users;
 
+    public Ticket(){}
+
     public Ticket(int roomId, LocalDateTime saleDate, double price, List<User> users){
         this.roomId = roomId;
         this.saleDate = saleDate;
