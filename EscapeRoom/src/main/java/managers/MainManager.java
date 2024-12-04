@@ -18,6 +18,7 @@ public class MainManager {
         int selectedMenuOption = -1;
 
         escapeRoomManager.createEscapeRoomIfNotPresent();
+        Integer escapeRoomId = escapeRoomManager.getEscapeRoom().getIdEscaperoom();
 
         do {
             try {
@@ -28,22 +29,22 @@ public class MainManager {
 
             switch (selectedMenuOption) {
                 case 1:
-                    Integer escapeRoomId = escapeRoomManager.getEscapeRoom().getIdEscaperoom();
                     inventoryManager.addRoomToEscapeRoom(escapeRoomId);
                     break;
                 case 2:
-                    inventoryManager.addEnigmaToRoom();
+                    inventoryManager.addNewEnigma();
                     break;
                 case 3:
-                    inventoryManager.getEnigmasForRoom().forEach(System.out::println);
-                    inventoryManager.addClueForEnigma();
+                    inventoryManager.addNewClue();
                     break;
                 case 4:
-                    // TODO: Room manager show all rooms
-                    inventoryManager.addDecorationToRoom();
+                    inventoryManager.addNewDecoration();
+                    break;
                 case 5:
+                    inventoryManager.showInventory(escapeRoomId);
                     break;
                 case 6:
+                    inventoryManager.showTotalInventoryValue(escapeRoomId);
                     break;
                 case 7:
                     inventoryManager.deleteMenuStart();

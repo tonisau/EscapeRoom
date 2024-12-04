@@ -76,7 +76,7 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
                 new Attribute<>(IDCLUE, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(THEME, null, String.class));
+                new Attribute<>(THEME, null, Theme.class));
 
         return this.getClues(Query.GETALLCLUES, queryAttributeList, outputAttributes);
     }

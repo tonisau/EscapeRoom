@@ -34,9 +34,10 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
     public void addDecoration(Decoration decoration, Integer roomId) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(decoration.getName(), String.class));
-        attributeList.add(new Attribute<>(decoration.getPrice(), Double.class));
         attributeList.add(new Attribute<>(decoration.getMaterial().name(), String.class));
+        attributeList.add(new Attribute<>(decoration.getPrice(), Double.class));
         attributeList.add(new Attribute<>(decoration.getQuantity(), Integer.class));
+        attributeList.add(new Attribute<>(roomId, Integer.class));
         dbConnection.create(Query.CREATEDECORATION, attributeList);
     }
 
@@ -47,7 +48,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
                 new Attribute<>(IDDECORATION, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(MATERIAL, null, String.class),
+                new Attribute<>(MATERIAL, null, Material.class),
                 new Attribute<>(QUANTITY, null, Integer.class));
 
         return this.getDecorations(Query.GETDECORATIONBYID, queryAttributeList, outputAttributes).getFirst();
@@ -60,7 +61,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
                 new Attribute<>(IDDECORATION, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(MATERIAL, null, String.class),
+                new Attribute<>(MATERIAL, null, Material.class),
                 new Attribute<>(QUANTITY, null, Integer.class));
 
         return this.getDecorations(Query.GETDECORATIONEBYROOM, queryAttributeList, outputAttributes);
@@ -73,7 +74,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
                 new Attribute<>(IDDECORATION, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(MATERIAL, null, String.class),
+                new Attribute<>(MATERIAL, null, Material.class),
                 new Attribute<>(QUANTITY, null, Integer.class));
 
         return this.getDecorations(Query.GETALLDECORATIONS, queryAttributeList, outputAttributes);

@@ -24,7 +24,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
     Parser<Room> parser = new Parser<>(this);
     ItemFactory itemFactory = new ItemFactoryImpl();
 
-    private static final String IDROOM = "idgift";
+    private static final String IDROOM = "idroom";
     private static final String NAME = "name";
     private static final String PRICE = "price";
     private static final String LEVEL = "level";
@@ -46,7 +46,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
                 new Attribute<>(IDROOM, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(LEVEL, null, String.class));
+                new Attribute<>(LEVEL, null, Level.class));
 
         return this.getRooms(Query.GETROOMBYESCAPEROOM, queryAttributeList, outputAttributes);
     }
@@ -58,7 +58,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
                 new Attribute<>(IDROOM, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(LEVEL, null, String.class));
+                new Attribute<>(LEVEL, null, Level.class));
 
         return this.getRooms(Query.GETROOMBYID, queryAttributeList, outputAttributes).getFirst();
     }
@@ -70,7 +70,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
                 new Attribute<>(IDROOM, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(LEVEL, null, String.class));
+                new Attribute<>(LEVEL, null, Level.class));
 
         return this.getRooms(Query.GETALLROOMS, queryAttributeList, outputAttributes);
     }

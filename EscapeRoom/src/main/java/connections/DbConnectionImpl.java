@@ -55,6 +55,7 @@ public class DbConnectionImpl implements DbConnection {
             try(ResultSet resultSet = this.executeQuery(statement)) {
                 while(resultSet.next()) {
                     HashSet<Attribute> hashSet = new HashSet<>();
+
                     for (Attribute attribute: outputAttributes) {
                         if (attribute.getType() == String.class) {
                             Attribute<String> att = new Attribute<>();
