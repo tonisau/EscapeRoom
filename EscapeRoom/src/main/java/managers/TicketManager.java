@@ -1,9 +1,13 @@
 package managers;
 
-import DAO.interfaces.implementations.DAORoomImpl;
+import DAO.implementations.TicketDAOImpl;
+import DAO.implementations.UserDAOImpl;
+import DAO.interfaces.UserDAO;
+//import DAO.interfaces.implementations.DAORoomImpl;
 import classes.Room;
 import classes.Ticket;
 import classes.User;
+import classes.enums.Level;
 import utils.Entry;
 
 import java.time.LocalDateTime;
@@ -16,22 +20,20 @@ public class TicketManager {
     private final static double PLAYER_PRICE = 20;
     private static TicketManager instance;
     private final TicketDAOImpl daoTicket;
-    private final DAORoomImpl daoRoom;
-    private final DAOUserImpl daoUser;
+    //private final DAORoomImpl daoRoom;
+    private final UserDAOImpl daoUser;
 
-    private TicketManager () {
+    public TicketManager () {
         this.daoTicket = new TicketDAOImpl();
-        this.daoRoom = new DAORoomImpl();
-    }
-
-    public static TicketManager getInstance(){
-        if (instance == null) instance = new TicketManager();
-        return instance;
+        this.daoUser = new UserDAOImpl();
+        //this.daoRoom = new DAORoomImpl();
     }
 
     public void generateTicket(){
         Ticket ticket = createTicket();
+
         // save ticket in BDD
+        this.daoTicket.addTicket(ticket);
 
         System.out.println("Printing ticket...");
         System.out.println(ticket.toString());
@@ -54,8 +56,11 @@ public class TicketManager {
     public int selectRoom(){
         int result = -1;
         int selId;
-        List<Room> rooms = this.daoRoom.showData();
-        if (rooms.isEmpty()){
+        //Uncomment when daoRoom is ready -->
+        //List<Room> rooms = this.daoRoom.showData();
+        Room room = new Room(1, "room1", 100, Level.LOW);
+
+        /*if (rooms.isEmpty()){
             System.out.println("None available room found in this escape room.");
         }
         else{
@@ -65,8 +70,9 @@ public class TicketManager {
                 selId = Entry.readInt("Your selection >> ");
             }while (checkRoomNotInList(selId, rooms));
             result = selId;
-        }
-        return result;
+        }*/
+//        return result;
+        return room.getIdRoom();
     }
     public boolean checkRoomNotInList(int id, List<Room> rooms){
         return rooms.stream().filter(room -> room.getIdRoom() == id).toList().isEmpty();
@@ -74,7 +80,7 @@ public class TicketManager {
 
     public List<User> getplayers(){
         List<User> players = new ArrayList<>();
-        List<User> users = this.daoUser.showData();
+        List<User> users = this.daoUser.getData();
         int id = -1;
         if (users.isEmpty()){
             System.out.println("No player found in this escape room. A ticket cannot be issued.");
@@ -110,8 +116,13 @@ public class TicketManager {
     }
 
     public void calcTotalIncome(){
+        LocalDateTime dateFrom = LocalDateTime.parse("2024-01-01T00:00:00");
+        LocalDateTime dateTo = LocalDateTime.parse("2024-12-31T00:00:00");
+
+
         System.out.println("The total sale amount of the escape room is : " +
-                            getTotalSales(this.daoTicket.showData()));
+                        this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo));
+               // getTotalSales(this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo)));
     }
     public double getTotalSales(List<Ticket> tickets){
         return tickets.stream().mapToDouble(Ticket::getPrice).sum();
