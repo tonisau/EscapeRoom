@@ -116,16 +116,28 @@ public class TicketManager {
     }
 
     public void calcTotalIncome(){
-        LocalDateTime dateFrom = LocalDateTime.parse("2024-01-01T00:00:00");
-        LocalDateTime dateTo = LocalDateTime.parse("2024-12-31T00:00:00");
+        LocalDateTime dateFrom;
+        LocalDateTime dateTo;
+        System.out.println("To calculate total income of a period, enter both start and end dates:");
+        do{
+            dateFrom = Entry.readLocalDateTime("Type start date: ");
+        }while (!checkDateFrom(dateFrom));
 
+        do{
+            dateTo = Entry.readLocalDateTime("Type end date: ");
+        }while (!checkDateTo(dateTo, dateFrom));
+//        LocalDateTime dateFrom = LocalDateTime.parse("2024-01-01T00:00:00");
+//        LocalDateTime dateTo = LocalDateTime.parse("2024-12-31T00:00:00");
 
         System.out.println("The total sale amount of the escape room is : " +
-                        this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo));
-               // getTotalSales(this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo)));
-    }
-    public double getTotalSales(List<Ticket> tickets){
-        return tickets.stream().mapToDouble(Ticket::getPrice).sum();
+                        this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo) + "€.");
     }
 
+    public boolean checkDateFrom(LocalDateTime date){
+        return date.isBefore(LocalDateTime.now());
+    }
+
+    public boolean checkDateTo(LocalDateTime dateTo, LocalDateTime dateFrom){
+        return dateTo.isAfter(dateFrom);
+    }
 }
