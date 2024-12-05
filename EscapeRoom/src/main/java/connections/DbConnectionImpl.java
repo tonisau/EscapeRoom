@@ -136,6 +136,8 @@ public class DbConnectionImpl implements DbConnection {
                     statement.setDouble(i + 1, (Double) attribute.getValue());
                 } else if (attribute.getType() == LocalDateTime.class){
                     statement.setObject(i +1, attribute.getValue());
+                } else if (attribute.getType() == Boolean.class){
+                    statement.setBoolean(i +1, (Boolean) attribute.getValue());
                 }
 
             } catch (SQLException e) {
