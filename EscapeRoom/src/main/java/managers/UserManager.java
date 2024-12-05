@@ -85,10 +85,10 @@ public class UserManager {
     }
 
     public void subscribeUser(){
+        List<User> users = daoUser.getData();
         User user = selectUser();
         if (user == null){
             System.out.println("No user found");
-            return;
         }else{
             Boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
             user.setIsSuscriber(isSubscriber);
@@ -144,7 +144,7 @@ public class UserManager {
         System.out.println("--- USER LIST ---");
         Integer id;
         User currentUser = null;
-        users.forEach(user -> System.out.println(user.getId() + ". " + user.getName()));
+        users.forEach(System.out::println);
         do{
             id = Entry.readInt("Select user id >> ");
             currentUser = checkUserInList(id, users);
