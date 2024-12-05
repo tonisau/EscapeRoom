@@ -6,6 +6,9 @@ import classes.enums.Theme;
 import exceptions.IncorrectInputException;
 import exceptions.StringException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -180,4 +183,24 @@ public class Entry {
         }while (!result.matches("[YN]") );
         return result.equals("Y");
     }
+
+    public static LocalDateTime readLocalDateTime(String message) {
+        Scanner scanner = new Scanner(System.in);
+        LocalDateTime dateTime = null;
+
+        while (true) {
+            System.out.print(message);
+            String dateStr = scanner.nextLine();
+
+            try {
+                dateTime = LocalDateTime.parse(dateStr + "T00:00:00");
+                break;
+            } catch (DateTimeParseException e) {
+
+                System.out.println("Invalid format. Please type date with format 'yyyy-MM-dd'.");
+            }
+        }
+        return dateTime;
+    }
+
 }

@@ -66,10 +66,10 @@ public class User implements Subscriber {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", isSuscriber=" + isSuscriber +
+                "id: " + id +
+                ", name: " + name +
+                ", email: " + email +
+                ", Suscriber? >" + isSuscriber +
                 '}';
     }
 }

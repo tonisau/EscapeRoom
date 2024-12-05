@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class DbConnectionImpl implements DbConnection {
@@ -72,20 +73,10 @@ public class DbConnectionImpl implements DbConnection {
                             att.setName(attribute.getName());
                             att.setValue(resultSet.getDouble(attribute.getName()));
                             hashSet.add(att);
-                        } else if (attribute.getType() == Theme.class) {
-                            Attribute<Theme> att = new Attribute<>();
+                        } else if (attribute.getType() == Boolean.class) {
+                            Attribute<Boolean> att = new Attribute<>();
                             att.setName(attribute.getName());
-                            att.setValue(Theme.valueOf(resultSet.getString(attribute.getName())));
-                            hashSet.add(att);
-                        } else if (attribute.getType() == Material.class) {
-                            Attribute<Material> att = new Attribute<>();
-                            att.setName(attribute.getName());
-                            att.setValue(Material.valueOf(resultSet.getString(attribute.getName())));
-                            hashSet.add(att);
-                        } else if (attribute.getType() == Level.class) {
-                            Attribute<Level> att = new Attribute<>();
-                            att.setName(attribute.getName());
-                            att.setValue(Level.valueOf(resultSet.getString(attribute.getName())));
+                            att.setValue(resultSet.getBoolean(attribute.getName()));
                             hashSet.add(att);
                         }
                     }
@@ -152,7 +143,12 @@ public class DbConnectionImpl implements DbConnection {
                     statement.setInt(i + 1, (Integer) attribute.getValue());
                 } else if (attribute.getType() == Double.class) {
                     statement.setDouble(i + 1, (Double) attribute.getValue());
+                } else if (attribute.getType() == LocalDateTime.class){
+                    statement.setObject(i +1, attribute.getValue());
+                } else if (attribute.getType() == Boolean.class){
+                    statement.setBoolean(i +1, (Boolean) attribute.getValue());
                 }
+
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Could not set value to statement. Position: " + (i + 1) + " Attribute: " + attribute.getName() + " Value: " + attribute.getValue());

@@ -1,25 +1,30 @@
 package classes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class Ticket {
     private int roomId;
-    private static double price = 20;
-    private Date saleDate;
+    private double price ;
+    private LocalDateTime saleDate;
     private List<User> users;
 
-    public Ticket(int roomId, Date saleDate, List<User> users){
+    public Ticket(){}
+
+    public Ticket(int roomId, LocalDateTime saleDate, double price, List<User> users){
         this.roomId = roomId;
         this.saleDate = saleDate;
+        this.price = price;
         this.users = users;
     }
 
-    public static void setPrice(double price) {
-        Ticket.price = price;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public static double getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -31,11 +36,11 @@ public class Ticket {
         return roomId;
     }
 
-    public void setSaleDate(Date saleDate) {
+    public void setSaleDate(LocalDateTime saleDate) {
         this.saleDate = saleDate;
     }
 
-    public Date getSaleDate() {
+    public LocalDateTime getSaleDate() {
         return saleDate;
     }
 
@@ -57,7 +62,7 @@ public class Ticket {
                 "Sala " + roomId +
                 ", fecha: " + saleDate +
                 ", precio: " + price +
-                "€, judadores: " + users +
+                "€, judadores: \n" + users +
                 '}';
     }
 }
