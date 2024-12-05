@@ -128,7 +128,7 @@ public class TicketManager {
         }while (!checkDateTo(dateTo, dateFrom));
 //        LocalDateTime dateFrom = LocalDateTime.parse("2024-01-01T00:00:00");
 //        LocalDateTime dateTo = LocalDateTime.parse("2024-12-31T00:00:00");
-        double income = this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo;
+        double income = this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo);
 
         System.out.println("The total sale amount of the escape room is : " +
                         String.format("%.2f", income) + "€.");
