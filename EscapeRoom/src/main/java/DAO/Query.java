@@ -36,16 +36,19 @@ public class Query {
     public static final String DELETEROOM = "DELETE FROM room WHERE idroom = ?";
     public static final String GETROOMBYID = "SELECT idroom, name, price, level FROM room WHERE idroom = ?";
 
-
     public static final String CREATEUSER = "INSERT INTO user (name, email) VALUES (?, ?)";;
     public static final String UPDATEUSER = "UPDATE user" +
             " SET name = ?, email = ?, isSubscriber = ? WHERE iduser = ?";
     public static final String GETUSER = "SELECT * FROM user WHERE iduser = ? LIMIT 1";
-    public static final String GETUSERBYEMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
     public static final String SHOWUSERS = "SELECT * FROM user";
     public static final String GETUSERSWITHENIGMA = "SELECT iduser, name, email FROM user INNER JOIN user_has_enigma ON user.iduser = user_has_enigma.user_iduser WHERE user_has_enigma.enigma_idenigma = ?";
     public static final String DELETEUSERHASENIGMA = "DELETE FROM user_has_enigma WHERE enigma_idenigma = ?";
     public static final String GETENIGMASBYUSER = "SELECT e.name FROM user_has_enigma uhe " +
-                                "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma " +
-                                "WHERE user_iduser = ?";
+            "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma " +
+            "WHERE user_iduser = ?";
+
+    public static final String CREATETICKET = "INSERT INTO ticket (price, date, room_idroom) VALUES (?, ?, ?)";
+    public static final String GETTICKETINCOME= "SELECT SUM(price) as Income FROM ticket WHERE Date BETWEEN ? and ?";
+}
+
 }
