@@ -73,21 +73,6 @@ public class DbConnectionImpl implements DbConnection {
                             att.setName(attribute.getName());
                             att.setValue(resultSet.getDouble(attribute.getName()));
                             hashSet.add(att);
-                        } else if (attribute.getType() == Theme.class) {
-                            Attribute<Theme> att = new Attribute<>();
-                            att.setName(attribute.getName());
-                            att.setValue(Theme.valueOf(resultSet.getString(attribute.getName())));
-                            hashSet.add(att);
-                        } else if (attribute.getType() == Material.class) {
-                            Attribute<Material> att = new Attribute<>();
-                            att.setName(attribute.getName());
-                            att.setValue(Material.valueOf(resultSet.getString(attribute.getName())));
-                            hashSet.add(att);
-                        } else if (attribute.getType() == Level.class) {
-                            Attribute<Level> att = new Attribute<>();
-                            att.setName(attribute.getName());
-                            att.setValue(Level.valueOf(resultSet.getString(attribute.getName())));
-                            hashSet.add(att);
                         }
                     }
                     list.add(hashSet);
