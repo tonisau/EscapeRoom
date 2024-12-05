@@ -58,7 +58,7 @@ public class TicketManager {
         int selId;
         //Uncomment when daoRoom is ready -->
         //List<Room> rooms = this.daoRoom.showData();
-        Room room = new Room(1, "room1", 100, Level.LOW);
+        Room room = new Room("room1", 100.0, Level.LOW);
 
         /*if (rooms.isEmpty()){
             System.out.println("None available room found in this escape room.");
