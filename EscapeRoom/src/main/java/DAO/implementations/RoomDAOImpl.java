@@ -46,7 +46,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
                 new Attribute<>(IDROOM, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(LEVEL, null, Level.class));
+                new Attribute<>(LEVEL, null, String.class));
 
         return this.getRooms(Query.GETROOMBYESCAPEROOM, queryAttributeList, outputAttributes);
     }
@@ -58,7 +58,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
                 new Attribute<>(IDROOM, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(LEVEL, null, Level.class));
+                new Attribute<>(LEVEL, null, String.class));
 
         return this.getRooms(Query.GETROOMBYID, queryAttributeList, outputAttributes).getFirst();
     }
@@ -70,7 +70,7 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
                 new Attribute<>(IDROOM, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(LEVEL, null, Level.class));
+                new Attribute<>(LEVEL, null, String.class));
 
         return this.getRooms(Query.GETALLROOMS, queryAttributeList, outputAttributes);
     }
@@ -101,6 +101,10 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
 
     @Override
     public void onCallbackString(Room object, Attribute<String> attribute) {
+        switch (attribute.getName()) {
+            case NAME -> object.setName(attribute.getValue());
+            case LEVEL -> object.setLevel(Level.valueOf(attribute.getValue()));
+        }
         if (attribute.getName().equals(NAME)) {
             object.setName(attribute.getValue());
         }
@@ -121,24 +125,5 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
     }
 
     @Override
-    public void onCallbackMaterial(Room object, Attribute<Material> attribute) {
-
-    }
-
-    @Override
-    public void onCallbackBoolean(Room object, Attribute<Boolean> attribute) {
-
-    }
-
-    @Override
-    public void onCallbackTheme(Room object, Attribute<Theme> attribute) {
-
-    }
-
-    @Override
-    public void onCallbackLevel(Room object, Attribute<Level> attribute) {
-        if (attribute.getName().equals(LEVEL)) {
-            object.setLevel(attribute.getValue());
-        }
-    }
+    public void onCallbackBoolean(Room object, Attribute<Boolean> attribute) {}
 }

@@ -2,12 +2,7 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.EnigmaDAO;
-import classes.enums.Level;
-import classes.User;
-import classes.enums.Material;
-import classes.enums.Theme;
 import classes.item.ItemFactory;
-import classes.item.implementations.Decoration;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
@@ -142,15 +137,7 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
     }
 
     @Override
-    public void onCallbackMaterial(Enigma object, Attribute<Material> attribute) {}
-
-    @Override
     public void onCallbackBoolean(Enigma object, Attribute<Boolean> attribute) {}
 
-    @Override
-    public void onCallbackTheme(Enigma object, Attribute<Theme> attribute) {}
-
-    @Override
-    public void onCallbackLevel(Enigma object, Attribute<Level> attribute) {}
 
 }

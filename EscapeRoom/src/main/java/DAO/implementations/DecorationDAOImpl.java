@@ -2,9 +2,7 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.DecorationDAO;
-import classes.enums.Level;
 import classes.enums.Material;
-import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.Decoration;
 import classes.item.implementations.ItemFactoryImpl;
@@ -48,7 +46,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
                 new Attribute<>(IDDECORATION, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(MATERIAL, null, Material.class),
+                new Attribute<>(MATERIAL, null, String.class),
                 new Attribute<>(QUANTITY, null, Integer.class));
 
         return this.getDecorations(Query.GETDECORATIONBYID, queryAttributeList, outputAttributes).getFirst();
@@ -61,7 +59,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
                 new Attribute<>(IDDECORATION, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(MATERIAL, null, Material.class),
+                new Attribute<>(MATERIAL, null, String.class),
                 new Attribute<>(QUANTITY, null, Integer.class));
 
         return this.getDecorations(Query.GETDECORATIONEBYROOM, queryAttributeList, outputAttributes);
@@ -74,7 +72,7 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
                 new Attribute<>(IDDECORATION, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(MATERIAL, null, Material.class),
+                new Attribute<>(MATERIAL, null, String.class),
                 new Attribute<>(QUANTITY, null, Integer.class));
 
         return this.getDecorations(Query.GETALLDECORATIONS, queryAttributeList, outputAttributes);
@@ -106,8 +104,9 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
 
     @Override
     public void onCallbackString(Decoration object, Attribute<String> attribute) {
-        if (attribute.getName().equals(NAME)) {
-            object.setName(attribute.getValue());
+        switch (attribute.getName()) {
+            case NAME -> object.setName(attribute.getValue());
+            case MATERIAL -> object.setMaterial(Material.valueOf(attribute.getValue()));
         }
     }
 
@@ -125,19 +124,6 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
             object.setPrice(attribute.getValue());
         }
     }
-
-    @Override
-    public void onCallbackMaterial(Decoration object, Attribute<Material> attribute) {
-        if (attribute.getName().equals(MATERIAL)) {
-            object.setMaterial(attribute.getValue());
-        }
-    }
-
-    @Override
-    public void onCallbackTheme(Decoration object, Attribute<Theme> attribute) {}
-
-    @Override
-    public void onCallbackLevel(Decoration object, Attribute<Level> attribute) {}
 
     @Override
     public void onCallbackBoolean(Decoration object, Attribute<Boolean> attribute) {}
