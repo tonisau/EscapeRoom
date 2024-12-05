@@ -135,7 +135,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
                 new Attribute<>(IDUSER, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(EMAIL, null, String.class),
-                new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
+                new Attribute<>(IS_SUBSCRIBER, null, Boolean.class));
 
         return this.getUsers(Query.GETUSERSWITHENIGMA, queryAttributeList, outputAttributes);
     }
