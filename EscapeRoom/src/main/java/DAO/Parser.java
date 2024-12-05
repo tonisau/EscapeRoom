@@ -1,5 +1,6 @@
 package DAO;
 
+import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
 import connections.attribute.Attribute;
@@ -23,6 +24,8 @@ public class Parser<T> {
             else if (attribute.getValue() instanceof Theme) callback.onCallbackTheme(object, attribute);
             else if (attribute.getValue() instanceof Material) callback.onCallbackMaterial(object, attribute);
             else if (attribute.getValue() instanceof Boolean) callback.onCallbackBoolean(object, attribute);
+            else if (attribute.getValue() instanceof Level) callback.onCallbackLevel(object, attribute);
+
         }
     }
 }

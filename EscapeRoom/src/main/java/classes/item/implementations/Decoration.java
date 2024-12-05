@@ -31,4 +31,15 @@ public class Decoration extends Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "Decoration{" +
+                "itemId=" + this.getItemId() +
+                ", name='" + this.getName() +
+                ", price=" + this.getPrice() +
+                ", material=" + this.getMaterial().name() +
+                ", quantity=" + this.getQuantity() +
+                '}';
+    }
 }
