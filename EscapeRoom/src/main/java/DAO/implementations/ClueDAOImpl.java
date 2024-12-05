@@ -2,12 +2,9 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.ClueDAO;
-import classes.enums.Level;
-import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.Clue;
-import classes.item.implementations.Decoration;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
@@ -48,7 +45,7 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
                 new Attribute<>(IDCLUE, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(THEME, null, Theme.class));
+                new Attribute<>(THEME, null, String.class));
 
         return this.getClues(Query.GETCLUEBYENIGMA, queryAttributeList, outputAttributes);
     }
@@ -76,7 +73,7 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
                 new Attribute<>(IDCLUE, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(THEME, null, Theme.class));
+                new Attribute<>(THEME, null, String.class));
 
         return this.getClues(Query.GETALLCLUES, queryAttributeList, outputAttributes);
     }
@@ -107,8 +104,9 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
 
     @Override
     public void onCallbackString(Clue object, Attribute<String> attribute) {
-        if (attribute.getName().equals(NAME)) {
-            object.setName(attribute.getValue());
+        switch (attribute.getName()) {
+            case NAME -> object.setName(attribute.getValue());
+            case THEME -> object.setTheme(Theme.valueOf(attribute.getValue()));
         }
     }
 
@@ -127,21 +125,5 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
     }
 
     @Override
-    public void onCallbackMaterial(Clue object, Attribute<Material> attribute) {
-
-    }
-
-    @Override
     public void onCallbackBoolean(Clue object, Attribute<Boolean> attribute) {}
-
-    @Override
-    public void onCallbackTheme(Clue object, Attribute<Theme> attribute) {
-        if (attribute.getName().equals(THEME)) {
-            object.setTheme(attribute.getValue());
-        }
-    }
-
-    @Override
-    public void onCallbackLevel(Clue object, Attribute<Level> attribute) {}
-
 }
