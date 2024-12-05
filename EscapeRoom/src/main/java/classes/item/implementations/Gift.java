@@ -8,5 +8,13 @@ public class Gift extends Item {
     }
 
     Gift() { super(); }
+
+    public String toString() {
+        return "Gift{" +
+                "itemId=" + this.getItemId() +
+                ", name='" + this.getName() +
+                ", price=" + this.getPrice() +
+                '}';
+    }
 }
 

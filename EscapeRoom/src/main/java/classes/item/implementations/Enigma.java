@@ -13,7 +13,7 @@ public class Enigma extends Item {
     public String toString() {
         return "Enigma{" +
                 "itemId=" + this.getItemId() +
-                ", name='" + this.getName() + '\'' +
+                ", name='" + this.getName() +
                 ", price=" + this.getPrice() +
                 '}';
     }

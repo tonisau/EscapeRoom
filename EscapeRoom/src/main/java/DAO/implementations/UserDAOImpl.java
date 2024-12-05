@@ -3,8 +3,11 @@ package DAO.implementations;
 import DAO.Parser;
 import DAO.interfaces.UserDAO;
 import classes.User;
+import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
+import classes.item.implementations.Decoration;
+import classes.item.implementations.Enigma;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import DAO.Query;
@@ -99,21 +102,49 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
                 new Attribute<>(EMAIL, null, String.class),
                 new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
 
-        List<HashSet<Attribute>> userList = dbConnection.query(Query.SHOWUSERS, queryAttributeList, outputAttributes);
+        return this.getUsers(Query.SHOWUSERS, queryAttributeList, outputAttributes);
+    }
 
-        if (userList.isEmpty()) return List.of();
+    private List<User> getUsers(String query, List<Attribute> queryAttributes, List<Attribute> outputAttributes) {
 
-        for (HashSet<Attribute> attributeValues: userList) {
+        List<User> users = new ArrayList<>();
+
+        List<HashSet<Attribute>> usersList = dbConnection.query(query, queryAttributes, outputAttributes);
+
+        if (usersList.isEmpty()) return List.of();
+
+        for (HashSet<Attribute> attributeValues: usersList) {
             User user = new User();
             parser.parseObject(user, attributeValues);
             users.add(user);
         }
+
         return users;
     }
 
     @Override
     public void delete(Integer id) {
 
+    }
+
+    @Override
+    public List<User> getUsersWithEnigma(Integer enigmaId) {
+        List<Attribute> queryAttributeList = List.of(new Attribute<>(enigmaId, Integer.class));
+
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<>(IDUSER, null, Integer.class),
+                new Attribute<>(NAME, null, String.class),
+                new Attribute<>(EMAIL, null, String.class),
+                new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
+
+        return this.getUsers(Query.GETUSERSWITHENIGMA, queryAttributeList, outputAttributes);
+    }
+
+    @Override
+    public void deleteUsersWithEnigma(Integer enigmaId) {
+        List<Attribute> attributeList = new ArrayList<>();
+        attributeList.add(new Attribute<>(enigmaId, Integer.class));
+        dbConnection.delete(Query.DELETEUSERHASENIGMA, attributeList);
     }
 
     @Override
@@ -146,4 +177,8 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
 
     @Override
     public void onCallbackTheme(User object, Attribute<Theme> attribute) {}
+
+    @Override
+    public void onCallbackLevel(User object, Attribute<Level> attribute) {}
+
 }

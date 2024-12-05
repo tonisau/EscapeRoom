@@ -21,4 +21,14 @@ public class Clue extends Item {
     public void setTheme(Theme theme) {
         this.theme = theme;
     }
+
+    @Override
+    public String toString() {
+        return "Clue{" +
+                "itemId=" + this.getItemId() +
+                ", name='" + this.getName() +
+                ", price=" + this.getPrice() +
+                ", theme=" + this.getTheme().name() +
+                '}';
+    }
 }

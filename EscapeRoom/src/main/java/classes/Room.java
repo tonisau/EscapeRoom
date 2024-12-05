@@ -3,33 +3,24 @@ package classes;
 import classes.enums.Level;
 
 public class Room {
-    private int idRoom;
+    private Integer idRoom;
     private String name;
-    private double price;
+    private Double price;
     private Level level;
 
-    public Room(int idRoom, String name, double price, Level level){
-        this.idRoom=idRoom;
-        this.name=name;
-        this.price=price;
-        this.level=level;
-    }
-    public Room(String name, double price, Level level){
+    public Room(String name, Double price, Level level){
         this.name=name;
         this.price=price;
         this.level=level;
     }
 
-    public Room() {
+    public Room() {}
 
-    }
-
-
-    public int getIdRoom() {
+    public Integer getIdRoom() {
         return idRoom;
     }
 
-    public void setIdRoom(int idRoom) {
+    public void setIdRoom(Integer idRoom) {
         this.idRoom = idRoom;
     }
 
@@ -41,11 +32,11 @@ public class Room {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
