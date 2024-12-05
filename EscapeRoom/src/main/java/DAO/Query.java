@@ -45,4 +45,7 @@ public class Query {
     public static final String SHOWUSERS = "SELECT * FROM user";
     public static final String GETUSERSWITHENIGMA = "SELECT iduser, name, email FROM user INNER JOIN user_has_enigma ON user.iduser = user_has_enigma.user_iduser WHERE user_has_enigma.enigma_idenigma = ?";
     public static final String DELETEUSERHASENIGMA = "DELETE FROM user_has_enigma WHERE enigma_idenigma = ?";
+    public static final String GETENIGMASBYUSER = "SELECT e.name FROM user_has_enigma uhe " +
+                                "JOIN enigma e ON uhe.enigma_idenigma = e.idenigma " +
+                                "WHERE user_iduser = ?";
 }
