@@ -2,6 +2,7 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.EnigmaDAO;
+import classes.User;
 import classes.item.ItemFactory;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.ItemFactoryImpl;

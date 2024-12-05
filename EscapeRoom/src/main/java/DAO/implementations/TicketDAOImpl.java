@@ -38,17 +38,7 @@ public class TicketDAOImpl implements TicketDAO, ParsingCallback<Ticket> {
     }
 
     @Override
-    public void onCallbackMaterial(Ticket object, Attribute<Material> attribute) {
-
-    }
-
-    @Override
     public void onCallbackBoolean(Ticket object, Attribute<Boolean> attribute) {
-
-    }
-
-    @Override
-    public void onCallbackTheme(Ticket object, Attribute<Theme> attribute) {
 
     }
 
