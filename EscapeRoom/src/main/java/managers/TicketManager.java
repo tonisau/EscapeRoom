@@ -128,9 +128,10 @@ public class TicketManager {
         }while (!checkDateTo(dateTo, dateFrom));
 //        LocalDateTime dateFrom = LocalDateTime.parse("2024-01-01T00:00:00");
 //        LocalDateTime dateTo = LocalDateTime.parse("2024-12-31T00:00:00");
+        double income = this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo;
 
         System.out.println("The total sale amount of the escape room is : " +
-                        this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo) + "€.");
+                        String.format("%.2f", income) + "€.");
     }
 
     public boolean checkDateFrom(LocalDateTime date){
@@ -138,6 +139,8 @@ public class TicketManager {
     }
 
     public boolean checkDateTo(LocalDateTime dateTo, LocalDateTime dateFrom){
-        return dateTo.isAfter(dateFrom);
+        boolean isValid = dateTo.isAfter(dateFrom)||dateTo.isEqual(dateFrom);
+        if (!isValid) System.out.println("The end date must be later or equal to the initial date.");
+        return isValid;
     }
 }
