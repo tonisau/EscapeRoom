@@ -73,6 +73,11 @@ public class DbConnectionImpl implements DbConnection {
                             att.setName(attribute.getName());
                             att.setValue(resultSet.getDouble(attribute.getName()));
                             hashSet.add(att);
+                        } else if (attribute.getType() == Boolean.class) {
+                            Attribute<Boolean> att = new Attribute<>();
+                            att.setName(attribute.getName());
+                            att.setValue(resultSet.getBoolean(attribute.getName()));
+                            hashSet.add(att);
                         }
                     }
                     list.add(hashSet);
