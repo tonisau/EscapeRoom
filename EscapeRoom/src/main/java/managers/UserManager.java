@@ -19,7 +19,7 @@ public class UserManager {
     private final GiftDAOImpl daoGift;
     private final EnigmaDAOImpl daoEnigma;
 
-    public UserManager(){
+    private UserManager(){
         this.daoUser = new UserDAOImpl();
         this.daoGift = new GiftDAOImpl();
         this.daoEnigma = new EnigmaDAOImpl();

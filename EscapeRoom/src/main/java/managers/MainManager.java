@@ -7,11 +7,10 @@ import utils.MenuOptions;
 
 public class MainManager {
 
-    EscapeRoomManager escapeRoomManager = new EscapeRoomManager();
-    //RoomManager roomManager = new RoomManager();
-    InventoryManager inventoryManager = new InventoryManager();
-    TicketManager ticketManager = new TicketManager();
-    UserManager userManager = new UserManager();
+    EscapeRoomManager escapeRoomManager = EscapeRoomManager.getInstance();
+    InventoryManager inventoryManager = InventoryManager.getInstance();
+    TicketManager ticketManager = TicketManager.getInstance();
+    UserManager userManager = UserManager.getInstance();
 
     public void start() {
         boolean close = false;

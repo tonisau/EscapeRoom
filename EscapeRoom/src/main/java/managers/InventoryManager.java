@@ -2,6 +2,7 @@ package managers;
 
 import DAO.implementations.*;
 import DAO.interfaces.*;
+import classes.EscapeRoom;
 import classes.Room;
 import classes.enums.Level;
 import classes.enums.Material;
@@ -16,14 +17,32 @@ import java.util.List;
 
 public class InventoryManager {
 
+    private static InventoryManager instance;
+
     RoomDAO roomDAO = new RoomDAOImpl();
     EnigmaDAO enigmaDAO = new EnigmaDAOImpl();
-    ClueDAO clueDAO = new ClueDAOImpl();
-    DecorationDAO decorationDAO = new DecorationDAOImpl();
-    GiftDAO giftDAO = new GiftDAOImpl();
-    UserDAO userDAO = new UserDAOImpl();
+    ClueDAO clueDAO;
+    DecorationDAO decorationDAO;
+    GiftDAO giftDAO;
+    UserDAO userDAO;
 
-    ItemFactory itemFactory = new ItemFactoryImpl();
+    ItemFactory itemFactory;
+
+    private InventoryManager(){
+        roomDAO = new RoomDAOImpl();
+        enigmaDAO = new EnigmaDAOImpl();
+        clueDAO = new ClueDAOImpl();
+        decorationDAO = new DecorationDAOImpl();
+        giftDAO = new GiftDAOImpl();
+        userDAO = new UserDAOImpl();
+
+        itemFactory = new ItemFactoryImpl();
+    }
+
+    public static InventoryManager getInstance(){
+        if (instance == null) instance = new InventoryManager();
+        return instance;
+    }
 
     public void addRoomToEscapeRoom(Integer escapeRoomId) {
         String name = Entry.readString("Give a name for the room");
