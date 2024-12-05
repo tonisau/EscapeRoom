@@ -124,10 +124,10 @@ public class UserManager {
         final String userName = user.getName();
         List<Gift> gifts;
             gifts = getInstance().daoGift.getAllGiftsByUser(user.getId());
-            if (gifts.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
-                    "has not won any reward yet");
+            if (gifts.isEmpty()) System.out.println("Sorry, the player " + userName +
+                    " has not won any reward yet");
             else{
-                System.out.println("The player " + user.getName() + " has won the following rewards:");
+                System.out.println("The player " + userName + " has won the following rewards:");
                 gifts.forEach(System.out::println);
             }
     }
