@@ -7,9 +7,7 @@ import subscription.Subscriber;
 import utils.Entry;
 import utils.MenuOptions;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainManager implements Observable {
 

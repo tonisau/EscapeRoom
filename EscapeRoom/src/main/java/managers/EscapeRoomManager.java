@@ -1,9 +1,6 @@
 package managers;
 
-import DAO.implementations.EnigmaDAOImpl;
 import DAO.implementations.EscapeRoomDAOImpl;
-import DAO.implementations.GiftDAOImpl;
-import DAO.implementations.UserDAOImpl;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
 import utils.Entry;

@@ -19,8 +19,8 @@ public class InventoryManager {
 
     private static InventoryManager instance;
 
-    RoomDAO roomDAO = new RoomDAOImpl();
-    EnigmaDAO enigmaDAO = new EnigmaDAOImpl();
+    RoomDAO roomDAO;
+    EnigmaDAO enigmaDAO;
     ClueDAO clueDAO;
     DecorationDAO decorationDAO;
     GiftDAO giftDAO;
