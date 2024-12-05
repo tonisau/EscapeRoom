@@ -6,12 +6,6 @@ public class EscapeRoom {
     private String name;
     private String cif;
 
-    public EscapeRoom(Integer idEscaperoom, String name, String cif) {
-        this.idEscaperoom = idEscaperoom;
-        this.name = name;
-        this.cif = cif;
-    }
-
     public EscapeRoom(String name, String cif) {
         this.name = name;
         this.cif = cif;

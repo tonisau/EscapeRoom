@@ -1,10 +1,12 @@
 package DAO.implementations;
 
 import DAO.Parser;
+import classes.enums.Level;
 import classes.enums.Material;
 import DAO.interfaces.GiftDAO;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
+import classes.item.implementations.Decoration;
 import classes.item.implementations.Gift;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
@@ -129,4 +131,8 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
 
     @Override
     public void onCallbackBoolean(Gift object, Attribute<Boolean> attribute) {}
+
+    @Override
+    public void onCallbackLevel(Gift object, Attribute<Level> attribute) {}
+
 }

@@ -7,6 +7,7 @@ import exceptions.IncorrectInputException;
 import exceptions.StringException;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Entry {
@@ -20,6 +21,32 @@ public class Entry {
                 validInput = scanner.nextInt();
                 isValidInput = true;
             } catch (InputMismatchException e) {
+                System.out.println("Format error. " + message);
+                scanner.nextLine();
+            }
+        }
+        scanner.nextLine();
+        return validInput;
+    }
+
+    private static Integer checkValidIntegerFromList(Integer input, List<Integer> validResults) throws IncorrectInputException {
+        if (validResults.contains(input)) {
+            return input;
+        } else {
+            throw new IncorrectInputException("Introduced id does not exist. ");
+        }
+    }
+
+    public static Integer readInt(String message, List<Integer> validResults) {
+        System.out.println(message);
+        Scanner scanner = new Scanner(System.in);
+        boolean isValidInput = false;
+        int validInput = 0;
+        while (!isValidInput) {
+            try {
+                validInput = checkValidIntegerFromList(scanner.nextInt(), validResults);
+                isValidInput = true;
+            } catch (InputMismatchException | IncorrectInputException e) {
                 System.out.println("Format error. " + message);
                 scanner.nextLine();
             }

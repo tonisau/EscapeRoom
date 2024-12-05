@@ -2,10 +2,12 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.ClueDAO;
+import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.Clue;
+import classes.item.implementations.Decoration;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
@@ -46,7 +48,7 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
                 new Attribute<>(IDCLUE, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(THEME, null, String.class));
+                new Attribute<>(THEME, null, Theme.class));
 
         return this.getClues(Query.GETCLUEBYENIGMA, queryAttributeList, outputAttributes);
     }
@@ -74,7 +76,7 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
                 new Attribute<>(IDCLUE, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(PRICE, null, Double.class),
-                new Attribute<>(THEME, null, String.class));
+                new Attribute<>(THEME, null, Theme.class));
 
         return this.getClues(Query.GETALLCLUES, queryAttributeList, outputAttributes);
     }
@@ -138,4 +140,8 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
             object.setTheme(attribute.getValue());
         }
     }
+
+    @Override
+    public void onCallbackLevel(Clue object, Attribute<Level> attribute) {}
+
 }
