@@ -1,5 +1,6 @@
 package DAO.interfaces;
 
+import classes.User;
 import classes.item.implementations.Enigma;
 
 import java.util.List;
@@ -8,4 +9,5 @@ public interface EnigmaDAO extends DAO<Enigma> {
     void addEnigma(Enigma enigma, Integer roomId);
     List<Enigma> getAllEnigmasByRoom(Integer roomId);
     Enigma getEnigmaById(Integer itemId);
+    List<Enigma> getAllEnigmasByUser(User user);
 }

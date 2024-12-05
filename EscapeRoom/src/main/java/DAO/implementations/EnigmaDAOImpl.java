@@ -2,8 +2,6 @@ package DAO.implementations;
 
 import DAO.Parser;
 import DAO.interfaces.EnigmaDAO;
-import classes.enums.Material;
-import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.ItemFactoryImpl;
@@ -63,6 +61,26 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
     }
 
     @Override
+    public List<Enigma> getAllEnigmasByUser(User user) {
+        List<Enigma> enigmas = new ArrayList<>();
+        List<Attribute> queryAttributeList = new ArrayList<>();
+        queryAttributeList.add(new Attribute<>(user.getId(), Integer.class));
+        List<Attribute> outputAttributes = Arrays.asList(
+                new Attribute<>(NAME, null, String.class));
+
+        List<HashSet<Attribute>> certificates = dbConnection.query(Query.GETENIGMASBYUSER, queryAttributeList, outputAttributes);
+
+        if (certificates.isEmpty()) return List.of();
+
+        for (HashSet<Attribute> attributeValues: certificates) {
+            Enigma enigma = itemFactory.createEnigma();
+            parser.parseObject(enigma, attributeValues);
+            enigmas.add(enigma);
+        }
+        return enigmas;
+    }
+
+    @Override
     public List<Enigma> getData() {
         List<Attribute> queryAttributeList = List.of();
         List<Attribute> outputAttributes = Arrays.asList(
@@ -119,11 +137,7 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
     }
 
     @Override
-    public void onCallbackMaterial(Enigma object, Attribute<Material> attribute) {}
-
-    @Override
     public void onCallbackBoolean(Enigma object, Attribute<Boolean> attribute) {}
 
-    @Override
-    public void onCallbackTheme(Enigma object, Attribute<Theme> attribute) {}
+
 }

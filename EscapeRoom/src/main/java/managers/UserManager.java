@@ -1,8 +1,10 @@
 package managers;
 
+import DAO.implementations.EnigmaDAOImpl;
 import DAO.implementations.GiftDAOImpl;
 import DAO.implementations.UserDAOImpl;
 import classes.User;
+import classes.item.implementations.Enigma;
 import classes.item.implementations.Gift;
 import exceptions.IncorrectMenuOptionException;
 import utils.Entry;
@@ -15,10 +17,12 @@ public class UserManager {
     private static UserManager instance;
     private final UserDAOImpl daoUser;
     private final GiftDAOImpl daoGift;
+    private final EnigmaDAOImpl daoEnigma;
 
     public UserManager(){
         this.daoUser = new UserDAOImpl();
         this.daoGift = new GiftDAOImpl();
+        this.daoEnigma = new EnigmaDAOImpl();
     }
 
     public static UserManager getInstance(){
@@ -81,10 +85,10 @@ public class UserManager {
     }
 
     public void subscribeUser(){
-        String email = Entry.readString("Please type user's email: ");
-        User user = getInstance().daoUser.getUserByEmail(email);
+        User user = selectUser();
         if (user == null){
-            System.out.println("User not found with such email");
+            System.out.println("No user found");
+            return;
         }else{
             Boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
             user.setIsSuscriber(isSubscriber);
@@ -93,29 +97,32 @@ public class UserManager {
     }
 
     public void printCertificates(){
-        String email = Entry.readString("Please type user's email: ");
-        User user = getInstance().daoUser.getUserByEmail(email);
-        List<String> enigmas;
-        if (user == null){
-            System.out.println("User not found with such email");
-        }else{
-            enigmas = getInstance().daoUser.getCertificates(user);
-            if (enigmas.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
-                                    " has not solved any enigma yet.");
-            else{
-                enigmas.forEach(e -> System.out.println("This escape room certifies that player " + user.getName() +
-                        " solved successfully the enigma '" + e + "'."));
-            }
+        User currentUser = selectUser();
+        if (currentUser == null){
+            System.out.println("No user found");
+            return;
+        }
+        final String userName = currentUser.getName();
+
+        List<Enigma> enigmas;
+
+        enigmas = getInstance().daoEnigma.getAllEnigmasByUser(currentUser);
+        if (enigmas.isEmpty()) System.out.println("Sorry, the player " + userName +
+                                " has not solved any enigma yet.");
+        else{
+            enigmas.forEach(e -> System.out.println("This escape room certifies that player " + userName +
+                    " solved successfully the enigma '" + e + "'."));
         }
     }
 
     public void showGifts(){
-        String email = Entry.readString("Please type user's email: ");
-        User user = getInstance().daoUser.getUserByEmail(email);
-        List<Gift> gifts;
+        User user = selectUser();
         if (user == null){
-            System.out.println("User not found with such email");
-        }else{
+            System.out.println("No user found");
+            return;
+        }
+        final String userName = user.getName();
+        List<Gift> gifts;
             gifts = getInstance().daoGift.getAllGiftsByUser(user.getId());
             if (gifts.isEmpty()) System.out.println("Sorry, the player " + user.getName() +
                     "has not won any reward yet");
@@ -123,10 +130,27 @@ public class UserManager {
                 System.out.println("The player " + user.getName() + " has won the following rewards:");
                 gifts.forEach(System.out::println);
             }
-        }
     }
 
+    public User checkUserInList(Integer id, List<User> users){
+        return users.stream().filter(user -> user.getId().equals(id))
+                            .findFirst().orElse(null);
+    }
 
+    public User selectUser(){
+        List<User> users = getInstance().daoUser.getData();
+        if (users.isEmpty()) return null;
+
+        System.out.println("--- USER LIST ---");
+        Integer id;
+        User currentUser = null;
+        users.forEach(user -> System.out.println(user.getId() + ". " + user.getName()));
+        do{
+            id = Entry.readInt("Select user id >> ");
+            currentUser = checkUserInList(id, users);
+        }while (currentUser == null);
+        return currentUser;
+    }
 }
 
 

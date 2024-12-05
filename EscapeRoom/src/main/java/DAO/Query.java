@@ -36,7 +36,4 @@ public class Query {
     public static final String GETUSER = "SELECT * FROM user WHERE iduser = ? LIMIT 1";
     public static final String GETUSERBYEMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
     public static final String SHOWUSERS = "SELECT * FROM user";
-
-    public static final String CREATETICKET = "INSERT INTO ticket (price, date, room_idroom) VALUES (?, ?, ?)";
-    public static final String GETTICKETINCOME= "SELECT SUM(price) as Income FROM ticket WHERE Date BETWEEN ? and ?";
 }
