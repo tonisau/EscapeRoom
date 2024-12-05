@@ -1,16 +1,34 @@
 package managers;
 
-import exceptions.IncorrectInputException;
+import classes.User;
 import exceptions.IncorrectMenuOptionException;
+import subscription.Observable;
+import subscription.Subscriber;
 import utils.Entry;
 import utils.MenuOptions;
 
-public class MainManager {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    EscapeRoomManager escapeRoomManager = EscapeRoomManager.getInstance();
-    InventoryManager inventoryManager = InventoryManager.getInstance();
-    TicketManager ticketManager = TicketManager.getInstance();
-    UserManager userManager = UserManager.getInstance();
+public class MainManager implements Observable {
+
+    EscapeRoomManager escapeRoomManager;
+    InventoryManager inventoryManager;
+    TicketManager ticketManager;
+    UserManager userManager;
+
+    private List<Subscriber> subscriberList;
+
+    public MainManager() {
+        escapeRoomManager = EscapeRoomManager.getInstance();
+        inventoryManager = InventoryManager.getInstance();
+        ticketManager = TicketManager.getInstance();
+        userManager = UserManager.getInstance();
+
+        userManager.setObservable(this);
+        inventoryManager.setObservable(this);
+    }
 
     public void start() {
         boolean close = false;
@@ -18,6 +36,11 @@ public class MainManager {
 
         escapeRoomManager.createEscapeRoomIfNotPresent();
         Integer escapeRoomId = escapeRoomManager.getEscapeRoom().getIdEscaperoom();
+
+        subscriberList = userManager.getAllUsers()
+                .stream().filter(User::isSuscriber)
+                .map(user -> (Subscriber) user) // Cast User to Subscriber
+                .toList();
 
         do {
             try {
@@ -76,5 +99,23 @@ public class MainManager {
         int menuOption = Entry.readInt("Select a menu option between 0 and " + MenuOptions.options.length + ".");
         if (menuOption < 0 || menuOption > MenuOptions.options.length) throw new IncorrectMenuOptionException("Menu option should be between 0 and " + MenuOptions.options.length + ".");
         else return menuOption;
+    }
+
+    @Override
+    public void subscribe(Subscriber subscriber) {
+        subscriberList.add(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Subscriber subscriber) {
+        subscriberList.remove(subscriber);
+    }
+
+    @Override
+    public void notifySubscribers(String message) {
+        if (subscriberList.isEmpty()) return;
+        for (Subscriber subscriber: subscriberList) {
+            subscriber.update(message);
+        }
     }
 }

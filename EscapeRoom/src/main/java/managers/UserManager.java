@@ -7,6 +7,7 @@ import classes.User;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.Gift;
 import exceptions.IncorrectMenuOptionException;
+import subscription.Observable;
 import utils.Entry;
 import utils.MenuUserOptions;
 
@@ -19,6 +20,8 @@ public class UserManager {
     private final GiftDAOImpl daoGift;
     private final EnigmaDAOImpl daoEnigma;
 
+    private Observable observable;
+
     private UserManager(){
         this.daoUser = new UserDAOImpl();
         this.daoGift = new GiftDAOImpl();
@@ -28,6 +31,10 @@ public class UserManager {
     public static UserManager getInstance(){
         if (instance == null) instance = new UserManager();
         return instance;
+    }
+
+    public void setObservable(Observable observable) {
+        this.observable = observable;
     }
 
     public void start() {
@@ -92,7 +99,14 @@ public class UserManager {
         }else{
             Boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
             user.setIsSuscriber(isSubscriber);
-            getInstance().daoUser.updateUser(user);
+            Boolean successful = getInstance().daoUser.updateUser(user);
+            if (successful) {
+                if (isSubscriber) {
+                    observable.subscribe(user);
+                } else {
+                    observable.unsubscribe(user);
+                }
+            }
         }
     }
 
@@ -135,6 +149,10 @@ public class UserManager {
     public User checkUserInList(Integer id, List<User> users){
         return users.stream().filter(user -> user.getId().equals(id))
                             .findFirst().orElse(null);
+    }
+
+    public List<User> getAllUsers() {
+        return daoUser.getData();
     }
 
     public User selectUser(){

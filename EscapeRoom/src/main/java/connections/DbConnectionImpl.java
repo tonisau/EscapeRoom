@@ -35,8 +35,8 @@ public class DbConnectionImpl implements DbConnection {
     }
 
     @Override
-    public void create(String query, List<Attribute> queryAttributes) {
-        this.callUpdate(query, queryAttributes);
+    public Boolean create(String query, List<Attribute> queryAttributes) {
+        return this.callUpdate(query, queryAttributes);
     }
 
     @Override
@@ -89,14 +89,16 @@ public class DbConnectionImpl implements DbConnection {
         return list;
     }
 
-    private void callUpdate(String query, List<Attribute> queryAttributes) {
+    private Boolean callUpdate(String query, List<Attribute> queryAttributes) {
         try(Connection connection = this.createConnection();
             PreparedStatement statement = this.createStatementWithQuery(connection, query)) {
             this.addAttributesToStatement(statement, queryAttributes);
             this.executeUpdate(statement);
         } catch (ConnectionException | SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
+        return true;
     }
 
     private void executeUpdate(PreparedStatement statement) throws ConnectionException {
