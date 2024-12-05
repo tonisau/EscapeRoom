@@ -3,9 +3,6 @@ package DAO.implementations;
 import DAO.Parser;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
-import classes.enums.Level;
-import classes.enums.Material;
-import classes.enums.Theme;
 import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
@@ -79,15 +76,6 @@ public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeR
 
     @Override
     public void onCallbackDouble(EscapeRoom object, Attribute<Double> attribute) {}
-
-    @Override
-    public void onCallbackMaterial(EscapeRoom object, Attribute<Material> attribute) {}
-
-    @Override
-    public void onCallbackTheme(EscapeRoom object, Attribute<Theme> attribute) {}
-
-    @Override
-    public void onCallbackLevel(EscapeRoom object, Attribute<Level> attribute) {}
 
     @Override
     public void onCallbackBoolean(EscapeRoom object, Attribute<Boolean> attribute) {}

@@ -219,7 +219,7 @@ public class InventoryManager {
     }
 
     private void addDecorationToRoom(List<Integer> roomIds) {
-        Integer roomId = Entry.readInt("Enter an room id", roomIds);
+        Integer roomId = Entry.readInt("Enter a room id", roomIds);
         String name = Entry.readString("Give a name for the new decoration object");
         Double price = Entry.readDouble("Enter a price for the decoration");
         Material material = Entry.readMaterial("Enter a material for the decoration (wood/plastic/paper/glass/metal)");

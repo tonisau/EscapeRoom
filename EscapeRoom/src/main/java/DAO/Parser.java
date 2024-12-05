@@ -21,10 +21,7 @@ public class Parser<T> {
             if (attribute.getValue() instanceof String) callback.onCallbackString(object, attribute);
             else if (attribute.getValue() instanceof Integer) callback.onCallbackInteger(object, attribute);
             else if (attribute.getValue() instanceof Double) callback.onCallbackDouble(object, attribute);
-            else if (attribute.getValue() instanceof Theme) callback.onCallbackTheme(object, attribute);
-            else if (attribute.getValue() instanceof Material) callback.onCallbackMaterial(object, attribute);
             else if (attribute.getValue() instanceof Boolean) callback.onCallbackBoolean(object, attribute);
-            else if (attribute.getValue() instanceof Level) callback.onCallbackLevel(object, attribute);
 
         }
     }

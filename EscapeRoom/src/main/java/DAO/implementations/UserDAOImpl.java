@@ -135,7 +135,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
                 new Attribute<>(IDUSER, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(EMAIL, null, String.class),
-                new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
+                new Attribute<>(IS_SUBSCRIBER, null, Boolean.class));
 
         return this.getUsers(Query.GETUSERSWITHENIGMA, queryAttributeList, outputAttributes);
     }
@@ -161,24 +161,10 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public void onCallbackDouble(User object, Attribute<Double> attribute) {
-
-    }
-
-    @Override
-    public void onCallbackMaterial(User object, Attribute<Material> attribute) {
-
-    }
+    public void onCallbackDouble(User object, Attribute<Double> attribute) {}
 
     @Override
     public void onCallbackBoolean(User object, Attribute<Boolean> attribute){
         if (attribute.getName().equals(IS_SUBSCRIBER)) object.setIsSuscriber(attribute.getValue());
     }
-
-    @Override
-    public void onCallbackTheme(User object, Attribute<Theme> attribute) {}
-
-    @Override
-    public void onCallbackLevel(User object, Attribute<Level> attribute) {}
-
 }
