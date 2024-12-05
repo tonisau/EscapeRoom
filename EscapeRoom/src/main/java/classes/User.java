@@ -69,7 +69,7 @@ public class User implements Subscriber {
                 "id: " + id +
                 ", name: " + name +
                 ", email: " + email +
-                ", Suscriber? >" + isSuscriber +
+                ", Suscriber? > " + isSuscriber +
                 '}';
     }
 }
