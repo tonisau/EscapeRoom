@@ -111,7 +111,7 @@ public class UserManager {
                                 " has not solved any enigma yet.");
         else{
             enigmas.forEach(e -> System.out.println("This escape room certifies that player " + userName +
-                    " solved successfully the enigma '" + e + "'."));
+                    " solved successfully the enigma '" + e.getName() + "'."));
         }
     }
 
