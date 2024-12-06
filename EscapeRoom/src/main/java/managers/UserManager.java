@@ -80,7 +80,8 @@ public class UserManager {
     public void createUser(){
         String name = Entry.readString("Please type user's name: ");
         String email = Entry.readString("Please type user's email: ");
-        User user = new User(name, email);
+        Boolean isSubscriber = Entry.readBoolean("Does the user want to subscribe to notifications?, Yes > Y, No > N");
+        User user = new User(name, email, isSubscriber);
         this.daoUser.add(user);
     }
 
