@@ -1,18 +1,26 @@
 package managers;
 
 import DAO.implementations.EscapeRoomDAOImpl;
-import DAO.interfaces.DAO;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
 import utils.Entry;
 
 import java.util.List;
-import java.util.Optional;
 
 public class EscapeRoomManager {
 
-    EscapeRoomDAO escapeRoomDAO = new EscapeRoomDAOImpl();
+    private static EscapeRoomManager instance;
+    EscapeRoomDAO escapeRoomDAO;
     EscapeRoom escapeRoom;
+
+    private EscapeRoomManager(){
+        this.escapeRoomDAO = new EscapeRoomDAOImpl();
+    }
+
+    public static EscapeRoomManager getInstance(){
+        if (instance == null) instance = new EscapeRoomManager();
+        return instance;
+    }
 
     public void createEscapeRoomIfNotPresent() {
         List<EscapeRoom> escapeRoomList = escapeRoomDAO.getData();

@@ -55,8 +55,8 @@ public class User implements Subscriber {
         displayEvent(event);
     }
     public void displayEvent(String event){
-        System.out.println("Hola " + this.name + ", tenemos noticias para ti:\n"
-                + event );
+        System.out.println("Hola " + this.name + ", exciting news for you:\n"
+                + event + "\n");
     }
 
     public Boolean isSuscriber() {
