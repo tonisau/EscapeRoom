@@ -12,9 +12,9 @@ public class Enigma extends Item {
     @Override
     public String toString() {
         return "Enigma{" +
-                "itemId=" + this.getItemId() +
-                ", name='" + this.getName() +
-                ", price=" + this.getPrice() +
+                "itemId= " + this.getItemId() +
+                ", name= " + this.getName() +
+                ", price= " + this.getPrice() +
                 '}';
     }
 }

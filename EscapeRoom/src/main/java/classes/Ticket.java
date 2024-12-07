@@ -1,9 +1,12 @@
 package classes;
 
+import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Ticket {
     private int roomId;
@@ -59,10 +62,10 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "Sala " + roomId +
-                ", fecha: " + saleDate +
-                ", precio: " + price +
-                "€, judadores: \n" + users +
+                "Room " + roomId +
+                ", date: " + saleDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) +
+                ", total price for all players: " + String.format("%.2f", price) +
+                "€, players: \n" + users +
                 '}';
     }
 }

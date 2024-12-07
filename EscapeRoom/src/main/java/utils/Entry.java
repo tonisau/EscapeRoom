@@ -7,7 +7,6 @@ import exceptions.IncorrectInputException;
 import exceptions.StringException;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -49,12 +48,15 @@ public class Entry {
             try {
                 validInput = checkValidIntegerFromList(scanner.nextInt(), validResults);
                 isValidInput = true;
-            } catch (InputMismatchException | IncorrectInputException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Format error. " + message);
+            } catch (IncorrectInputException e) {
+                System.out.println(e.getMessage() + message);
+            }
+            finally {
                 scanner.nextLine();
             }
         }
-        scanner.nextLine();
         return validInput;
     }
 
@@ -186,7 +188,7 @@ public class Entry {
 
     public static LocalDateTime readLocalDateTime(String message) {
         Scanner scanner = new Scanner(System.in);
-        LocalDateTime dateTime = null;
+        LocalDateTime dateTime;
 
         while (true) {
             System.out.print(message);
@@ -196,11 +198,9 @@ public class Entry {
                 dateTime = LocalDateTime.parse(dateStr + "T00:00:00");
                 break;
             } catch (DateTimeParseException e) {
-
                 System.out.println("Invalid format. Please type date with format 'yyyy-MM-dd'.");
             }
         }
         return dateTime;
     }
-
 }

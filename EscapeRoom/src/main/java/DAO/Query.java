@@ -25,10 +25,10 @@ public class Query {
 
     public static final String CREATEGIFT = "INSERT INTO gift (name) VALUES (?)";
     public static final String CREATEUSERHASGIFT = "INSERT INTO user_has_gift (gift_idgift, user_iduser) VALUES (?, ?)";
-    public static final String GETGIFTBYUSER = "SELECT gift.idgift, gift.name FROM gift INNER JOIN user_has_gift ON gift.idgift = user_has_gift.gift_idgift WHERE user_has_gift.user_iduser = ?;";
+    public static final String GETGIFTBYUSER = "select idgift, name from user_has_gift uhg join gift g ON uhg.gift_idgift = g.idgift where uhg.user_iduser = ?";
     public static final String GETALLGIFTS = "SELECT idgift, name FROM gift";
     public static final String DELETEGIFT = "DELETE FROM gift WHERE idgift = ?";
-    public static final String GETGIFTBYID = "SELECT idgift, name, price FROM gift WHERE idgift = ?";
+    public static final String GETGIFTBYID = "SELECT idgift, name FROM gift WHERE idgift = ?";
 
     public static final String CREATEROOM = "INSERT INTO room (name, price, level, escaperoom_idescaperoom) VALUES (?, ?, ?, ?)";
     public static final String GETROOMBYESCAPEROOM = "SELECT idroom, name, price, level FROM room WHERE escaperoom_idescaperoom = ?;";
@@ -49,4 +49,7 @@ public class Query {
 
     public static final String CREATETICKET = "INSERT INTO ticket (price, date, room_idroom) VALUES (?, ?, ?)";
     public static final String GETTICKETINCOME= "SELECT SUM(price) as Income FROM ticket WHERE Date BETWEEN ? and ?";
+    public static final String CREATEUSER_HAS_ENIGMAS = "INSERT INTO user_has_enigma (enigma_idenigma, user_iduser) VALUES (?, ?)";
+
+
 }
