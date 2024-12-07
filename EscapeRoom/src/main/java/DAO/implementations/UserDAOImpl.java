@@ -51,11 +51,6 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return null;
-    } // TODO: remove
-
-    @Override
     public void updateUser(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
