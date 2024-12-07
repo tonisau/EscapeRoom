@@ -70,8 +70,7 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
         List<Attribute> queryAttributeList = List.of();
         List<Attribute> outputAttributes = Arrays.asList(
                 new Attribute<>(IDGIFT, null, Integer.class),
-                new Attribute<>(NAME, null, String.class),
-                new Attribute<>(PRICE, null, Double.class));
+                new Attribute<>(NAME, null, String.class));
 
         return this.getGifts(Query.GETALLGIFTS, queryAttributeList, outputAttributes);
     }
