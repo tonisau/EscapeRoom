@@ -30,6 +30,9 @@ public class TicketManager {
         this.daoTicket.addTicket(ticket);
         System.out.println("Printing ticket...");
         System.out.println(ticket);
+        System.out.println("Starting the game...");
+        GameManager gameManager = new GameManager(ticket.getUsers(), ticket.getRoomId());
+        gameManager.playGame();
     }
 
     public Ticket createTicket(){
@@ -91,15 +94,16 @@ public class TicketManager {
         LocalDateTime dateTo;
         System.out.println("To calculate total income of a period, enter both start and end dates:");
         do{
-            dateFrom = Entry.readLocalDateTime("Type start date: ");
+            dateFrom = Entry.readLocalDateTime("Type start date ('yyyy-MM-dd'): ");
         }while (!checkDateFrom(dateFrom));
 
         do{
-            dateTo = Entry.readLocalDateTime("Type end date: ");
+            dateTo = Entry.readLocalDateTime("Type end date ('yyyy-MM-dd'): ");
         }while (!checkDateTo(dateTo, dateFrom));
 
         double income = this.daoTicket.getIncomeBetweenDates(dateFrom, dateTo);
-        System.out.println("The total sale amount of the escape room is : " +
+        System.out.println("The total sale amount of the escape room between " +
+                        dateFrom + " and " + dateTo + " is : " +
                         String.format("%.2f", income) + "€.");
     }
 
@@ -108,8 +112,8 @@ public class TicketManager {
     }
 
     public boolean checkDateTo(LocalDateTime dateTo, LocalDateTime dateFrom){
-        boolean isValid = dateTo.isAfter(dateFrom)||dateTo.isEqual(dateFrom);
-        if (!isValid) System.out.println("The end date must be later or equal to the initial date.");
+        boolean isValid = dateTo.isAfter(dateFrom);
+        if (!isValid) System.out.println("The end date must be later than the initial date (all dates are by default at 00:00 hour).");
         return isValid;
     }
 
