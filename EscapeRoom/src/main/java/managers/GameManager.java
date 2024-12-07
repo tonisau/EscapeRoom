@@ -1,41 +1,42 @@
 package managers;
 
-import classes.Room;
+import DAO.implementations.EnigmaDAOImpl;
+import DAO.implementations.GiftDAOImpl;
 import classes.User;
 import classes.item.implementations.Enigma;
+import classes.item.implementations.Gift;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class GameManager {
-    private List<User> players;
-    private Room room;
-    private ItemDAOImpl itemDAO;
+    private final List<User> players;
+    private final Integer roomId;
+    private final EnigmaDAOImpl enigmaDao;
+    private final GiftDAOImpl giftDAO;
     HashMap<User, Enigma> certificates;
     HashMap<User, Gift> gifts;
 
-
-    public GameManager(List<User> players, Room room, ItemDAOImpl itemDAO){
+    public GameManager(List<User> players, Integer roomId){
         this.players = players;
-        this.room = room;
-        this.itemDAO = itemDAO;
+        this.roomId = roomId;
+        this.enigmaDao = new EnigmaDAOImpl();
+        this.giftDAO = new GiftDAOImpl();
     }
 
     public void playGame(){
         System.out.println("Trying to get out of the room!...");
         this.certificates = resolveEnigmas();
         this.gifts = grantGifts();
-        System.out.println("Game has ended!...");
+        System.out.println("Game has ended, Congratulations!...");
     }
-    public HashMap<User, Enigma> resolveEnigmas(){
-        // Replace following code with Get Enigma list of the room
-        List<Enigma> enigmas = new ArrayList<>();
-        enigmas.add(new Enigma("Enigma1", 12.00));
-        enigmas.add(new Enigma("Enigma2", 14.50));
 
+    public HashMap<User, Enigma> resolveEnigmas(){
+
+        List<Enigma> enigmas = this.enigmaDao.getAllEnigmasByRoom(roomId);
         HashMap<User, Enigma> certificates = new HashMap<>();
+
         enigmas.forEach(enigma -> {
             for (User player : players){
                 if (solveEnigma()){
@@ -44,6 +45,11 @@ public class GameManager {
                 }
             }
         });
+
+        if(!certificates.isEmpty()){
+            certificates.forEach(((user, enigma)
+                    -> enigmaDao.addEnigmaToUser(user.getId(), enigma.getItemId())));
+        }
         return certificates;
     }
 
@@ -52,13 +58,15 @@ public class GameManager {
     }
 
     public HashMap<User, Gift> grantGifts(){
-        HashMap<User, Gift> grantedGifts = new HashMap<User, Gift>();
-        List<Gift> availableGifts = new ArrayList<>();
+        HashMap<User, Gift> grantedGifts = new HashMap<>();
+        List<Gift> availableGifts = giftDAO.getData();
         this.certificates.forEach(((user, enigma) -> {
             Gift gift = availableGifts.get(new Random().nextInt(availableGifts.size()));
             grantedGifts.put(user, gift);
         }));
-        // write grantedGifts in BDD
+
+        if(!grantedGifts.isEmpty()) grantedGifts.forEach((user, gift)
+                -> giftDAO.assignGiftToUser(user.getId(), gift.getItemId()));
         return grantedGifts;
     }
 }
