@@ -49,4 +49,7 @@ public class Query {
 
     public static final String CREATETICKET = "INSERT INTO ticket (price, date, room_idroom) VALUES (?, ?, ?)";
     public static final String GETTICKETINCOME= "SELECT SUM(price) as Income FROM ticket WHERE Date BETWEEN ? and ?";
+    public static final String CREATEUSER_HAS_ENIGMAS = "INSERT INTO user_has_enigma (enigma_idenigma, user_iduser) VALUES (?, ?)";
+
+
 }
