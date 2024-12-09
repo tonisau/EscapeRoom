@@ -64,6 +64,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
         attributeList.add(new Attribute<>(user.getEmail(), String.class));
+        attributeList.add(new Attribute<>(user.isSuscriber(), Boolean.class));
         return dbConnection.create(Query.CREATEUSER, attributeList);
     }
 
