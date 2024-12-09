@@ -31,10 +31,10 @@ public class Query {
     public static final String GETGIFTBYID = "SELECT idgift, name FROM gift WHERE idgift = ?";
 
     public static final String CREATEROOM = "INSERT INTO room (name, price, level, escaperoom_idescaperoom) VALUES (?, ?, ?, ?)";
-    public static final String GETROOMBYESCAPEROOM = "SELECT idroom, name, price, level FROM room WHERE escaperoom_idescaperoom = ?;";
-    public static final String GETALLROOMS = "SELECT idroom, name, price, level FROM room";
-    public static final String DELETEROOM = "DELETE FROM room WHERE idroom = ?";
-    public static final String GETROOMBYID = "SELECT idroom, name, price, level FROM room WHERE idroom = ?";
+    public static final String GETROOMBYESCAPEROOM = "SELECT idroom, name, price, level FROM room WHERE isActive = 1 AND escaperoom_idescaperoom = ?;";
+    public static final String GETALLROOMS = "SELECT idroom, name, price, level FROM room WHERE isActive = 1;";
+    public static final String DELETEROOM = "UPDATE room SET isActive = 0 where idroom = ?";
+    public static final String GETROOMBYID = "SELECT idroom, name, price, level FROM room WHERE isActive = 1 AND idroom = ?";
 
     public static final String CREATEUSER = "INSERT INTO user (name, email, isSubscriber) VALUES (?, ?, ?)";;
     public static final String UPDATEUSER = "UPDATE user" +
