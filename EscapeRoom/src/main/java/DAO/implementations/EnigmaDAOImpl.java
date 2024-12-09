@@ -36,6 +36,14 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
     }
 
     @Override
+    public void addEnigmaToUser(Integer userId, Integer enigmaId) {
+        List<Attribute> attributeList = new ArrayList<>();
+        attributeList.add(new Attribute<>(enigmaId, Integer.class));
+        attributeList.add(new Attribute<>(userId, Integer.class));
+        dbConnection.create(Query.CREATEUSER_HAS_ENIGMAS, attributeList);
+    }
+
+    @Override
     public List<Enigma> getAllEnigmasByRoom(Integer roomId) {
         List<Enigma> enigmas = new ArrayList<>();
 

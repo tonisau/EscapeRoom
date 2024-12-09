@@ -7,7 +7,6 @@ import java.util.List;
 public interface UserDAO extends DAO<User>{
     void add(User user);
     User getUser(Integer id);
-    User getUserByEmail(String email);
     Boolean updateUser(User user);
     List<User> getUsersWithEnigma(Integer enigmaId);
     void deleteUsersWithEnigma(Integer enigmaId);
