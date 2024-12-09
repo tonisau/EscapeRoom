@@ -7,6 +7,7 @@ import classes.User;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.Gift;
 import exceptions.IncorrectMenuOptionException;
+import subscription.Observable;
 import utils.Entry;
 import utils.MenuUserOptions;
 
@@ -19,7 +20,9 @@ public class UserManager {
     private final GiftDAOImpl daoGift;
     private final EnigmaDAOImpl daoEnigma;
 
-    public UserManager(){
+    private Observable observable;
+
+    private UserManager(){
         this.daoUser = new UserDAOImpl();
         this.daoGift = new GiftDAOImpl();
         this.daoEnigma = new EnigmaDAOImpl();
@@ -28,6 +31,10 @@ public class UserManager {
     public static UserManager getInstance(){
         if (instance == null) instance = new UserManager();
         return instance;
+    }
+
+    public void setObservable(Observable observable) {
+        this.observable = observable;
     }
 
     public void start() {
@@ -82,7 +89,12 @@ public class UserManager {
         String email = Entry.readString("Please type user's email: ");
         Boolean isSubscriber = Entry.readBoolean("Does the user want to subscribe to notifications?, Yes > Y, No > N");
         User user = new User(name, email, isSubscriber);
-        this.daoUser.add(user);
+        Boolean successful = this.daoUser.add(user);
+        if (successful) {
+            if (isSubscriber) {
+                observable.subscribe(user);
+            }
+        }
     }
 
     public void subscribeUser(){
@@ -91,11 +103,18 @@ public class UserManager {
             User user = selectUser(users);
             Boolean isSubscriber = Entry.readBoolean("Subscribe user to newsletter? Yes > Y, No > N");
             user.setIsSuscriber(isSubscriber);
-            this.daoUser.updateUser(user);
+            Boolean successful = daoUser.updateUser(user);
+            if (successful) {
+                if (isSubscriber) {
+                    observable.subscribe(user);
+                } else {
+                    observable.unsubscribe(user);
+                }
+            }
         }
     }
 
-    public void printCertificates(){
+    public void printCertificates() {
         List<User> users = getData();
         if(!users.isEmpty()){
             User currentUser = selectUser(users);
@@ -127,8 +146,11 @@ public class UserManager {
         }
     }
 
-    public User selectUser(List<User> users){
+    public List<User> getAllUsers() {
+        return daoUser.getData();
+    }
 
+    public User selectUser(List<User> users) {
         System.out.println("--- USER LIST ---");
         Integer id;
         User currentUser;

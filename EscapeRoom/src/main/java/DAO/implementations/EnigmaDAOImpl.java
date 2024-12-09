@@ -27,12 +27,12 @@ public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
     private static final String PRICE = "price";
 
     @Override
-    public void addEnigma(Enigma enigma, Integer roomId) {
+    public Boolean addEnigma(Enigma enigma, Integer roomId) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(enigma.getName(), String.class));
         attributeList.add(new Attribute<>(enigma.getPrice(), Double.class));
         attributeList.add(new Attribute<>(roomId, Integer.class));
-        dbConnection.create(Query.CREATEENIGMA, attributeList);
+        return dbConnection.create(Query.CREATEENIGMA, attributeList);
     }
 
     @Override

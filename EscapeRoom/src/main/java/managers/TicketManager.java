@@ -1,8 +1,13 @@
 package managers;
 
-import DAO.implementations.RoomDAOImpl;
+import DAO.implementations.EscapeRoomDAOImpl;
 import DAO.implementations.TicketDAOImpl;
 import DAO.implementations.UserDAOImpl;
+import DAO.interfaces.EscapeRoomDAO;
+import DAO.interfaces.UserDAO;
+//import DAO.interfaces.implementations.DAORoomImpl;
+import DAO.implementations.RoomDAOImpl;
+import classes.EscapeRoom;
 import classes.Room;
 import classes.Ticket;
 import classes.User;
@@ -13,16 +18,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketManager {
-    private final static double PLAYER_PRICE = 20;
+
     private static TicketManager instance;
+
+    private final static double PLAYER_PRICE = 20;
     private final TicketDAOImpl daoTicket;
     private final RoomDAOImpl daoRoom;
     private final UserDAOImpl daoUser;
 
-    public TicketManager () {
+    private TicketManager(){
         this.daoTicket = new TicketDAOImpl();
         this.daoUser = new UserDAOImpl();
         this.daoRoom = new RoomDAOImpl();
+    }
+
+    public static TicketManager getInstance(){
+        if (instance == null) instance = new TicketManager();
+        return instance;
     }
 
     public void generateTicket(){

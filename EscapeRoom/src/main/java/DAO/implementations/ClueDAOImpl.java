@@ -28,13 +28,13 @@ public class ClueDAOImpl implements ClueDAO, ParsingCallback<Clue> {
     private static final String THEME = "theme";
 
     @Override
-    public void addClue(Clue clue, Integer enigmaId) {
+    public Boolean addClue(Clue clue, Integer enigmaId) {
         List<Attribute> queryAttributeList = new ArrayList<>();
         queryAttributeList.add(new Attribute(clue.getName(), String.class));
         queryAttributeList.add(new Attribute(clue.getPrice(), Double.class));
         queryAttributeList.add(new Attribute(clue.getTheme().name(), String.class));
         queryAttributeList.add(new Attribute(enigmaId, Integer.class));
-        dbConnection.create(Query.CREATECLUE, queryAttributeList);
+        return dbConnection.create(Query.CREATECLUE, queryAttributeList);
     }
 
     @Override

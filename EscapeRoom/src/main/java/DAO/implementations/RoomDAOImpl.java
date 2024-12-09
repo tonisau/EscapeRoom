@@ -30,13 +30,13 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
     private static final String LEVEL = "level";
 
     @Override
-    public void addRoom(Room room, Integer escapeRoomId) {
+    public Boolean addRoom(Room room, Integer escapeRoomId) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(room.getName(), String.class));
         attributeList.add(new Attribute<>(room.getPrice(), Double.class));
         attributeList.add(new Attribute<>(room.getLevel().name(), String.class));
         attributeList.add(new Attribute<>(escapeRoomId, Integer.class));
-        dbConnection.create(Query.CREATEROOM, attributeList);
+        return dbConnection.create(Query.CREATEROOM, attributeList);
     }
 
     @Override

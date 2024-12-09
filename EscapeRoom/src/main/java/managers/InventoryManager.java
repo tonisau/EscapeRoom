@@ -9,6 +9,7 @@ import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.*;
 import exceptions.IncorrectMenuOptionException;
+import subscription.Observable;
 import utils.Entry;
 import utils.MenuDeleteInventoryOptions;
 
@@ -16,20 +17,45 @@ import java.util.List;
 
 public class InventoryManager {
 
-    RoomDAO roomDAO = new RoomDAOImpl();
-    EnigmaDAO enigmaDAO = new EnigmaDAOImpl();
-    ClueDAO clueDAO = new ClueDAOImpl();
-    DecorationDAO decorationDAO = new DecorationDAOImpl();
-    GiftDAO giftDAO = new GiftDAOImpl();
-    UserDAO userDAO = new UserDAOImpl();
+    private static InventoryManager instance;
 
-    ItemFactory itemFactory = new ItemFactoryImpl();
+    RoomDAO roomDAO;
+    EnigmaDAO enigmaDAO;
+    ClueDAO clueDAO;
+    DecorationDAO decorationDAO;
+    GiftDAO giftDAO;
+    UserDAO userDAO;
+
+    ItemFactory itemFactory;
+    private Observable observable;
+
+    private InventoryManager(){
+        roomDAO = new RoomDAOImpl();
+        enigmaDAO = new EnigmaDAOImpl();
+        clueDAO = new ClueDAOImpl();
+        decorationDAO = new DecorationDAOImpl();
+        giftDAO = new GiftDAOImpl();
+        userDAO = new UserDAOImpl();
+
+        itemFactory = new ItemFactoryImpl();
+    }
+
+    public static InventoryManager getInstance(){
+        if (instance == null) instance = new InventoryManager();
+        return instance;
+    }
+
+    public void setObservable(Observable observable) {
+        this.observable = observable;
+    }
 
     public void addRoomToEscapeRoom(Integer escapeRoomId) {
         String name = Entry.readString("Give a name for the room");
         Double price = Entry.readDouble("Enter a price for the room");
         Level level = Entry.readLevel("Enter a level for the room (Low/Medium/High)");
-        roomDAO.addRoom(new Room(name, price, level), escapeRoomId);
+        Room room = new Room(name, price, level);
+        Boolean created = roomDAO.addRoom(room, escapeRoomId);
+        if (created) observable.notifySubscribers("New room created " + room.getName());
     }
 
     public void addNewEnigma() {
@@ -189,7 +215,9 @@ public class InventoryManager {
         Integer roomId = Entry.readInt("Enter a room id", roomIds);
         String name = Entry.readString("Give a name for the enigma");
         Double price = Entry.readDouble("Enter a price for the enigma");
-        enigmaDAO.addEnigma(itemFactory.createEnigma(name, price), roomId);
+        Enigma enigma = itemFactory.createEnigma(name, price);
+        Boolean created = enigmaDAO.addEnigma(enigma, roomId);
+        if (created) observable.notifySubscribers("New enigma created '" + enigma.getName() + "' for room with id: " + roomId);
     }
 
     private List<Enigma> getEnigmasForRoom(List<Integer> roomIds) {
@@ -224,7 +252,9 @@ public class InventoryManager {
         Double price = Entry.readDouble("Enter a price for the decoration");
         Material material = Entry.readMaterial("Enter a material for the decoration (wood/plastic/paper/glass/metal)");
         Integer quantity = Entry.readInt("How may decoration objects do you have?");
-        decorationDAO.addDecoration(itemFactory.createDecoration(name, price, material, quantity), roomId);
+        Decoration decoration = itemFactory.createDecoration(name, price, material, quantity);
+        Boolean created = decorationDAO.addDecoration(decoration, roomId);
+        if (created) observable.notifySubscribers("New decoration object created '" + decoration.getName() + "' for room with id: " + roomId);
     }
 
     private List<Decoration> getAllDecoration() {
@@ -241,7 +271,9 @@ public class InventoryManager {
         String name = Entry.readString("Give a name for the new clue");
         Double price = Entry.readDouble("Enter a price for the clue");
         Theme theme = Entry.readTheme("Give a Theme for the clue (detective/futurist/cowboys)");
-        clueDAO.addClue(itemFactory.createClue(name, price, theme), enigmaId);
+        Clue clue = itemFactory.createClue(name, price, theme);
+        Boolean created = clueDAO.addClue(clue, enigmaId);
+        if (created) observable.notifySubscribers("New clue created '" + clue.getName() + "' for enigma with id: " + enigmaId);
     }
 
     private List<Clue> getAllClues() {

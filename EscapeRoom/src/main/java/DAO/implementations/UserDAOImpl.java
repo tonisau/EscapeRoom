@@ -51,20 +51,21 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public void updateUser(User user) {
+    public Boolean updateUser(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
         attributeList.add(new Attribute<>(user.getEmail(), String.class));
         attributeList.add(new Attribute<>(user.isSuscriber(), Boolean.class));
         attributeList.add(new Attribute<>(user.getId(), Integer.class));
-        dbConnection.create(Query.UPDATEUSER, attributeList);
+        return dbConnection.create(Query.UPDATEUSER, attributeList);
     }
 
-    public void add(User user) {
+    public Boolean add(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
         attributeList.add(new Attribute<>(user.getEmail(), String.class));
-        dbConnection.create(Query.CREATEUSER, attributeList);
+        attributeList.add(new Attribute<>(user.isSuscriber(), Boolean.class));
+        return dbConnection.create(Query.CREATEUSER, attributeList);
     }
 
     @Override
