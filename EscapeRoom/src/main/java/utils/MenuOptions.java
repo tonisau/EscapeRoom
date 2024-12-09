@@ -11,7 +11,8 @@ public class MenuOptions {
     static final String m8 = "Access to user menu. ";
     static final String m9 = "Create new game and generate ticket. ";
     static final String m10 = "Show total sales. ";
+    static final String m11 = "Add new gift to available gifts";
     static public final String close = "Close.";
 
-    static public String[] options = {m1, m2, m3, m4, m5, m6, m7, m8, m9, m10};
+    static public String[] options = {m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11};
 }
