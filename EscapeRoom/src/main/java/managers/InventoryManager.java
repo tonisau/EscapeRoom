@@ -80,8 +80,7 @@ public class InventoryManager {
 
     public void createGift() {
         String name = Entry.readString("Give a name for the gift");
-        Double price = Entry.readDouble("Enter a price for the gift");
-        giftDAO.addGift(itemFactory.createGift(name, price));
+        giftDAO.addGift(itemFactory.createGift(name, 0.0));
     }
 
     public void deleteGift() {
