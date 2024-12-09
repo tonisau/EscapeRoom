@@ -1,12 +1,8 @@
 package DAO.implementations;
 
 import DAO.Parser;
-import classes.enums.Level;
-import classes.enums.Material;
 import DAO.interfaces.GiftDAO;
-import classes.enums.Theme;
 import classes.item.ItemFactory;
-import classes.item.implementations.Decoration;
 import classes.item.implementations.Gift;
 import classes.item.implementations.ItemFactoryImpl;
 import connections.DbConnectionImpl;
@@ -33,7 +29,6 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
     public void addGift(Gift gift) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(gift.getName(), String.class));
-        attributeList.add(new Attribute<>(gift.getPrice(), Double.class));
         dbConnection.create(Query.CREATEGIFT, attributeList);
     }
 

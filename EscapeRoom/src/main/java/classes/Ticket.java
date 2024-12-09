@@ -27,36 +27,20 @@ public class Ticket {
         this.price = price;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
-    public int getRoomId() {
+    public Integer getRoomId() {
         return roomId;
-    }
-
-    public void setSaleDate(LocalDateTime saleDate) {
-        this.saleDate = saleDate;
     }
 
     public LocalDateTime getSaleDate() {
         return saleDate;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public List<User> getUsers() {
         return users;
-    }
-
-    public void addUser(User user){
-        this.users.add(user);
     }
 
     @Override
