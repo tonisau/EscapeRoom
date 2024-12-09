@@ -36,7 +36,7 @@ public class Query {
     public static final String DELETEROOM = "UPDATE room SET isActive = 0 where idroom = ?";
     public static final String GETROOMBYID = "SELECT idroom, name, price, level FROM room WHERE isActive = 1 AND idroom = ?";
 
-    public static final String CREATEUSER = "INSERT INTO user (name, email, isSubscriber) VALUES (?, ?, ?)";;
+    public static final String CREATEUSER = "INSERT INTO user (name, email, isSubscriber) VALUES (?, ?, ?)";
     public static final String UPDATEUSER = "UPDATE user" +
             " SET name = ?, email = ?, isSubscriber = ? WHERE iduser = ?";
     public static final String GETUSER = "SELECT * FROM user WHERE iduser = ? LIMIT 1";
