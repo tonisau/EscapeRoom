@@ -33,7 +33,6 @@ public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
     public void addGift(Gift gift) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(gift.getName(), String.class));
-        attributeList.add(new Attribute<>(gift.getPrice(), Double.class));
         dbConnection.create(Query.CREATEGIFT, attributeList);
     }
 
