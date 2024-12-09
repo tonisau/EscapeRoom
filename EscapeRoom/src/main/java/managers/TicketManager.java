@@ -20,7 +20,7 @@ import java.util.List;
 public class TicketManager {
 
     private static TicketManager instance;
-    private final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
     private final static double PLAYER_PRICE = 20;
     private final TicketDAOImpl daoTicket;
     private final RoomDAOImpl daoRoom;

@@ -60,11 +60,11 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
         return dbConnection.create(Query.UPDATEUSER, attributeList);
     }
 
-    public void add(User user) {
+    public Boolean add(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
         attributeList.add(new Attribute<>(user.getEmail(), String.class));
-        dbConnection.create(Query.CREATEUSER, attributeList);
+        return dbConnection.create(Query.CREATEUSER, attributeList);
     }
 
     @Override
