@@ -1,13 +1,8 @@
 package managers;
 
-import DAO.implementations.EscapeRoomDAOImpl;
 import DAO.implementations.TicketDAOImpl;
 import DAO.implementations.UserDAOImpl;
-import DAO.interfaces.EscapeRoomDAO;
-import DAO.interfaces.UserDAO;
-//import DAO.interfaces.implementations.DAORoomImpl;
 import DAO.implementations.RoomDAOImpl;
-import classes.EscapeRoom;
 import classes.Room;
 import classes.Ticket;
 import classes.User;

@@ -13,7 +13,7 @@ import java.util.Random;
 public class GameManager {
     private final List<User> players;
     private final Integer roomId;
-    private final EnigmaDAOImpl enigmaDao;
+    private final EnigmaDAOImpl enigmaDAO;
     private final GiftDAOImpl giftDAO;
     HashMap<User, Enigma> certificates;
     HashMap<User, Gift> gifts;
@@ -21,7 +21,7 @@ public class GameManager {
     public GameManager(List<User> players, Integer roomId){
         this.players = players;
         this.roomId = roomId;
-        this.enigmaDao = new EnigmaDAOImpl();
+        this.enigmaDAO = new EnigmaDAOImpl();
         this.giftDAO = new GiftDAOImpl();
     }
 
@@ -30,11 +30,13 @@ public class GameManager {
         this.certificates = resolveEnigmas();
         this.gifts = grantGifts();
         System.out.println("Game has ended, Congratulations!...");
+        this.gifts.forEach((user, gift)
+                -> System.out.println(user.getName() + " receives " + gift.getName()));
     }
 
     public HashMap<User, Enigma> resolveEnigmas(){
 
-        List<Enigma> enigmas = this.enigmaDao.getAllEnigmasByRoom(roomId);
+        List<Enigma> enigmas = this.enigmaDAO.getAllEnigmasByRoom(roomId);
         HashMap<User, Enigma> certificates = new HashMap<>();
 
         enigmas.forEach(enigma -> {
@@ -48,7 +50,7 @@ public class GameManager {
 
         if(!certificates.isEmpty()){
             certificates.forEach(((user, enigma)
-                    -> enigmaDao.addEnigmaToUser(user.getId(), enigma.getItemId())));
+                    -> enigmaDAO.addEnigmaToUser(user.getId(), enigma.getItemId())));
         }
         return certificates;
     }
