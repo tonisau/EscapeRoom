@@ -51,11 +51,6 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return null;
-    } // TODO: remove
-
-    @Override
     public void updateUser(User user) {
         List<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute<>(user.getName(), String.class));
@@ -81,7 +76,7 @@ public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
                 new Attribute<>(IDUSER, null, Integer.class),
                 new Attribute<>(NAME, null, String.class),
                 new Attribute<>(EMAIL, null, String.class),
-                new Attribute<>(IS_SUBSCRIBER, null, boolean.class));
+                new Attribute<>(IS_SUBSCRIBER, null, Boolean.class));
 
         return this.getUsers(Query.SHOWUSERS, queryAttributeList, outputAttributes);
     }

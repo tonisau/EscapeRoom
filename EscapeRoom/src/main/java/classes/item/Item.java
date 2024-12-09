@@ -38,7 +38,7 @@ public abstract class Item {
         this.itemId = itemId;
     }
 
-    public int getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 }
