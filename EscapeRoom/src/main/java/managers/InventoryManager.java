@@ -6,6 +6,7 @@ import classes.Room;
 import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
+import classes.item.Item;
 import classes.item.ItemFactory;
 import classes.item.implementations.*;
 import exceptions.IncorrectMenuOptionException;
@@ -157,20 +158,40 @@ public class InventoryManager {
             }
             switch (selectedMenuOption) {
                 case 1:
-                    getAllRooms().forEach(System.out::println);
-                    deleteRoom();
+                    List<Room> rooms = getAllRooms();
+                    if(!rooms.isEmpty()){
+                        rooms.forEach(System.out::println);
+                        deleteRoom(rooms);
+                    }else {
+                        System.out.println("No rooms available!");
+                    }
                     break;
                 case 2:
-                    getAllEnigmas().forEach(System.out::println);
-                    deleteEnigma();
+                    List<Enigma> enigmas = getAllEnigmas();
+                    if(!enigmas.isEmpty()){
+                        enigmas.forEach(System.out::println);
+                        deleteEnigma(enigmas);
+                    }else {
+                        System.out.println("No enigmas available!");
+                    }
                     break;
                 case 3:
-                    getAllClues().forEach(System.out::println);
-                    deleteClue();
+                    List<Clue> clues = getAllClues();
+                    if(!clues.isEmpty()){
+                        clues.forEach(System.out::println);
+                        deleteClue(clues);
+                    }else {
+                        System.out.println("No clues available!");
+                    }
                     break;
                 case 4:
-                    getAllDecoration().forEach(System.out::println);
-                    deleteDecoration();
+                    List<Decoration> decorations = getAllDecoration();
+                    if (!decorations.isEmpty()){
+                        decorations.forEach(System.out::println);
+                        deleteDecoration(decorations);
+                    }else{
+                        System.out.println("No decoration available!");
+                    }
                     break;
                 case 0:
                     close = true;
@@ -192,8 +213,9 @@ public class InventoryManager {
         else return menuOption;
     }
 
-    private void deleteRoom() {
-        Integer roomId = Entry.readInt("Enter a room id");
+    private void deleteRoom(List<Room> rooms) {
+        Integer roomId = Entry.readInt("Enter a room id",
+                rooms.stream().map(Room::getIdRoom).toList());
         roomDAO.delete(roomId);
     }
 
@@ -219,8 +241,9 @@ public class InventoryManager {
         return enigmaDAO.getData();
     }
 
-    private void deleteEnigma() {
-        Integer enigmaId = Entry.readInt("Enter an enigma id");
+    private void deleteEnigma(List<Enigma> enigmas) {
+        Integer enigmaId = Entry.readInt("Enter an enigma id",
+                enigmas.stream().map(Item::getItemId).toList());
         List<Clue> clues = clueDAO.getAllCluesByEnigma(enigmaId);
         Boolean confirm = true;
         if (!clues.isEmpty()) {
@@ -251,8 +274,9 @@ public class InventoryManager {
         return decorationDAO.getData();
     }
 
-    private void deleteDecoration() {
-        Integer decorationId = Entry.readInt("Enter a decoration id");
+    private void deleteDecoration(List<Decoration> decorations) {
+        Integer decorationId = Entry.readInt("Enter a decoration id",
+                decorations.stream().map(Item::getItemId).toList());
         decorationDAO.delete(decorationId);
     }
 
@@ -270,8 +294,9 @@ public class InventoryManager {
         return clueDAO.getData();
     }
 
-    private void deleteClue() {
-        Integer clueId = Entry.readInt("Enter a clue id");
+    private void deleteClue(List<Clue> clues) {
+        Integer clueId = Entry.readInt("Enter a clue id",
+                clues.stream().map(Item::getItemId).toList());
         clueDAO.delete(clueId);
     }
 }
