@@ -84,15 +84,6 @@ public class InventoryManager {
         giftDAO.addGift(itemFactory.createGift(name, price));
     }
 
-    public List<Gift> getGiftsForUser() {
-        Integer userId = Entry.readInt("Enter a user id");
-        return giftDAO.getAllGiftsByUser(userId);
-    }
-
-    public List<Gift> getAllGifts() {
-        return giftDAO.getData();
-    }
-
     public void deleteGift() {
         Integer giftId = Entry.readInt("Enter a gift id");
         giftDAO.delete(giftId);
