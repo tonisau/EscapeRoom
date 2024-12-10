@@ -8,6 +8,7 @@ import classes.enums.Theme;
 import classes.item.Item;
 import classes.item.ItemFactory;
 import classes.item.implementations.*;
+import connections.DbConnectionImpl;
 import exceptions.IncorrectMenuOptionException;
 import subscription.Observable;
 import utils.Entry;
@@ -35,12 +36,12 @@ public class InventoryManager {
     private Observable observable;
 
     private InventoryManager(){
-        this.roomHelper = new RoomHelperImpl();
+        roomHelper = new RoomHelperImpl();
 
-        this.roomDAO = new RoomDAOImpl();
+        roomDAO = new RoomDAOImpl(DbConnectionImpl.getInstance());
         enigmaDAO = new EnigmaDAOImpl();
         clueDAO = new ClueDAOImpl();
-        decorationDAO = new DecorationDAOImpl();
+        decorationDAO = new DecorationDAOImpl(DbConnectionImpl.getInstance());
         giftDAO = new GiftDAOImpl();
         userDAO = new UserDAOImpl();
 
@@ -76,6 +77,7 @@ public class InventoryManager {
             System.out.println("You need to add a room first");
             return;
         }
+        System.out.println("--- ROOM LIST ---");
         rooms.forEach(System.out::println);
         addEnigmaToRoom(rooms.stream().map(Room::getIdRoom).toList());
     }
@@ -86,6 +88,7 @@ public class InventoryManager {
            System.out.println("You need to add a room first");
            return;
         }
+        System.out.println("--- ROOM LIST ---");
         rooms.forEach(System.out::println);
         addDecorationToRoom(rooms.stream().map(Room::getIdRoom).toList());
     }
@@ -106,13 +109,14 @@ public class InventoryManager {
             System.out.println("You need to add a room first");
             return;
         }
+        System.out.println("--- ROOM LIST ---");
         rooms.forEach(System.out::println);
         List<Enigma> enigmas = getEnigmasForRoom(rooms.stream().map(Room::getIdRoom).toList());
         if (enigmas.isEmpty()) {
             System.out.println("You need to add an enigma first");
             return;
         }
-
+        System.out.println("--- ENIGMA LIST ---");
         enigmas.forEach(System.out::println);
         addClueForEnigma(enigmas.stream().map(Enigma::getItemId).toList());
     }
@@ -121,12 +125,12 @@ public class InventoryManager {
         List<Room> rooms = roomDAO.getAllRoomsByEscapeRoom(escapeRoomId);
         for (Room room: rooms) {
             System.out.println(room);
-            decorationDAO.getAllDecorationsByRoom(room.getIdRoom()).forEach(System.out::println);
+            decorationDAO.getAllDecorationsByRoom(room.getIdRoom()).forEach(deco -> System.out.println("  " + deco));
 
             List<Enigma> enigmas = enigmaDAO.getAllEnigmasByRoom(room.getIdRoom());
             for (Enigma enigma: enigmas) {
-                System.out.println(enigma);
-                clueDAO.getAllCluesByEnigma(enigma.getItemId()).forEach(System.out::println);
+                System.out.println("  " + enigma);
+                clueDAO.getAllCluesByEnigma(enigma.getItemId()).forEach(clue -> System.out.println("    " + clue));
             }
 
             System.out.println();
