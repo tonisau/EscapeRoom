@@ -39,6 +39,10 @@ A la nostra solució, hem decidit crear el seguent Model de MySQL:
 
 ![MySQL Model](EER/EER%20Diagram.png)
 
+Al nostre programa Java, hem implementat un MainManager que comença el menú principal, previa creació de l'Escape Room. Després segons les opcions del menú hem creat diferents managers per repartir responsabilitats. A més, hem creat una serie d'utils per gestionar els menús i les entrades per consola, el DBConnection que gestiona la connexió a base de dades i les queries de forma independent i molt més que podreu trobar al diagrama UML:
+
+![UML Diagram](UML/UMLDIagram.drawio.png)
+
 
 ## Testing: Testa almenys dues funcionalitats clau de l'aplicació.
 
