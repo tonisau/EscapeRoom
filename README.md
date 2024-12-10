@@ -39,7 +39,15 @@ A la nostra solució, hem decidit crear el seguent Model de MySQL:
 
 ![MySQL Model](EER/EER%20Diagram.png)
 
-Al nostre programa Java, hem implementat un MainManager que comença el menú principal, previa creació de l'Escape Room. Després segons les opcions del menú hem creat diferents managers per repartir responsabilitats. A més, hem creat una serie d'utils per gestionar els menús i les entrades per consola, el DBConnection que gestiona la connexió a base de dades i les queries de forma independent i molt més que podreu trobar al diagrama UML:
+Al nostre programa Java, hem implementat un MainManager que comença el menú principal, previa creació de l'Escape Room. Després, segons les opcions del menú, hem creat diferents managers per repartir responsabilitats. Per exemple, l'Inventory Manager empra un factory per crear els diferents items (decoració, enigmes, pistes i regals) i s'encarrega de la lògica referent a crear, mostrar i eliminar inventari. Per altre banda, el Game Manager crea un joc a partir d'una sala i una llista de jugadors, assignant de forma aleatoria els enigmes resolts per cada jugador, els certificats i els regals corresponents. 
+
+A més, hem creat una serie d'utils per gestionar els menús i les entrades per consola, el DBConnection que gestiona la connexió a base de dades i les queries de forma independent, i molt més que podreu trobar al diagrama UML.
+
+Com a patrons, hem aplicat:
+- Observer, per notificar als subscriptors de novetats
+- Callback, pel parser del gestor de connexió DBConnection que implementen tots els DAOs
+- Singleton, per la creació dels diferents Managers i el DBConnection
+- Factory, per crear els diferents items
 
 ![UML Diagram](UML/UMLDiagram.drawio.png)
 
