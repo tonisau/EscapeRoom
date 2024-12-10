@@ -54,10 +54,10 @@ Com a patrons, hem aplicat:
 
 ## Testing: Testa almenys dues funcionalitats clau de l'aplicació.
 
-Hem testejat alguns DAO del projecte, amb idea de implementar tots en un futur.
+Hem testejat alguns DAO del projecte, amb idea d'implementar tots en un futur.
 La idea es fer un mock del DBConnection de manera que poguem revisar:
 1. Que la llista d'atributs que es crea al DAO i es passa al DBConnection és correcte.
-2. Que la query per DDBB té el numero d'atributs esperats.
+2. Que la query per DDBB té el nombre d'atributs esperats.
 
 També hem testejar el mètode d'afegir una room al InventoryManager. La idea és fer el test de tots els elements que s'afegeixen als diferents Managers en un futur.
 En aquest cas hem fet un mock del RoomDAO, del observable (en l'aplicació real implementat pel MainManager) i de l'entrada de dades per consola. Després hem testejat:
