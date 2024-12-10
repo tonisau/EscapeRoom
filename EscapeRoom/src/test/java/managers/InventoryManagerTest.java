@@ -14,11 +14,6 @@ class InventoryManagerTest {
     RoomDAOMock roomDAO;
     Room room;
 
-    @BeforeAll
-    static void initAll() {
-
-    }
-
     @BeforeEach
     void init() {
         room = new Room("Mistery room", 45.0, Level.LOW);
@@ -31,10 +26,10 @@ class InventoryManagerTest {
     }
 
     @Test
-    void givenAddRoomCalled_wheDAOCalled_ThenExpectedRoom() {
+    void givenAddRoomCalled_wheDAOCalled_ThenExpectedRoomSentToDDBB() {
         roomDAO.success = false;
         inventoryManager.addRoomToEscapeRoom(3);
-        assertEquals(roomDAO.room, this.room);
+        Assertions.assertEquals(roomDAO.room, this.room);
     }
 
     @Test
