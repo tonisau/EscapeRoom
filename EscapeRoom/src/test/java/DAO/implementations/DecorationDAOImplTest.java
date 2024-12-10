@@ -44,4 +44,11 @@ class DecorationDAOImplTest {
         Assertions.assertEquals(dbConnection.queryAttributes.get(3), new Attribute<Integer>(this.decoration.getQuantity(), Integer.class));
         Assertions.assertEquals(dbConnection.queryAttributes.get(4), new Attribute<Integer>(roomId, Integer.class));
     }
+
+    @Test
+    void givenDecorationDAO_whenAddDecoration_ThenExpectedArgumentsQuantityInQueryString() {
+        decorationDAO.addDecoration(decoration, roomId);
+        long count = dbConnection.query.chars().filter(ch -> ch == '?').count();
+        Assertions.assertEquals(dbConnection.queryAttributes.size(), count);
+    }
 }

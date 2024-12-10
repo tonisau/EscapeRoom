@@ -29,4 +29,11 @@ class EscapeRoomDAOImplTest {
         Assertions.assertEquals(dbConnection.queryAttributes.getFirst(), new Attribute<String>(this.escapeRoom.getName(), String.class));
         Assertions.assertEquals(dbConnection.queryAttributes.get(1), new Attribute<String>(this.escapeRoom.getCif(), String.class));
     }
+
+    @Test
+    void givenEscapeRoomDAO_whenAddEscapeRoom_ThenExpectedArgumentsQuantityInQueryString() {
+        escapeRoomDAO.add(escapeRoom);
+        long count = dbConnection.query.chars().filter(ch -> ch == '?').count();
+        Assertions.assertEquals(dbConnection.queryAttributes.size(), count);
+    }
 }

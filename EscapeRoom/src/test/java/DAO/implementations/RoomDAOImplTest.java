@@ -6,6 +6,7 @@ import classes.enums.Level;
 import connections.attribute.Attribute;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -36,5 +37,12 @@ public class RoomDAOImplTest {
         Assertions.assertEquals(dbConnection.queryAttributes.get(1), new Attribute<Double>(room.getPrice(), Double.class));
         Assertions.assertEquals(dbConnection.queryAttributes.get(2), new Attribute<String>(room.getLevel().name(), String.class));
         Assertions.assertEquals(dbConnection.queryAttributes.get(3), new Attribute<Integer>(escapeRoomId, Integer.class));
+    }
+
+    @Test
+    void givenRoomDAO_whenAddRoom_ThenExpectedArgumentsQuantityInQueryString() {
+        roomDAO.addRoom(new Room("Charles", 43.5, Level.MEDIUM), 5);
+        long count = dbConnection.query.chars().filter(ch -> ch == '?').count();
+        Assertions.assertEquals(dbConnection.queryAttributes.size(), count);
     }
 }
