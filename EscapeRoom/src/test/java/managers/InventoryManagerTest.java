@@ -1,6 +1,10 @@
 package managers;
 
+import classes.Room;
+import classes.enums.Level;
 import org.junit.jupiter.api.*;
+
+import static org.junit.Assert.assertEquals;
 
 
 class InventoryManagerTest {
@@ -8,6 +12,7 @@ class InventoryManagerTest {
     InventoryManager inventoryManager;
     ObservableMock observable;
     RoomDAOMock roomDAO;
+    Room room;
 
     @BeforeAll
     static void initAll() {
@@ -16,12 +21,20 @@ class InventoryManagerTest {
 
     @BeforeEach
     void init() {
+        room = new Room("Mistery room", 45.0, Level.LOW);
         observable = new ObservableMock();
         roomDAO = new RoomDAOMock();
         inventoryManager = InventoryManager.getInstance();
-        inventoryManager.setRoomHelper(new RoomHelperMock());
+        inventoryManager.setRoomHelper(new RoomHelperMock(room));
         inventoryManager.setRoomDAO(roomDAO);
         inventoryManager.setObservable(observable);
+    }
+
+    @Test
+    void givenAddRoomCalled_wheDAOCalled_ThenExpectedRoom() {
+        roomDAO.success = false;
+        inventoryManager.addRoomToEscapeRoom(3);
+        assertEquals(roomDAO.room, this.room);
     }
 
     @Test
@@ -36,62 +49,5 @@ class InventoryManagerTest {
         roomDAO.success = true;
         inventoryManager.addRoomToEscapeRoom(3);
         Assertions.assertTrue(observable.notified);
-    }
-
-/*
-
-    @Test
-    public void givenStaticMockRegistration_whenMocked_thenReturnsMockSuccessfully() {
-        //assertTrue(Mockito.mockingDetails(EntryTest.class).isMock());
-    }
-
-    @Test
-    void addNewEnigma() {
-    }
-
-    @Test
-    void addNewDecoration() {
-    }
-
-    @Test
-    void createGift() {
-    }
-
-    @Test
-    void deleteGift() {
-    }
-
-    @Test
-    void addNewClue() {
-    }
-
-    @Test
-    void showInventory() {
-    }
-
-    @Test
-    void showTotalInventoryValue() {
-    }
-
-    @Test
-    void deleteRoom() {
-    }
-
-    @Test
-    void deleteEnigma() {
-    }
-
-    @Test
-    void deleteDecoration() {
-    }
-
-    @Test
-    void deleteClue() {
-    }
-    */
-
-    @AfterEach
-    void tearDown() {
-        //utilities.close();
     }
 }

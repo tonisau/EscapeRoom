@@ -8,9 +8,13 @@ import java.util.List;
 public class RoomDAOMock implements RoomDAO {
 
     Boolean success = false;
+    Room room;
+    Integer escapeRoomId;
 
     @Override
     public Boolean addRoom(Room room, Integer escapeRoomId) {
+        this.room = room;
+        this.escapeRoomId = escapeRoomId;
         return success;
     }
 
