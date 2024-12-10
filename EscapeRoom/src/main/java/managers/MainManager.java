@@ -1,15 +1,15 @@
 package managers;
 
-import DAO.implementations.RoomDAOImpl;
 import classes.User;
 import exceptions.IncorrectMenuOptionException;
 import subscription.Observable;
 import subscription.Subscriber;
 import utils.Entry;
 import utils.MenuOptions;
-import utils.RoomHelperImpl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainManager implements Observable {
 
@@ -18,7 +18,7 @@ public class MainManager implements Observable {
     TicketManager ticketManager;
     UserManager userManager;
 
-    private List<Subscriber> subscriberList;
+    private List<Subscriber> subscriberList = new ArrayList<>();
 
     public MainManager() {
         escapeRoomManager = EscapeRoomManager.getInstance();
@@ -37,10 +37,13 @@ public class MainManager implements Observable {
         escapeRoomManager.createEscapeRoomIfNotPresent();
         Integer escapeRoomId = escapeRoomManager.getEscapeRoom().getIdEscaperoom();
 
-        subscriberList = userManager.getAllUsers()
-                .stream().filter(User::isSuscriber)
-                .map(user -> (Subscriber) user)
-                .toList();
+        List<User> users = userManager.getAllUsers();
+        if (!users.isEmpty()) {
+            subscriberList = users
+                    .stream().filter(User::isSuscriber)
+                    .map(user -> (Subscriber) user)
+                    .collect(Collectors.toList());
+        }
 
         do {
             try {
@@ -82,6 +85,7 @@ public class MainManager implements Observable {
                     break;
                 case 11:
                     inventoryManager.createGift();
+                    break;
                 case 0:
                     close = true;
                     break;

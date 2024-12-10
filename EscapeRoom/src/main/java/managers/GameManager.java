@@ -62,13 +62,17 @@ public class GameManager {
     public HashMap<User, Gift> grantGifts(){
         HashMap<User, Gift> grantedGifts = new HashMap<>();
         List<Gift> availableGifts = giftDAO.getData();
+        if (availableGifts.isEmpty()) {
+            return grantedGifts;
+        }
+
         this.certificates.forEach(((user, enigma) -> {
             Gift gift = availableGifts.get(new Random().nextInt(availableGifts.size()));
             grantedGifts.put(user, gift);
         }));
 
         if(!grantedGifts.isEmpty()) grantedGifts.forEach((user, gift)
-                -> giftDAO.assignGiftToUser(user.getId(), gift.getItemId()));
+                -> giftDAO.assignGiftToUser( gift.getItemId(), user.getId()));
         return grantedGifts;
     }
 }
