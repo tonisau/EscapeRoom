@@ -1,11 +1,13 @@
 package managers;
 
+import DAO.implementations.RoomDAOImpl;
 import classes.User;
 import exceptions.IncorrectMenuOptionException;
 import subscription.Observable;
 import subscription.Subscriber;
 import utils.Entry;
 import utils.MenuOptions;
+import utils.RoomHelperImpl;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class MainManager implements Observable {
 
         subscriberList = userManager.getAllUsers()
                 .stream().filter(User::isSuscriber)
-                .map(user -> (Subscriber) user) // Cast User to Subscriber
+                .map(user -> (Subscriber) user)
                 .toList();
 
         do {
@@ -64,7 +66,7 @@ public class MainManager implements Observable {
                     inventoryManager.showInventory(escapeRoomId);
                     break;
                 case 6:
-                    inventoryManager.showTotalInventoryValue(escapeRoomId);
+                    System.out.println(inventoryManager.showTotalInventoryValue(escapeRoomId));
                     break;
                 case 7:
                     inventoryManager.deleteMenuStart();

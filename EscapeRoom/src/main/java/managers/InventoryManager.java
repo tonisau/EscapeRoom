@@ -3,7 +3,6 @@ package managers;
 import DAO.implementations.*;
 import DAO.interfaces.*;
 import classes.Room;
-import classes.enums.Level;
 import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.Item;
@@ -13,6 +12,8 @@ import exceptions.IncorrectMenuOptionException;
 import subscription.Observable;
 import utils.Entry;
 import utils.MenuDeleteInventoryOptions;
+import utils.RoomHelperImpl;
+import utils.RoomHelper;
 
 import java.util.List;
 
@@ -20,18 +21,22 @@ public class InventoryManager {
 
     private static InventoryManager instance;
 
-    RoomDAO roomDAO;
-    EnigmaDAO enigmaDAO;
-    ClueDAO clueDAO;
-    DecorationDAO decorationDAO;
-    GiftDAO giftDAO;
-    UserDAO userDAO;
+    private RoomHelper roomHelper;
 
-    ItemFactory itemFactory;
+    private RoomDAO roomDAO;
+    private EnigmaDAO enigmaDAO;
+    private ClueDAO clueDAO;
+    private DecorationDAO decorationDAO;
+    private GiftDAO giftDAO;
+    private  UserDAO userDAO;
+
+    private ItemFactory itemFactory;
     private Observable observable;
 
     private InventoryManager(){
-        roomDAO = new RoomDAOImpl();
+        this.roomHelper = new RoomHelperImpl();
+
+        this.roomDAO = new RoomDAOImpl();
         enigmaDAO = new EnigmaDAOImpl();
         clueDAO = new ClueDAOImpl();
         decorationDAO = new DecorationDAOImpl();
@@ -50,11 +55,16 @@ public class InventoryManager {
         this.observable = observable;
     }
 
+    public void setRoomHelper(RoomHelper roomHelper) {
+        this.roomHelper = roomHelper;
+    }
+
+    public void setRoomDAO(RoomDAO roomDAO) {
+        this.roomDAO = roomDAO;
+    }
+
     public void addRoomToEscapeRoom(Integer escapeRoomId) {
-        String name = Entry.readString("Give a name for the room");
-        Double price = Entry.readDouble("Enter a price for the room");
-        Level level = Entry.readLevel("Enter a level for the room (Low/Medium/High)");
-        Room room = new Room(name, price, level);
+        Room room = roomHelper.createRoom();
         Boolean created = roomDAO.addRoom(room, escapeRoomId);
         if (created) observable.notifySubscribers("New room created " + room.getName());
     }
@@ -122,7 +132,7 @@ public class InventoryManager {
         }
     }
 
-    public void showTotalInventoryValue(Integer escapeRoomId) {
+    public String showTotalInventoryValue(Integer escapeRoomId) {
         Double totalValue = 0.0;
         List<Room> rooms = roomDAO.getAllRoomsByEscapeRoom(escapeRoomId);
         for (Room room: rooms) {
@@ -143,7 +153,7 @@ public class InventoryManager {
                 totalValue += totalClue;
             }
         }
-        System.out.println("Total inventory value:" + totalValue);
+        return ("Total inventory value:" + totalValue);
     }
 
     public void deleteMenuStart() {
