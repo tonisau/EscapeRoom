@@ -88,12 +88,12 @@ public class TicketManager {
         return players;
     }
 
-    public User checkUser(int id, List<User> users){
-        return users.stream().filter(user -> user.getId() == id).findFirst().orElse(null);
+    public User checkUser(Integer id, List<User> users){
+        return users.stream().filter(user -> user.getId().equals(id)).findFirst().orElse(null);
     }
 
-    public boolean checkUserNotSelected(int id, List<User> players){
-        return players.stream().filter(player -> player.getId() == id).toList().isEmpty();
+    public boolean checkUserNotSelected(Integer id, List<User> players){
+        return players.stream().filter(player -> player.getId().equals(id)).toList().isEmpty();
     }
 
     public void calcTotalIncome(){

@@ -80,6 +80,8 @@ public class MainManager implements Observable {
                 case 10:
                     ticketManager.calcTotalIncome();
                     break;
+                case 11:
+                    inventoryManager.createGift();
                 case 0:
                     close = true;
                     break;
