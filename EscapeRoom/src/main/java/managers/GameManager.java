@@ -30,8 +30,11 @@ public class GameManager {
         this.certificates = resolveEnigmas();
         this.gifts = grantGifts();
         System.out.println("Game has ended, Congratulations!...");
+        this.certificates.forEach((user, enigma)
+                -> System.out.println(user.getName() + " has resolved successfully the enigma "
+                + enigma.getName()));
         this.gifts.forEach((user, gift)
-                -> System.out.println(user.getName() + " receives " + gift.getName()));
+                -> System.out.println(user.getName() + " is awarded gift: " + gift.getName()));
     }
 
     public HashMap<User, Enigma> resolveEnigmas(){

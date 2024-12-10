@@ -116,7 +116,6 @@ public class InventoryManager {
             System.out.println("You need to add an enigma first");
             return;
         }
-
         System.out.println("--- ENIGMA LIST ---");
         enigmas.forEach(System.out::println);
         addClueForEnigma(enigmas.stream().map(Enigma::getItemId).toList());
