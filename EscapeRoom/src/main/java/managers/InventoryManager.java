@@ -119,17 +119,21 @@ public class InventoryManager {
 
     public void showInventory(Integer escapeRoomId) {
         List<Room> rooms = roomDAO.getAllRoomsByEscapeRoom(escapeRoomId);
-        for (Room room: rooms) {
-            System.out.println(room);
-            decorationDAO.getAllDecorationsByRoom(room.getIdRoom()).forEach(System.out::println);
+        if(rooms.isEmpty()) {
+            System.out.println("Nothing to show in the escape room");
+        }else{
+            for (Room room: rooms) {
+                System.out.println(room);
+                decorationDAO.getAllDecorationsByRoom(room.getIdRoom()).forEach(System.out::println);
 
-            List<Enigma> enigmas = enigmaDAO.getAllEnigmasByRoom(room.getIdRoom());
-            for (Enigma enigma: enigmas) {
-                System.out.println(enigma);
-                clueDAO.getAllCluesByEnigma(enigma.getItemId()).forEach(System.out::println);
+                List<Enigma> enigmas = enigmaDAO.getAllEnigmasByRoom(room.getIdRoom());
+                for (Enigma enigma: enigmas) {
+                    System.out.println(enigma);
+                    clueDAO.getAllCluesByEnigma(enigma.getItemId()).forEach(System.out::println);
+                }
+                System.out.println();
             }
 
-            System.out.println();
         }
     }
 
@@ -154,7 +158,7 @@ public class InventoryManager {
                 totalValue += totalClue;
             }
         }
-        return ("Total inventory value:" + totalValue);
+        return ("Total inventory value of the escape room: " + String.format("%.2f", totalValue) + "€");
     }
 
     public void deleteMenuStart() {
