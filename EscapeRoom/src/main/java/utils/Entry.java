@@ -35,7 +35,7 @@ public class Entry {
         if (validResults.contains(input)) {
             return input;
         } else {
-            throw new IncorrectInputException("Introduced id does not exist. ");
+            throw new IncorrectInputException("Introduced value does not exist. ");
         }
     }
 

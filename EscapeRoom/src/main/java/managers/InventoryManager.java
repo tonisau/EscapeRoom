@@ -16,6 +16,7 @@ import utils.RoomHelperImpl;
 import utils.RoomHelper;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class InventoryManager {
 
@@ -218,7 +219,8 @@ public class InventoryManager {
         }
         System.out.println("0. " + MenuDeleteInventoryOptions.close);
 
-        int menuOption = Entry.readInt("Select a menu option between 0 and " + MenuDeleteInventoryOptions.options.length + ".");
+        List<Integer> validOptions = IntStream.rangeClosed(0, MenuDeleteInventoryOptions.options.length).boxed().toList();
+        int menuOption = Entry.readInt("Select a menu option between 0 and " + MenuDeleteInventoryOptions.options.length + ".", validOptions);
         if (menuOption < 0 || menuOption > MenuDeleteInventoryOptions.options.length) throw new IncorrectMenuOptionException("Menu option should be between 0 and " + MenuDeleteInventoryOptions.options.length + ".");
         else return menuOption;
     }
