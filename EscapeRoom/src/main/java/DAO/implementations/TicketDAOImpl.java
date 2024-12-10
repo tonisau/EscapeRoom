@@ -6,6 +6,7 @@ import DAO.interfaces.TicketDAO;
 import classes.Ticket;
 import classes.enums.Material;
 import classes.enums.Theme;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import connections.callback.ParsingCallback;
@@ -17,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class TicketDAOImpl implements TicketDAO, ParsingCallback<Ticket> {
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection = DbConnectionImpl.getInstance();
     Parser<Ticket> parser = new Parser<>(this);
 
     private static final String INCOME = "Income";

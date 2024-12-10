@@ -3,6 +3,7 @@ package managers;
 import DAO.implementations.EscapeRoomDAOImpl;
 import DAO.interfaces.EscapeRoomDAO;
 import classes.EscapeRoom;
+import connections.DbConnectionImpl;
 import utils.Entry;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class EscapeRoomManager {
     EscapeRoom escapeRoom;
 
     private EscapeRoomManager(){
-        this.escapeRoomDAO = new EscapeRoomDAOImpl();
+        this.escapeRoomDAO = new EscapeRoomDAOImpl(DbConnectionImpl.getInstance());
     }
 
     public static EscapeRoomManager getInstance(){

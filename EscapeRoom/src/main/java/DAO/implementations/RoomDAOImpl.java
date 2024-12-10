@@ -9,6 +9,7 @@ import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.ItemFactory;
 import classes.item.implementations.ItemFactoryImpl;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import connections.callback.ParsingCallback;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
 
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection;
     Parser<Room> parser = new Parser<>(this);
     ItemFactory itemFactory = new ItemFactoryImpl();
 
@@ -28,6 +29,10 @@ public class RoomDAOImpl implements RoomDAO, ParsingCallback<Room> {
     private static final String NAME = "name";
     private static final String PRICE = "price";
     private static final String LEVEL = "level";
+
+    public RoomDAOImpl(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public Boolean addRoom(Room room, Integer escapeRoomId) {

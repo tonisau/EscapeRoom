@@ -1,5 +1,7 @@
 package connections.attribute;
 
+import java.util.Objects;
+
 public class Attribute<T> {
 
     private String name;
@@ -37,5 +39,18 @@ public class Attribute<T> {
 
     public Class<T> getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Attribute<?> attribute = (Attribute<?>) object;
+        return Objects.equals(getName(), attribute.getName()) && Objects.equals(getValue(), attribute.getValue()) && Objects.equals(getType(), attribute.getType());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getValue(), getType());
     }
 }
