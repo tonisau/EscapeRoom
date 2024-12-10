@@ -37,7 +37,7 @@ public class Decoration extends Item {
         return "Decoration{" +
                 "itemId=" + this.getItemId() +
                 ", name='" + this.getName() +
-                ", price=" + this.getPrice() +
+                ", price= " + String.format("%.2f", this.getPrice()) + "€" +
                 ", material=" + this.getMaterial().name() +
                 ", quantity=" + this.getQuantity() +
                 '}';

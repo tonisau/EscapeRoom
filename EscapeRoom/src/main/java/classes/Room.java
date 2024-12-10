@@ -55,7 +55,7 @@ public class Room {
         return "Room{" +
                 "idRoom=" + idRoom +
                 ", name='" + name + '\'' +
-                ", price=" + price +
+                ", price= " + String.format("%.2f", price) + "€" +
                 ", level=" + level +
                 '}';
     }

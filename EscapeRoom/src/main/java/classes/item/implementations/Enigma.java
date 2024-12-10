@@ -14,7 +14,7 @@ public class Enigma extends Item {
         return "Enigma{" +
                 "itemId= " + this.getItemId() +
                 ", name= " + this.getName() +
-                ", price= " + this.getPrice() +
+                ", price= " + String.format("%.2f", this.getPrice()) + "€" +
                 '}';
     }
 }
