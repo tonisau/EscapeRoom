@@ -276,7 +276,7 @@ public class InventoryManager {
         String name = Entry.readString("Give a name for the new decoration object");
         Double price = Entry.readDouble("Enter a price for the decoration");
         Material material = Entry.readMaterial("Enter a material for the decoration (wood/plastic/paper/glass/metal)");
-        Integer quantity = Entry.readInt("How may decoration objects do you have?");
+        Integer quantity = Entry.readInt("How many decoration objects do you have?");
         Decoration decoration = itemFactory.createDecoration(name, price, material, quantity);
         Boolean created = decorationDAO.addDecoration(decoration, roomId);
         if (created) observable.notifySubscribers("New decoration object created '" + decoration.getName() + "' for room with id: " + roomId);
