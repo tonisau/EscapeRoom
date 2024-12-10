@@ -31,10 +31,10 @@ class InventoryManagerTest {
     }
 
     @Test
-    void givenAddRoomCalled_wheDAOCalled_ThenExpectedRoom() {
+    void givenAddRoomCalled_wheDAOCalled_ThenExpectedRoomSentToDDBB() {
         roomDAO.success = false;
         inventoryManager.addRoomToEscapeRoom(3);
-        assertEquals(roomDAO.room, this.room);
+        Assertions.assertEquals(roomDAO.room, this.room);
     }
 
     @Test
