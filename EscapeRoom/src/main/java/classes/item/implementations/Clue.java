@@ -27,7 +27,7 @@ public class Clue extends Item {
         return "Clue{" +
                 "itemId=" + this.getItemId() +
                 ", name='" + this.getName() +
-                "', price=" + this.getPrice() +
+                "', price= " + String.format("%.2f", this.getPrice()) + "€" +
                 ", theme=" + this.getTheme().name() +
                 '}';
     }
