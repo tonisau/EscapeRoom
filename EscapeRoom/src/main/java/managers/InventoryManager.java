@@ -36,9 +36,9 @@ public class InventoryManager {
     private Observable observable;
 
     private InventoryManager(){
-        this.roomHelper = new RoomHelperImpl();
+        roomHelper = new RoomHelperImpl();
 
-        this.roomDAO = new RoomDAOImpl(DbConnectionImpl.getInstance());
+        roomDAO = new RoomDAOImpl(DbConnectionImpl.getInstance());
         enigmaDAO = new EnigmaDAOImpl();
         clueDAO = new ClueDAOImpl();
         decorationDAO = new DecorationDAOImpl(DbConnectionImpl.getInstance());
