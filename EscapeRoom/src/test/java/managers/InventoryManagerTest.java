@@ -14,11 +14,6 @@ class InventoryManagerTest {
     RoomDAOMock roomDAO;
     Room room;
 
-    @BeforeAll
-    static void initAll() {
-
-    }
-
     @BeforeEach
     void init() {
         room = new Room("Mistery room", 45.0, Level.LOW);

@@ -6,6 +6,7 @@ import classes.enums.Material;
 import classes.item.ItemFactory;
 import classes.item.implementations.Decoration;
 import classes.item.implementations.ItemFactoryImpl;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import DAO.Query;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decoration> {
 
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection;
     Parser<Decoration> parser = new Parser<>(this);
     ItemFactory itemFactory = new ItemFactoryImpl();
 
@@ -27,6 +28,10 @@ public class DecorationDAOImpl implements DecorationDAO, ParsingCallback<Decorat
     private static final String PRICE = "price";
     private static final String MATERIAL = "material";
     private static final String QUANTITY = "quantity";
+
+    public DecorationDAOImpl(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public Boolean addDecoration(Decoration decoration, Integer roomId) {

@@ -5,6 +5,7 @@ import DAO.interfaces.GiftDAO;
 import classes.item.ItemFactory;
 import classes.item.implementations.Gift;
 import classes.item.implementations.ItemFactoryImpl;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import DAO.Query;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class GiftDAOImpl implements GiftDAO, ParsingCallback<Gift> {
 
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection = DbConnectionImpl.getInstance();
     Parser<Gift> parser = new Parser<>(this);
     ItemFactory itemFactory = new ItemFactoryImpl();
 

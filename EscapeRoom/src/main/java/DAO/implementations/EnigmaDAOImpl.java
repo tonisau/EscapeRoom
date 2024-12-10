@@ -6,6 +6,7 @@ import classes.User;
 import classes.item.ItemFactory;
 import classes.item.implementations.Enigma;
 import classes.item.implementations.ItemFactoryImpl;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import DAO.Query;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class EnigmaDAOImpl implements EnigmaDAO, ParsingCallback<Enigma> {
 
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection = DbConnectionImpl.getInstance();
     Parser<Enigma> parser = new Parser<>(this);
     ItemFactory itemFactory = new ItemFactoryImpl();
 

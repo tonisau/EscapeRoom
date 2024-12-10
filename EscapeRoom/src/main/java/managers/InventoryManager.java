@@ -8,6 +8,7 @@ import classes.enums.Theme;
 import classes.item.Item;
 import classes.item.ItemFactory;
 import classes.item.implementations.*;
+import connections.DbConnectionImpl;
 import exceptions.IncorrectMenuOptionException;
 import subscription.Observable;
 import utils.Entry;
@@ -37,10 +38,10 @@ public class InventoryManager {
     private InventoryManager(){
         this.roomHelper = new RoomHelperImpl();
 
-        this.roomDAO = new RoomDAOImpl();
+        this.roomDAO = new RoomDAOImpl(DbConnectionImpl.getInstance());
         enigmaDAO = new EnigmaDAOImpl();
         clueDAO = new ClueDAOImpl();
-        decorationDAO = new DecorationDAOImpl();
+        decorationDAO = new DecorationDAOImpl(DbConnectionImpl.getInstance());
         giftDAO = new GiftDAOImpl();
         userDAO = new UserDAOImpl();
 

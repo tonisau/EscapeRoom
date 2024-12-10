@@ -6,6 +6,7 @@ import DAO.implementations.RoomDAOImpl;
 import classes.Room;
 import classes.Ticket;
 import classes.User;
+import connections.DbConnectionImpl;
 import utils.Entry;
 
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class TicketManager {
     private TicketManager(){
         this.daoTicket = new TicketDAOImpl();
         this.daoUser = new UserDAOImpl();
-        this.daoRoom = new RoomDAOImpl();
+        this.daoRoom = new RoomDAOImpl(DbConnectionImpl.getInstance());
     }
 
     public static TicketManager getInstance(){

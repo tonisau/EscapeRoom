@@ -8,6 +8,7 @@ import classes.enums.Material;
 import classes.enums.Theme;
 import classes.item.implementations.Decoration;
 import classes.item.implementations.Enigma;
+import connections.DbConnection;
 import connections.DbConnectionImpl;
 import connections.attribute.Attribute;
 import DAO.Query;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO, ParsingCallback<User> {
 
-    DbConnectionImpl dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection = DbConnectionImpl.getInstance();
     Parser<User> parser = new Parser<>(this);
 
     private static final String NAME = "name";

@@ -13,14 +13,16 @@ import java.util.*;
 
 public class EscapeRoomDAOImpl implements EscapeRoomDAO, ParsingCallback<EscapeRoom> {
 
-    DbConnection dbConnection = DbConnectionImpl.getInstance();
+    DbConnection dbConnection;
     Parser<EscapeRoom> parser = new Parser<>(this);
 
     private static final String IDESCAPEROOM = "idEscapeRoom";
     private static final String NAME = "name";
     private static final String CIF = "cif";
 
-    public EscapeRoomDAOImpl() {}
+    public EscapeRoomDAOImpl(DbConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public void add(EscapeRoom escapeRoom) {
