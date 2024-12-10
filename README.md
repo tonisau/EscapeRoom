@@ -33,6 +33,12 @@ Pel que fa a les funcionalitats a mostrar per pantalla, s'espera que inclogui co
 - Notificar als usuaris sobre esdeveniments importants a l'Escape Room, com l'addició de noves pistes, la finalització d'una sala, etc.
 - Els usuaris interessats en aquests esdeveniments podran sol·licitar registrar-se per poder rebre notificacions quan es produeixin esdeveniments rellevants
 
+## La nostra solució
+
+A la nostra solució, hem decidit crear el seguent Model de MySQL:
+
+![MySQL Model](EER/EER%20Diagram.png)
+
 
 ## Testing: Testa almenys dues funcionalitats clau de l'aplicació.
 
